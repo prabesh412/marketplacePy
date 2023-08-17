@@ -7,7 +7,7 @@ import { User } from '../../orval/model';
 interface StoreInterface {
   setAccessToken: (accessToken: string) => void;
   accessToken: string | null;
-  axiosRun: () => void;
+  axiosRun: (token: string) => void;
   setProfile: (profile: User) => void;
   profile: User | null;
   logout: () => void;
@@ -45,9 +45,7 @@ export const initializeStore = (
       }));
       setCookie(null, 'accessToken', accessToken, { path: '/' });
     },
-    axiosRun: () => {
-      const cookies = parseCookies();
-      const token = cookies?.accessToken;
+    axiosRun: (token: string) => {
       if (token) {
         AXIOS_INSTANCE.interceptors.request.use(function (config) {
           config.headers.Authorization = token ? `Token ${token}` : null;
@@ -60,6 +58,7 @@ export const initializeStore = (
     },
     logout: () => {
       set(() => ({ accessToken: null }));
+      set(() => ({ profile: null }));
       destroyCookie(null, 'accessToken', { path: '/' });
     },
   }));

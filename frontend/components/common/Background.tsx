@@ -14,8 +14,8 @@ const Background = (props: any) => {
     query: { enabled: Boolean(accessToken) },
   });
   useEffect(() => {
-    if (typeof window !== 'undefined') {
-      axiosRun();
+    if (typeof window !== 'undefined' && accessToken !== null) {
+      axiosRun(accessToken);
     }
   }, []);
   useEffect(() => {

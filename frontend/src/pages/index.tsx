@@ -10,8 +10,6 @@ export async function getServerSideProps(ctx: NextPageContext) {
   const zustandStore = await getDefaultStore(ctx);
   return {
     props: {
-      // the "stringify and then parse again" piece is required as next.js
-      // isn't able to serialize it to JSON properly
       dehydratedState: dehydrate(queryClient),
       initialZustandState: JSON.parse(JSON.stringify(zustandStore)),
     },

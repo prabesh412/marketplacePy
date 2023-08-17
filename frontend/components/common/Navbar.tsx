@@ -90,8 +90,7 @@ const Navbar = ({ links }: HeaderSearchProps) => {
   const [opened, { toggle }] = useDisclosure(false);
   const { classes } = useStyles();
   const router = useRouter();
-
-  const store = useStore((state) => state.accessToken);
+  const profile = usersMeRetrieve();
   const user = useStore((state) => state.profile);
   const logout = useStore((state) => state.logout);
 
@@ -134,7 +133,7 @@ const Navbar = ({ links }: HeaderSearchProps) => {
             </Group>
 
             <Group spacing={10} ml={25}>
-              {store ? (
+              {user ? (
                 <>
                   <Avatar
                     color="grape"
