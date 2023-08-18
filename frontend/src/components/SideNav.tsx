@@ -1,22 +1,16 @@
+import { Code, createStyles, Group, Navbar, rem, ScrollArea } from '@mantine/core';
 import {
-  Navbar,
-  Group,
-  Code,
-  ScrollArea,
-  createStyles,
-  rem,
-} from '@mantine/core';
-import {
-  IconNotes,
-  IconCalendarStats,
-  IconGauge,
-  IconPresentationAnalytics,
-  IconFileAnalytics,
   IconAdjustments,
+  IconCalendarStats,
+  IconFileAnalytics,
+  IconGauge,
   IconLock,
+  IconNotes,
+  IconPresentationAnalytics,
 } from '@tabler/icons-react';
 import { LinksGroup } from './NavLinks';
 import { UserButton } from './UserButton';
+
 const mockdata = [
   { label: 'Dashboard', icon: IconGauge },
   {
@@ -55,8 +49,7 @@ const mockdata = [
 
 const useStyles = createStyles((theme) => ({
   navbar: {
-    backgroundColor:
-      theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.white,
+    backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.white,
     paddingBottom: 0,
   },
 
@@ -92,17 +85,12 @@ const useStyles = createStyles((theme) => ({
 
 export function SideNav() {
   const { classes } = useStyles();
-  const links = mockdata.map((item) => (
-    <LinksGroup {...item} key={item.label} />
-  ));
+  const links = mockdata.map((item) => <LinksGroup {...item} key={item.label} />);
+
+  // TODO : use navbar configs from the config folder
 
   return (
-    <Navbar
-      sx={{ height: '100vh' }}
-      width={{ sm: 300 }}
-      p="md"
-      className={classes.navbar}
-    >
+    <Navbar sx={{ height: '100vh' }} width={{ sm: 300 }} p="md" className={classes.navbar}>
       <Navbar.Section className={classes.header}>
         <Group position="apart">
           <Code sx={{ fontWeight: 700 }}>v3.1.2</Code>

@@ -1,20 +1,20 @@
 import {
-  Paper,
-  createStyles,
-  TextInput,
-  PasswordInput,
-  Checkbox,
-  Button,
-  Title,
-  Text,
   Anchor,
+  Button,
+  Checkbox,
+  createStyles,
+  Paper,
+  PasswordInput,
   rem,
+  Text,
+  TextInput,
+  Title,
 } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { useDjRestAuthLoginCreate } from '../../orval/dj-rest-auth/dj-rest-auth';
-import { useStore } from '../store/store';
+import { useStore } from '@/zustand/store';
 import { useRouter } from 'next/router';
-import { routes } from '../utils/routes';
+import { index } from '../routes';
 
 const useStyles = createStyles((theme) => ({
   wrapper: {
@@ -68,9 +68,9 @@ export function AuthPage() {
       {
         onSuccess: (data) => {
           setToken(data.key);
-          router.push(routes.home);
+          router.push(index.home);
         },
-      },
+      }
     );
   };
 
@@ -101,11 +101,7 @@ export function AuthPage() {
         </form>
         <Text ta="center" mt="md">
           Don&apos;t have an account?{' '}
-          <Anchor<'a'>
-            href="#"
-            weight={700}
-            onClick={(event) => event.preventDefault()}
-          >
+          <Anchor<'a'> href="#" weight={700} onClick={(event) => event.preventDefault()}>
             Register
           </Anchor>
         </Text>

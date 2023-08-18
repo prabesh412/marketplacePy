@@ -1,8 +1,7 @@
-import axios from 'axios';
 import nookies from 'nookies';
-import { initializeStore, useStore } from '../store/store';
+import { initializeStore } from '@/zustand/store';
 import { NextPageContext } from 'next';
-import { useUsersMeRetrieve, usersMeRetrieve } from '../../orval/users/users';
+import { usersMeRetrieve } from '../../orval/users/users';
 import { AXIOS_INSTANCE } from '../../orval/api/custom-instance';
 
 export const getDefaultStore = async (ctx: NextPageContext) => {

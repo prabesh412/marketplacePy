@@ -1,9 +1,6 @@
 import { Paper } from '@mantine/core';
-import { MantineProvider } from '@mantine/core';
-import { useMediaQuery } from '@mantine/hooks';
 import { useEffect } from 'react';
-import { useStore } from '../store/store';
-import App, { AppProps } from 'next/app';
+import { useStore } from '@/zustand/store';
 import { useUsersMeRetrieve } from '../../orval/users/users';
 
 const Background = (props: any) => {

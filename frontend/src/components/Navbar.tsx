@@ -1,27 +1,24 @@
 import {
-  createStyles,
-  Header,
-  Menu,
-  Group,
-  Center,
-  Text,
-  Select,
-  Flex,
-  Button,
+  Avatar,
   Burger,
+  Button,
   Container,
+  createStyles,
+  Group,
+  Header,
   rem,
+  Select,
+  Text,
 } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
-import { Avatar } from '@mantine/core';
 import { IconSearch } from '@tabler/icons-react';
 import { useRouter } from 'next/router';
-import { routes } from '../utils/routes';
-import React, { useContext } from 'react';
-import { useStore } from '../store/store';
-import { useUsersMeRetrieve, usersMeRetrieve } from '../../orval/users/users';
+import { index } from '@/routes';
+import React from 'react';
+import { useStore } from '@/zustand/store';
+import { usersMeRetrieve } from '../../orval/users/users';
 
-// import { MantineLogo } from '@mantine/ds';
+// TODO : use header configs from the config folder
 
 const useStyles = createStyles((theme) => ({
   inner: {
@@ -54,18 +51,12 @@ const useStyles = createStyles((theme) => ({
     padding: `${rem(8)} ${rem(12)}`,
     borderRadius: theme.radius.sm,
     textDecoration: 'none',
-    color:
-      theme.colorScheme === 'dark'
-        ? theme.colors.dark[0]
-        : theme.colors.gray[7],
+    color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.colors.gray[7],
     fontSize: theme.fontSizes.md,
     fontWeight: 500,
 
     '&:hover': {
-      backgroundColor:
-        theme.colorScheme === 'dark'
-          ? theme.colors.dark[6]
-          : theme.colors.gray[3],
+      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[3],
     },
   },
   profile: {
@@ -135,28 +126,18 @@ const Navbar = ({ links }: HeaderSearchProps) => {
             <Group spacing={10} ml={25}>
               {user ? (
                 <>
-                  <Avatar
-                    color="grape"
-                    radius="xl"
-                    placeholder="MK"
-                    variant="filled"
-                  >
+                  <Avatar color="grape" radius="xl" placeholder="MK" variant="filled">
                     MK
                   </Avatar>
                   <Button onClick={logout}></Button>
                 </>
               ) : (
-                <Button onClick={() => router.push(routes.login)}>Login</Button>
+                <Button onClick={() => router.push(index.login)}>Login</Button>
               )}
             </Group>
           </Group>
 
-          <Burger
-            opened={opened}
-            onClick={toggle}
-            className={classes.burger}
-            size="sm"
-          />
+          <Burger opened={opened} onClick={toggle} className={classes.burger} size="sm" />
         </div>
       </Container>
     </Header>

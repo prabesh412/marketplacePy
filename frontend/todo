@@ -1,4 +1,1 @@
- create a homepage route api, that will give FE 30-50 popular Ebooks, which will be used for search
- Search will work like: 
-          user enters something, create timeout of 1 second, execute query after a sec, 
-          
+TODO : modify Readme ( folder structure )

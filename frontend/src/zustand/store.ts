@@ -1,4 +1,4 @@
-import { destroyCookie, parseCookies, setCookie } from 'nookies';
+import { destroyCookie, setCookie } from 'nookies';
 import { createContext, useContext } from 'react';
 import { createStore, useStore as useZustandStore } from 'zustand';
 import { AXIOS_INSTANCE } from '../../orval/api/custom-instance';
@@ -32,9 +32,7 @@ export const useStore = <T>(selector: (state: StoreInterface) => T) => {
   return useZustandStore(store, selector);
 };
 
-export const initializeStore = (
-  preloadedState: Partial<StoreInterface> = {},
-) => {
+export const initializeStore = (preloadedState: Partial<StoreInterface> = {}) => {
   return createStore<StoreInterface>((set, get) => ({
     ...getDefaultInitialState(),
     ...preloadedState,
