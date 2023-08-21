@@ -34,13 +34,3 @@ const App = (props: AppProps) => {
 };
 
 export default App;
-
-// TODO : select the proper type
-
-App.getInitialProps = async (appContext: any) => {
-  let pageProps = {};
-  if (appContext.Component.getInitialProps) {
-    pageProps = await appContext.Component.getInitialProps(appContext.ctx);
-  }
-  return { pageProps };
-};
