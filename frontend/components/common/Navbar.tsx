@@ -20,6 +20,7 @@ import { routes } from '../utils/routes';
 import React, { useContext } from 'react';
 import { useStore } from '../store/store';
 import { useUsersMeRetrieve, usersMeRetrieve } from '../../orval/users/users';
+import { SideNav } from './SideNav';
 
 // import { MantineLogo } from '@mantine/ds';
 
@@ -84,9 +85,10 @@ interface HeaderSearchProps {
     link: string;
     iconArg: React.ReactElement;
   }[];
+  showSideNav: () => void;
 }
 
-const Navbar = ({ links }: HeaderSearchProps) => {
+const Navbar = ({ links, showSideNav }: HeaderSearchProps) => {
   const [opened, { toggle }] = useDisclosure(false);
   const { classes } = useStyles();
   const router = useRouter();
@@ -108,58 +110,62 @@ const Navbar = ({ links }: HeaderSearchProps) => {
   });
 
   return (
-    <Header height={60} mt={10}>
-      <Container fluid>
-        <div className={classes.inner}>
-          <Text weight={500} size="lg" pr={20}>
-            HamroBazar
-          </Text>
-          <Select
-            ml={15}
-            placeholder="Search Here..."
-            searchable
-            icon={<IconSearch />}
-            sx={{
-              width: '450px',
-              minHeight: '20px',
-              boxShadow: ' -1px 3px 24px -5px rgba(200,204,204,0.76)',
-            }}
-            nothingFound="Nobody here"
-            data={[]}
-          />
-          <Group>
-            <Group spacing={15} ml={70} className={classes.links}>
-              {items}
-            </Group>
+    <>
+      <Header height={60} mt={10} sx={{ zIndex: 1000 }}>
+        <Container fluid>
+          <div className={classes.inner}>
+            <Burger
+              opened={opened}
+              onClick={showSideNav}
+              className={classes.burger}
+              size="sm"
+              pr={'sm'}
+            />
+            <Text weight={500} size="lg" pl={10}>
+              HamroBazar
+            </Text>
+            <Select
+              ml={15}
+              placeholder="Search Here..."
+              searchable
+              icon={<IconSearch />}
+              sx={{
+                width: '450px',
+                minHeight: '20px',
+                boxShadow: ' -1px 3px 24px -5px rgba(200,204,204,0.76)',
+              }}
+              nothingFound="Nobody here"
+              data={[]}
+            />
+            <Group>
+              <Group spacing={15} ml={70} className={classes.links}>
+                {items}
+              </Group>
 
-            <Group spacing={10} ml={25}>
-              {user ? (
-                <>
-                  <Avatar
-                    color="grape"
-                    radius="xl"
-                    placeholder="MK"
-                    variant="filled"
-                  >
-                    MK
-                  </Avatar>
-                  <Button onClick={logout}></Button>
-                </>
-              ) : (
-                <Button onClick={() => router.push(routes.login)}>Login</Button>
-              )}
+              <Group spacing={10} ml={25}>
+                {user ? (
+                  <>
+                    <Avatar
+                      color="grape"
+                      radius="xl"
+                      placeholder="MK"
+                      variant="filled"
+                    >
+                      MK
+                    </Avatar>
+                    <Button onClick={logout}></Button>
+                  </>
+                ) : (
+                  <Button onClick={() => router.push(routes.auth)}>
+                    Login
+                  </Button>
+                )}
+              </Group>
             </Group>
-          </Group>
-
-          <Burger
-            opened={opened}
-            onClick={toggle}
-            className={classes.burger}
-            size="sm"
-          />
-        </div>
-      </Container>
-    </Header>
+          </div>
+        </Container>
+      </Header>
+    </>
   );
 };
 

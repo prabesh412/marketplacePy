@@ -1,9 +1,10 @@
 import Head from 'next/head';
 import { initializeStore, useStore } from '../../components/store/store';
-import { useEffect } from 'react';
+import { ReactElement, useEffect } from 'react';
 import { QueryClient, dehydrate } from '@tanstack/react-query';
 import { NextPageContext } from 'next';
 import { getDefaultStore } from '../../components/utils/PageDefaults';
+import MainLayout from '../../components/layouts/MainLayout';
 
 export async function getServerSideProps(ctx: NextPageContext) {
   const queryClient = new QueryClient();
@@ -16,6 +17,8 @@ export async function getServerSideProps(ctx: NextPageContext) {
   };
 }
 
+Home.getLayout = (page: ReactElement) => <MainLayout>{page}</MainLayout>;
+
 export default function Home() {
   const store = useStore((state) => state.accessToken);
 
@@ -27,6 +30,7 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
+      <h1>hello this is me</h1>
     </>
   );
 }
