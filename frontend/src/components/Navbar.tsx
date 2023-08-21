@@ -141,7 +141,7 @@ const Navbar = ({ links, showSideNav }: HeaderSearchProps) => {
                     <Button onClick={logout}></Button>
                   </>
                 ) : (
-                  <Button onClick={() => router.push(PATH_AUTH.login)}>Login</Button>
+                  <Button onClick={() => router.push(PATH_AUTH.root)}>Login</Button>
                 )}
               </Group>
             </Group>
