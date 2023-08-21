@@ -13,10 +13,10 @@ import {
 import { useDisclosure } from '@mantine/hooks';
 import { IconSearch } from '@tabler/icons-react';
 import { useRouter } from 'next/router';
-import { index } from '@/routes';
 import React from 'react';
 import { useStore } from '@/zustand/store';
 import { usersMeRetrieve } from '../../orval/users/users';
+import { PATH_AUTH } from '@/routes';
 
 // TODO : use header configs from the config folder
 
@@ -141,7 +141,7 @@ const Navbar = ({ links, showSideNav }: HeaderSearchProps) => {
                     <Button onClick={logout}></Button>
                   </>
                 ) : (
-                  <Button onClick={() => router.push(index.login)}>Login</Button>
+                  <Button onClick={() => router.push(PATH_AUTH.root)}>Login</Button>
                 )}
               </Group>
             </Group>
