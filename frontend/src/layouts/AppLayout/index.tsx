@@ -1,32 +1,31 @@
-import { ReactNode } from 'react';
-import { Paper } from '@mantine/core';
+import { ReactNode, useState } from 'react';
+import { AppShell } from '@mantine/core';
 import Navbar from '@/components/Navbar';
 import { IconBell, IconHeart } from '@tabler/icons-react';
-import { useRouter } from 'next/router';
-import { index, PATH_APP } from '@/routes';
+import { PATH_APP } from '@/routes';
 import { SideNav } from '@/components/SideNav';
+import { useMediaQuery } from '@mantine/hooks';
 
 interface AppLayoutProps {
   children: ReactNode;
 }
 
 const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
-  const router = useRouter();
-  const shouldRenderSideNav = router.pathname !== index.login;
-
-  // TODO : use config file
-
+  const matches = useMediaQuery('(min-width: 56.25em)');
+  const [showSideNav, setShowSideNav] = useState(matches);
+  const handleBurgerChange = () => {
+    if (!matches) {
+      setShowSideNav((prevShowSideNav) => !prevShowSideNav);
+    }
+  };
   return (
     <>
-      <header>
-        <Navbar links={links} />
-      </header>
-      <aside>{shouldRenderSideNav && <SideNav />}</aside>
-      <main>
-        <Paper style={{ height: '100vh', marginLeft: '400px' }} sx={(theme) => ({})}>
-          {children}
-        </Paper>
-      </main>
+      <AppShell
+        navbar={<Navbar links={links} showSideNav={handleBurgerChange} />}
+        aside={showSideNav || matches ? <SideNav /> : undefined}
+      >
+        {children}
+      </AppShell>
     </>
   );
 };

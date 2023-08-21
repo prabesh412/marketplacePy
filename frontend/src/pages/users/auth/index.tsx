@@ -1,6 +1,6 @@
-import { Container, Tabs } from '@mantine/core';
-import { QueryClient, dehydrate } from '@tanstack/react-query';
-import { AuthPage } from '../../../../components/page-specifics/auth/AuthPage';
+import { Container } from '@mantine/core';
+import { dehydrate, QueryClient } from '@tanstack/react-query';
+import { AuthPage } from '@/sections/auth/AuthPage';
 
 export const getServerSideProps = async () => {
   const queryClient = new QueryClient();
