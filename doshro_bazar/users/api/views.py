@@ -4,6 +4,7 @@ from rest_framework.decorators import action
 from rest_framework.mixins import ListModelMixin, RetrieveModelMixin, UpdateModelMixin, CreateModelMixin
 from rest_framework.response import Response
 from rest_framework.viewsets import GenericViewSet
+from rest_framework.parsers import FormParser, MultiPartParser
 import random
 from .serializers import UserSerializer, UserRegisterSerializer, OTPValidationSerializer
 from doshro_bazar.users.models import OTP

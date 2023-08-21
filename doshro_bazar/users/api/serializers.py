@@ -16,8 +16,7 @@ class UserSerializer(serializers.ModelSerializer[UserType]):
         }
 
 
-class UserRegisterSerializer(serializers.ModelSerializer[UserType]):
-    image = serializers.ImageField(required=False, allow_null=True)
+class UserRegisterSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ["username", "name", "password","image"]
