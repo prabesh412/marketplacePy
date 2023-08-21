@@ -1,20 +1,17 @@
 import {
-  Paper,
-  createStyles,
-  TextInput,
-  PasswordInput,
-  Checkbox,
   Button,
-  Title,
-  Text,
-  Anchor,
+  Checkbox,
+  createStyles,
+  PasswordInput,
   rem,
+  TextInput,
+  Title,
 } from '@mantine/core';
 import { useDjRestAuthLoginCreate } from '../../../orval/dj-rest-auth/dj-rest-auth';
 import { useRouter } from 'next/router';
-import { useStore } from '../../store/store';
 import { useForm } from '@mantine/form';
-import { routes } from '../../utils/routes';
+import { useStore } from '@/zustand/store';
+import { PATH_APP } from '@/routes';
 
 const useStyles = createStyles((theme) => ({
   form: {
@@ -55,9 +52,9 @@ const Login = () => {
       {
         onSuccess: (data) => {
           setToken(data.key);
-          router.push(routes.home);
+          router.push(PATH_APP.root);
         },
-      },
+      }
     );
   };
   return (

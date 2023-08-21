@@ -1,17 +1,13 @@
 import {
-  Paper,
-  createStyles,
-  TextInput,
-  PasswordInput,
-  Checkbox,
   Button,
-  Title,
-  Text,
-  Anchor,
+  Checkbox,
+  createStyles,
+  PasswordInput,
   rem,
+  TextInput,
+  Title,
 } from '@mantine/core';
 import { useRouter } from 'next/router';
-import { useStore } from '../../store/store';
 import { useDjRestAuthRegisterCreate } from '../../../orval/dj-rest-auth/dj-rest-auth';
 import { useForm } from '@mantine/form';
 import { useState } from 'react';
@@ -47,11 +43,7 @@ const Register = () => {
     },
   });
 
-  const handleRegister = (values: {
-    username: string;
-    password: string;
-    name: string;
-  }) => {
+  const handleRegister = (values: { username: string; password: string; name: string }) => {
     const data = {
       username: values.username,
       name: values.name,
@@ -63,7 +55,7 @@ const Register = () => {
         onSuccess: (data) => {
           setStep(true);
         },
-      },
+      }
     );
   };
   return (
