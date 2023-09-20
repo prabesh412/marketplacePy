@@ -12,6 +12,8 @@ import { useRouter } from 'next/router';
 import { useForm } from '@mantine/form';
 import { useStore } from '@/zustand/store';
 import { PATH_APP } from '@/routes';
+import { notifications } from '@mantine/notifications';
+import { error } from 'console';
 
 const useStyles = createStyles((theme) => ({
   form: {
@@ -47,14 +49,48 @@ const Login = () => {
       username: values.username,
       password: values.password,
     };
+    notifications.show({
+      id: 'login',
+      title: `Logging you up`,
+      message: `Please wait while we Log you in`,
+      loading: true,
+      autoClose: false,
+      withCloseButton: false,
+    });
     postLogin.mutate(
       { data },
       {
         onSuccess: (data) => {
           setToken(data.key);
           router.push(PATH_APP.root);
+          notifications.update({
+            id: 'login',
+            title: `Login Success`,
+            color: 'green',
+            message: 'Logged in successfully',
+            loading: false,
+            autoClose: true,
+
+            withCloseButton: true,
+          });
         },
-      }
+        onError: (error: any) => {
+          notifications.update({
+            id: 'login',
+            title: `Login Failed`,
+            color: 'red',
+            message: `${
+              error['response']['data']['email'] ||
+              error['response']['data']['username'] ||
+              error['response']['data']['non_field_errors'] ||
+              error['response']['data']['password1']
+            }`,
+            loading: false,
+            autoClose: true,
+            withCloseButton: true,
+          });
+        },
+      },
     );
   };
   return (

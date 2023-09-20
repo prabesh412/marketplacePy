@@ -1,9 +1,9 @@
 import { AppProps } from 'next/app';
 import { MantineProvider, MantineThemeOverride } from '@mantine/core';
+import { Notifications } from '@mantine/notifications';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import StoreProvider from '@/zustand/StoreProvider';
 import Background from '@/components/Background';
-import Head from 'next/head';
 import { NextPage } from 'next';
 import { ReactNode } from 'react';
 
@@ -26,6 +26,7 @@ export default function App({ Component, pageProps }: Props) {
 
   return (
     <MantineProvider withGlobalStyles withNormalizeCSS theme={customTheme}>
+      <Notifications />
       <StoreProvider {...pageProps.initialZustandState}>
         <QueryClientProvider client={new QueryClient()}>
           <Background>{getLayout(<Component {...pageProps} />)}</Background>

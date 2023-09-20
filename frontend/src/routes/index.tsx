@@ -2,7 +2,7 @@ function path(root: string, subLink: string) {
   return `${root}${subLink}`;
 }
 
-const ROOTS_AUTH = '/users/auth';
+export const ROOTS_AUTH = '/users/auth';
 // const ROOTS_DASHBOARD = '/dashboard';
 
 export const PATH_APP = {

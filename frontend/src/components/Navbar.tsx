@@ -51,12 +51,18 @@ const useStyles = createStyles((theme) => ({
     padding: `${rem(8)} ${rem(12)}`,
     borderRadius: theme.radius.sm,
     textDecoration: 'none',
-    color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.colors.gray[7],
+    color:
+      theme.colorScheme === 'dark'
+        ? theme.colors.dark[0]
+        : theme.colors.gray[7],
     fontSize: theme.fontSizes.md,
     fontWeight: 500,
 
     '&:hover': {
-      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[3],
+      backgroundColor:
+        theme.colorScheme === 'dark'
+          ? theme.colors.dark[6]
+          : theme.colors.gray[3],
     },
   },
   profile: {
@@ -75,7 +81,7 @@ interface HeaderSearchProps {
     link: string;
     iconArg: React.ReactElement;
   }[];
-  showSideNav: () => void;
+  showSideNav?: () => void;
 }
 
 const Navbar = ({ links, showSideNav }: HeaderSearchProps) => {
@@ -112,7 +118,7 @@ const Navbar = ({ links, showSideNav }: HeaderSearchProps) => {
               pr={'sm'}
             />
             <Text weight={500} size="lg" pl={10}>
-              HamroBazar
+              DoshroBazar
             </Text>
             <Select
               ml={15}
@@ -135,18 +141,30 @@ const Navbar = ({ links, showSideNav }: HeaderSearchProps) => {
               <Group spacing={10} ml={25}>
                 {user ? (
                   <>
-                    <Avatar color="grape" radius="xl" placeholder="MK" variant="filled">
-                      MK
+                    <Avatar
+                      color="grape"
+                      radius="xl"
+                      placeholder="MK"
+                      variant="filled"
+                    >
+                      PU
                     </Avatar>
                     <Button onClick={logout}></Button>
                   </>
                 ) : (
-                  <Button onClick={() => router.push(PATH_AUTH.root)}>Login</Button>
+                  <Button onClick={() => router.push(PATH_AUTH.root)}>
+                    Login
+                  </Button>
                 )}
               </Group>
             </Group>
 
-            <Burger opened={opened} onClick={toggle} className={classes.burger} size="sm" />
+            <Burger
+              opened={opened}
+              onClick={toggle}
+              className={classes.burger}
+              size="sm"
+            />
           </div>
         </Container>
       </Header>
