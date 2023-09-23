@@ -47,3 +47,16 @@ class ListingImage(AbstractClient):
 
     def __str__(self):
         return self.listing.title
+    
+
+class ListingViews(AbstractClient):
+    listing_name = models.SlugField(max_length = 500, default = "",unique = True)
+    views = models.IntegerField(default = 0)
+
+    def __str__(self):\
+        return self.listing_name
+    
+    def update_views(self, increment = 1):
+        obj = ListingViews.objects.get(listing_name = self.listing_name)
+        obj.update(views = obj.views + increment)
+        

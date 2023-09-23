@@ -15,3 +15,4 @@ class CategoryViewSet(ListModelMixin, GenericViewSet):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
     filter_backends = (filters_new.DjangoFilterBackend, )
+    pagination_class = None

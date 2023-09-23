@@ -88,7 +88,6 @@ const Navbar = ({ links, showSideNav }: HeaderSearchProps) => {
   const [opened, { toggle }] = useDisclosure(false);
   const { classes } = useStyles();
   const router = useRouter();
-  const profile = usersMeRetrieve();
   const user = useStore((state) => state.profile);
   const logout = useStore((state) => state.logout);
 
