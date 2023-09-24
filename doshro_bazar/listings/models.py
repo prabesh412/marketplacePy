@@ -1,6 +1,8 @@
 from django.db import models
 from doshro_bazar.utils.abstract_models import AbstractClient
 import uuid
+from django.utils.text import slugify
+
 # Create your models here.
 
 class Listings(AbstractClient):
@@ -15,9 +17,6 @@ class Listings(AbstractClient):
         REMOVED = "RD", ("Removed")
 
     title = models.CharField(max_length=255)
-    id = models.UUIDField(
-        primary_key=True, default=uuid.uuid4, editable=False, unique=True
-    )
     description = models.TextField(null=True, blank=True)
     price = models.DecimalField(max_digits=10, decimal_places=2)
     status = models.CharField(
@@ -34,15 +33,20 @@ class Listings(AbstractClient):
     )
     location = models.CharField(max_length=255, null=True, blank=True)
     phone_number = models.CharField(max_length=255, null=True, blank=True)
+    slug = models.SlugField(max_length=500, default = None, blank = True, unique=True, primary_key = True)
 
     def __str__(self):
         return self.title
     
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.title)
+        super(Listings, self).save(*args, **kwargs)
+
 
 class ListingImage(AbstractClient):
     image = models.ImageField(upload_to="listing_images")
     listing = models.ForeignKey(
-        "listings.Listings", on_delete=models.CASCADE, related_name="images"
+        Listings, on_delete=models.CASCADE, related_name="images"
     )
 
     def __str__(self):

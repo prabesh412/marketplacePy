@@ -9,23 +9,20 @@ class ListingImageSerializer(serializers.ModelSerializer):
 
 
 class ListingsSerializer(serializers.ModelSerializer):
-    images = ListingImageSerializer(many=True, read_only=True)
+    images = ListingImageSerializer( read_only=True, many=True)
     user = UserSerializer(read_only=True)
                     
     class Meta:
         model = Listings
         fields = "__all__"
-        read_only_fields = ["user", "id", "slug", "created_at", "updated_at"]
+        read_only_fields = ["slug", "created_at", "updated_at"]
 
 
 class ListingsInputSerializer(serializers.ModelSerializer):
     class Meta:
         model = Listings
         fields = "__all__"
-        read_only_fields = ["user", "id", "slug", "created_at", "updated_at"]
-       
+        read_only_fields = [ "user","slug", "created_at", "updated_at"]
 
-class ListingImageSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = ListingImage
-        fields = "__all__"
+ 
+
