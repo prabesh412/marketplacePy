@@ -1,21 +1,29 @@
 import {
+  Anchor,
   Button,
   Checkbox,
   createStyles,
+  Paper,
   PasswordInput,
   rem,
+  Text,
   TextInput,
   Title,
 } from '@mantine/core';
-
-import { useDjRestAuthLoginCreate } from '../../../orval/dj-rest-auth/dj-rest-auth';
-import { useRouter } from 'next/router';
 import { useForm } from '@mantine/form';
+import { useDjRestAuthLoginCreate } from '../../orval/dj-rest-auth/dj-rest-auth';
 import { useStore } from '@/zustand/store';
-import { PATH_APP } from '@/routes';
-import { notifications } from '@mantine/notifications';
+import { useRouter } from 'next/router';
+import { PATH_APP } from '../routes';
 
 const useStyles = createStyles((theme) => ({
+  wrapper: {
+    minHeight: '100vh',
+    backgroundSize: 'cover',
+    backgroundImage:
+      'url(https://images.unsplash.com/photo-1484242857719-4b9144542727?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1280&q=80)',
+  },
+
   form: {
     borderRight: `${rem(1)} solid ${
       theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.colors.gray[3]
@@ -28,10 +36,17 @@ const useStyles = createStyles((theme) => ({
       maxWidth: '100%',
     },
   },
+
+  title: {
+    color: theme.colorScheme === 'dark' ? theme.white : theme.black,
+    fontFamily: `Greycliff CF, ${theme.fontFamily}`,
+  },
 }));
-const Login = () => {
+
+export function AuthPage() {
   const { classes } = useStyles();
   const postLogin = useDjRestAuthLoginCreate();
+
   const setToken = useStore((state) => state.setAccessToken);
   const router = useRouter();
   const form = useForm({
@@ -49,55 +64,22 @@ const Login = () => {
       username: values.username,
       password: values.password,
     };
-    notifications.show({
-      id: 'login',
-      title: `Logging you up`,
-      message: `Please wait while we Log you in`,
-      loading: true,
-      autoClose: false,
-      withCloseButton: false,
-    });
     postLogin.mutate(
       { data },
       {
         onSuccess: (data) => {
           setToken(data.key);
           router.push(PATH_APP.root);
-          notifications.update({
-            id: 'login',
-            title: `Login Success`,
-            color: 'green',
-            message: 'Logged in successfully',
-            loading: false,
-            autoClose: true,
-
-            withCloseButton: true,
-          });
-        },
-        onError: (error: any) => {
-          notifications.update({
-            id: 'login',
-            title: `Login Failed`,
-            color: 'red',
-            message: `${
-              error['response']['data']['email'] ||
-              error['response']['data']['username'] ||
-              error['response']['data']['non_field_errors'] ||
-              error['response']['data']['password1']
-            }`,
-            loading: false,
-            autoClose: true,
-            withCloseButton: true,
-          });
         },
       },
     );
   };
+
   return (
-    <>
-      <div>
-        <Title order={2} ta="center" mt="md" mb={50}>
-          Login to DoshroBazar
+    <div className={classes.wrapper}>
+      <Paper className={classes.form} radius={0} p={30}>
+        <Title order={2} className={classes.title} ta="center" mt="md" mb={50}>
+          Welcome back to Mantine!
         </Title>
         <form onSubmit={form.onSubmit((values) => login(values))}>
           <TextInput
@@ -118,8 +100,17 @@ const Login = () => {
             Login
           </Button>
         </form>
-      </div>
-    </>
+        <Text ta="center" mt="md">
+          Don&apos;t have an account?{' '}
+          <Anchor<'a'>
+            href="#"
+            weight={700}
+            onClick={(event) => event.preventDefault()}
+          >
+            Register
+          </Anchor>
+        </Text>
+      </Paper>
+    </div>
   );
-};
-export default Login;
+}

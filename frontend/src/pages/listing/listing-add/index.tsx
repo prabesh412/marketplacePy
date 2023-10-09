@@ -1,18 +1,18 @@
 import { Container } from '@mantine/core';
 import { dehydrate, QueryClient } from '@tanstack/react-query';
-import { AuthPage } from '@/sections/auth/AuthPage';
 import { ReactElement } from 'react';
-import AuthLayout from '@/layouts/AuthLayout';
 import { getDefaultStore } from '@/utils/PageDefaults';
 import { NextPageContext } from 'next';
+import AddListingLayout from '@/layouts/AddListing';
+import AddListingPage from '@/components/pageSpecific/AddListingPage';
 
 export const getServerSideProps = async (ctx: NextPageContext) => {
   const queryClient = new QueryClient();
   const zustandStore = await getDefaultStore(ctx);
-  if (zustandStore.accessToken !== '') {
+  if (zustandStore.accessToken === '') {
     return {
       redirect: {
-        destination: '/',
+        destination: '/users/auth',
         permanent: false,
       },
     };
@@ -26,12 +26,14 @@ export const getServerSideProps = async (ctx: NextPageContext) => {
   };
 };
 
-Auth.getLayout = (page: ReactElement) => <AuthLayout>{page}</AuthLayout>;
+AddListing.getLayout = (page: ReactElement) => (
+  <AddListingLayout>{page}</AddListingLayout>
+);
 
-export default function Auth() {
+export default function AddListing() {
   return (
-    <Container fluid>
-      <AuthPage />
+    <Container mb={'xl'} mt={'xl'} fluid>
+      <AddListingPage />
     </Container>
   );
 }

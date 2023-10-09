@@ -5,11 +5,33 @@ import { getDefaultStore } from '@/utils/PageDefaults';
 import { ReactElement } from 'react';
 import { Page } from '@/ui';
 import HomeSection from '@/sections/Home';
-import HomeLayout from '@/layouts/homeLayout';
+import HomeLayout from '@/layouts/HomeLayout';
+import {
+  categoryList,
+  getCategoryListQueryKey,
+} from '../../orval/category/category';
+import AddListingFloatButton from '@/components/add-listing/AddListingFloatButton';
+import {
+  getListingsListQueryKey,
+  listingsList,
+} from '../../orval/listings/listings';
 
 export async function getServerSideProps(ctx: NextPageContext) {
   const queryClient = new QueryClient();
   const zustandStore = await getDefaultStore(ctx);
+
+  await queryClient.prefetchQuery(
+    getCategoryListQueryKey(),
+    () => categoryList(),
+    {},
+  );
+
+  await queryClient.prefetchQuery(
+    getListingsListQueryKey(),
+    () => listingsList(),
+    {},
+  );
+
   return {
     props: {
       dehydratedState: dehydrate(queryClient),
@@ -21,10 +43,9 @@ export async function getServerSideProps(ctx: NextPageContext) {
 HomePage.getLayout = (page: ReactElement) => <HomeLayout>{page}</HomeLayout>;
 
 export default function HomePage() {
-  const store = useStore((state) => state.accessToken);
-
   return (
     <Page title={'Home'}>
+      <AddListingFloatButton />
       <HomeSection />
     </Page>
   );

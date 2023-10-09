@@ -2,11 +2,11 @@ import { ReactNode } from 'react';
 import Navbar from '@/components/common/Navbar';
 import ResponsiveMargin from '@/components/global/ResponsiveMargin';
 
-interface AppLayoutProps {
+interface AddListingProps {
   children: ReactNode;
 }
 
-const HomeLayout: React.FC<AppLayoutProps> = ({ children }) => {
+const AddListingLayout: React.FC<AddListingProps> = ({ children }) => {
   return (
     <>
       <Navbar />
@@ -15,4 +15,4 @@ const HomeLayout: React.FC<AppLayoutProps> = ({ children }) => {
   );
 };
 
-export default HomeLayout;
+export default AddListingLayout;
