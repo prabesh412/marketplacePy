@@ -9,6 +9,7 @@ from doshro_bazar.listings.serializers import ListingsSerializer, ListingsInputS
 from doshro_bazar.listings.filters import ListingsFilter
 from django.shortcuts import get_object_or_404
 from django.core.cache import cache
+from rest_framework.parsers import MultiPartParser, FormParser
 
 
 @extend_schema_view(
@@ -54,13 +55,18 @@ class ListingImageViewSet(CreateModelMixin, GenericViewSet):
     queryset = ListingImage.objects.all()
     serializer_class = ListingImageSerializer
     filter_backends = (filters_new.DjangoFilterBackend, )
+    parser_classes = (FormParser, MultiPartParser,)
 
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        listing = Listings.objects.get(id=request.data["listing"])
-        if listing.user != request.user:
-            return Response({"message": "You are not authorized to add image to this listing."}, status=status.HTTP_401_UNAUTHORIZED)
-        serializer.save()
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
+        listing = Listings.objects.get(slug=request.data["listing"])
+        
+        listing_images = request.data.getlist("image")
+        listing_images_bulk_create_list = []
+        for image in listing_images:
+            listing_images_bulk_create_list.append(ListingImage(listing=listing, image=image))
 
+        ListingImage.objects.bulk_create(listing_images_bulk_create_list)
+            
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
