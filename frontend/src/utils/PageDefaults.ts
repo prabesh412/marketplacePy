@@ -1,10 +1,12 @@
 import nookies from 'nookies';
 import { initializeStore } from '@/zustand/store';
-import { NextPageContext } from 'next';
+import { NextPageContext, GetServerSidePropsContext } from 'next';
 import { usersMeRetrieve } from '../../orval/users/users';
 import { AXIOS_INSTANCE } from '../../orval/api/custom-instance';
 
-export const getDefaultStore = async (ctx: NextPageContext) => {
+export const getDefaultStore = async (
+  ctx: NextPageContext | GetServerSidePropsContext,
+) => {
   const accessToken = nookies.get(ctx)?.accessToken;
   let zustandStore = initializeStore();
   let profile;
@@ -20,6 +22,7 @@ export const getDefaultStore = async (ctx: NextPageContext) => {
 
     zustandStore = initializeStore({
       profile: profile,
+      accessToken,
     });
   }
 

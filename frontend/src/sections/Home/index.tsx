@@ -1,5 +1,13 @@
+import HomepageSearchArea from '@/components/common/HomepageSearchArea';
+import FeaturedHomepaeSection from '@/components/common/FeaturedHomepaeSection';
+
 const HomeSection = () => {
-  return <>This is the home section</>;
+  return (
+    <>
+      <HomepageSearchArea />
+      <FeaturedHomepaeSection />
+    </>
+  );
 };
 
 export default HomeSection;

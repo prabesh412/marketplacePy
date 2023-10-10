@@ -1,4 +1,11 @@
-import { Code, createStyles, Group, Navbar, rem, ScrollArea } from '@mantine/core';
+import {
+  Code,
+  createStyles,
+  Group,
+  Navbar,
+  rem,
+  ScrollArea,
+} from '@mantine/core';
 import {
   IconAdjustments,
   IconCalendarStats,
@@ -48,7 +55,8 @@ const mockdata = [
 
 const useStyles = createStyles((theme) => ({
   navbar: {
-    backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.white,
+    backgroundColor:
+      theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.white,
     paddingBottom: 0,
     height: '100vh',
   },
@@ -77,17 +85,19 @@ const useStyles = createStyles((theme) => ({
 
 export function SideNav() {
   const { classes } = useStyles();
-  const links = mockdata.map((item) => <LinksGroup {...item} key={item.label} />);
+  const links = mockdata.map((item) => (
+    <LinksGroup {...item} key={item.label} />
+  ));
 
   // TODO : use navbar configs from the config folder
 
   return (
-    <Navbar sx={{ height: '100vh' }} width={{ sm: 300 }} p="md" className={classes.navbar}>
-      <Navbar.Section className={classes.header}>
-        <Group position="apart">
-          <Code sx={{ fontWeight: 700 }}>v3.1.2</Code>
-        </Group>
-      </Navbar.Section>
+    <Navbar
+      sx={{ height: '100vh' }}
+      width={{ sm: 300 }}
+      p="md"
+      className={classes.navbar}
+    >
       <Navbar.Section grow className={classes.links} component={ScrollArea}>
         <div className={classes.linksInner}>{links}</div>
       </Navbar.Section>

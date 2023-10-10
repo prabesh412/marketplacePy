@@ -1,23 +1,37 @@
 import { Container } from '@mantine/core';
 import { dehydrate, QueryClient } from '@tanstack/react-query';
 import { AuthPage } from '@/sections/auth/AuthPage';
+import { ReactElement } from 'react';
+import AuthLayout from '@/layouts/AuthLayout';
+import { getDefaultStore } from '@/utils/PageDefaults';
+import { NextPageContext } from 'next';
 
-export const getServerSideProps = async () => {
+export const getServerSideProps = async (ctx: NextPageContext) => {
   const queryClient = new QueryClient();
+  const zustandStore = await getDefaultStore(ctx);
+  if (zustandStore.accessToken !== '') {
+    return {
+      redirect: {
+        destination: '/',
+        permanent: false,
+      },
+    };
+  }
 
   return {
     props: {
       dehydratedState: dehydrate(queryClient),
+      initialZustandState: JSON.parse(JSON.stringify(zustandStore)),
     },
   };
 };
 
-const Login = () => {
+Auth.getLayout = (page: ReactElement) => <AuthLayout>{page}</AuthLayout>;
+
+export default function Auth() {
   return (
     <Container fluid>
       <AuthPage />
     </Container>
   );
-};
-
-export default Login;
+}

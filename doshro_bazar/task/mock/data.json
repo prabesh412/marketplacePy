@@ -1,0 +1,1726 @@
+{
+  "data": [
+    {
+      "id": "D4225D8B-1FAF-453C-AEC3-66CA1C1E2602",
+      "image": "https://cdn02.hamrobazaar.com/Assets/Category/apparels.png",
+      "name": "Apparels & Accessories",
+      "displayOrder": 1,
+      "categories": [
+        {
+          "id": "05894FC1-EF2E-4788-8E20-9FD9F651B616",
+          "image": "",
+          "name": "Baby & Children's Accessories ",
+          "displayOrder": 101,
+          "count": 603
+        },
+        {
+          "id": "FB499149-B61E-4FFB-B33B-90A619E0E2BA",
+          "image": null,
+          "name": "Baby & Children's Clothing",
+          "displayOrder": 102,
+          "count": 240
+        },
+        {
+          "id": "4A7FAF5A-AF38-4CDB-91CD-D6F5F2842C28",
+          "image": "",
+          "name": "Bags & Luggage",
+          "displayOrder": 103,
+          "count": 943
+        },
+        {
+          "id": "413FC53B-323F-41C9-86E9-85208FB3A667",
+          "image": "",
+          "name": "Jewellery",
+          "displayOrder": 104,
+          "count": 1357
+        },
+        {
+          "id": "A94B940D-CD64-4669-BF7C-24FDC6B940AF",
+          "image": "",
+          "name": "Men's Accessories",
+          "displayOrder": 105,
+          "count": 69
+        },
+        {
+          "id": "F95E7990-8A82-4BC9-A85F-650F81C30FC7",
+          "image": "",
+          "name": "Men's Clothing",
+          "displayOrder": 106,
+          "count": 771
+        },
+        {
+          "id": "0429E5C9-7742-46A5-A377-8C9D1F784549",
+          "image": "",
+          "name": "Men's Shoes",
+          "displayOrder": 107,
+          "count": 995
+        },
+        {
+          "id": "CEE0C4AC-676F-4D66-AE80-D4BA63B835B9",
+          "image": "",
+          "name": "Others",
+          "displayOrder": 108,
+          "count": 430
+        },
+        {
+          "id": "32808C4A-C5EC-467E-B04D-C9DA0991819D",
+          "image": "",
+          "name": "Sunglasses",
+          "displayOrder": 109,
+          "count": 352
+        },
+        {
+          "id": "CDBCC741-D24B-4939-8CF6-9573F0F8C87C",
+          "image": "",
+          "name": "Thrift Store",
+          "displayOrder": 110,
+          "count": 185
+        },
+        {
+          "id": "CA880934-ECC1-44CA-BEE9-DD1D5ED59C9A",
+          "image": "",
+          "name": "Watches",
+          "displayOrder": 111,
+          "count": 1450
+        },
+        {
+          "id": "1FD6F6B6-9D30-42D0-B0F0-AAE719115A97",
+          "image": "",
+          "name": "Women's Accessories",
+          "displayOrder": 112,
+          "count": 62
+        },
+        {
+          "id": "94826404-5E30-4432-9D4B-A6A9487D5C8B",
+          "image": "",
+          "name": "Women's Clothing",
+          "displayOrder": 113,
+          "count": 1042
+        },
+        {
+          "id": "8C762ADE-7962-4D0D-89F5-30B17515BAE6",
+          "image": "",
+          "name": "Women's Shoes",
+          "displayOrder": 114,
+          "count": 128
+        }
+      ],
+      "count": 8627
+    },
+    {
+      "id": "EB9C8147-07C0-4951-A962-381CDB400E37",
+      "image": "https://cdn02.hamrobazaar.com/Assets/Category/automobiles.png",
+      "name": "Automobiles",
+      "displayOrder": 2,
+      "categories": [
+        {
+          "id": "F93D355F-CC20-4FFE-9CB7-6C7CDFF1DC50",
+          "image": null,
+          "name": "Cars",
+          "displayOrder": 201,
+          "count": 3315
+        },
+        {
+          "id": "59973AED-F03D-4985-9AEC-542831929081",
+          "image": null,
+          "name": "Motorcycles",
+          "displayOrder": 202,
+          "count": 3721
+        },
+        {
+          "id": "0FDC6B65-DD1D-4D2F-B32F-4D4EA2B7C4AB",
+          "image": "",
+          "name": "Parts & Accessories",
+          "displayOrder": 203,
+          "count": 4825
+        },
+        {
+          "id": "C7B30B2B-6C4A-44BF-86DC-AAA92996A3B9",
+          "image": null,
+          "name": "Showroom - Cars",
+          "displayOrder": 204,
+          "count": 437
+        },
+        {
+          "id": "A38264B5-BD83-4AD5-8161-B529A962E398",
+          "image": null,
+          "name": "Showroom - Motorcycles",
+          "displayOrder": 205,
+          "count": 234
+        }
+      ],
+      "count": 12532
+    },
+    {
+      "id": "CDDDA9D7-331D-4E0E-8BDC-6A51B083CBA2",
+      "image": "https://cdn02.hamrobazaar.com/Assets/Category/beauty%20and%20health.png",
+      "name": "Beauty & Health",
+      "displayOrder": 3,
+      "categories": [
+        {
+          "id": "E99037E7-F4FE-4B2F-9CA8-96A176F2E008",
+          "image": "",
+          "name": "Bath Toiletries",
+          "displayOrder": 2133,
+          "count": 289
+        },
+        {
+          "id": "B2A57366-98FE-4E23-B379-7BA274CDC390",
+          "image": "",
+          "name": "Body Care",
+          "displayOrder": 2134,
+          "count": 1798
+        },
+        {
+          "id": "91A69BA9-4467-4857-9837-3A28CA10DB81",
+          "image": "",
+          "name": "Cosmetics & Skin Care",
+          "displayOrder": 2135,
+          "count": 1221
+        },
+        {
+          "id": "F3C2EBB2-D684-4192-8137-759B85E689A1",
+          "image": "",
+          "name": "Electronic Cigarettes & Vapes",
+          "displayOrder": 2136,
+          "count": 3948
+        },
+        {
+          "id": "6EC866EE-6BD7-4B63-92EC-83F2A4085122",
+          "image": "",
+          "name": "Eye Care",
+          "displayOrder": 2137,
+          "count": 53
+        },
+        {
+          "id": "55010CAC-6AE6-4375-AFE7-1C1B503644D3",
+          "image": "",
+          "name": "Face Care",
+          "displayOrder": 2138,
+          "count": 241
+        },
+        {
+          "id": "FBA6A1E3-C240-4AE9-8D0F-5B93723C62AA",
+          "image": "",
+          "name": "Medical & Health Devices",
+          "displayOrder": 2139,
+          "count": 664
+        },
+        {
+          "id": "D04755E7-D220-4212-AA4D-DA1C3302921C",
+          "image": "",
+          "name": "Men's Grooming Tools",
+          "displayOrder": 2140,
+          "count": 588
+        },
+        {
+          "id": "01F142CE-8E91-4AEE-96F8-F5C3C3108DAD",
+          "image": "",
+          "name": "Others",
+          "displayOrder": 2141,
+          "count": 350
+        },
+        {
+          "id": "0C1A2E8E-C5CC-4770-B78A-AD8F14405D25",
+          "image": "",
+          "name": "Perfumes & Fragrances",
+          "displayOrder": 2142,
+          "count": 297
+        },
+        {
+          "id": "2F431F72-0D5A-4E15-9AA5-5D650047E1F4",
+          "image": "",
+          "name": "Tattoo Equipment",
+          "displayOrder": 2143,
+          "count": 161
+        },
+        {
+          "id": "21542052-F2F8-4E32-BEE7-74731ED76270",
+          "image": "",
+          "name": "Women's Grooming Tools",
+          "displayOrder": 2144,
+          "count": 634
+        }
+      ],
+      "count": 10244
+    },
+    {
+      "id": "21CCF9DF-83A0-46AE-A089-6F61B1A89037",
+      "image": "https://cdn02.hamrobazaar.com/Assets/Category/books.png",
+      "name": "Books & Learning",
+      "displayOrder": 4,
+      "categories": [
+        {
+          "id": "4D02B1E2-363C-4026-8CCF-CC7E16167C53",
+          "image": "",
+          "name": "Book - Children & School",
+          "displayOrder": 2145,
+          "count": 58
+        },
+        {
+          "id": "4B58302C-EDF0-4DC6-BCA7-1E922221553B",
+          "image": "",
+          "name": "Book - Educational Textbook",
+          "displayOrder": 2146,
+          "count": 655
+        },
+        {
+          "id": "96D93A6D-C357-4CE6-B368-9B72953092DF",
+          "image": "",
+          "name": "Book - Fiction",
+          "displayOrder": 2147,
+          "count": 136
+        },
+        {
+          "id": "94130BC3-0DD6-4319-B6ED-3053E3945693",
+          "image": "",
+          "name": "Book - Non Fiction & Biography",
+          "displayOrder": 2148,
+          "count": 71
+        },
+        {
+          "id": "4D092CBF-D485-4A75-9041-B835A82E415E",
+          "image": "",
+          "name": "Book - Other",
+          "displayOrder": 2149,
+          "count": 322
+        },
+        {
+          "id": "96BA8345-531F-4D2F-BB12-7120B926ED22",
+          "image": "",
+          "name": "Book - Technology",
+          "displayOrder": 2150,
+          "count": 85
+        },
+        {
+          "id": "795B51BB-A8C5-4E95-962A-0A73FDC26DD2",
+          "image": "",
+          "name": "Interactive & Video Learning",
+          "displayOrder": 2151,
+          "count": 49
+        },
+        {
+          "id": "36CEA7C9-2F33-411D-81A9-C35D3215AB4E",
+          "image": "",
+          "name": "Magazines & Comics",
+          "displayOrder": 2152,
+          "count": 15
+        },
+        {
+          "id": "C6EEC94D-B3CF-4BCF-93EC-39AF6A2E4826",
+          "image": "",
+          "name": "Stationery Items",
+          "displayOrder": 2153,
+          "count": 337
+        }
+      ],
+      "count": 1728
+    },
+    {
+      "id": "4D9D69A1-52D7-41A8-BC17-FFC3777300A2",
+      "image": "https://cdn02.hamrobazaar.com/Assets/Category/business%20and%20industrial.png",
+      "name": "Business & Industrial",
+      "displayOrder": 5,
+      "categories": [
+        {
+          "id": "F7716525-11D4-4D89-9456-778DB6838533",
+          "image": "",
+          "name": "Business Offers",
+          "displayOrder": 2154,
+          "count": 122
+        },
+        {
+          "id": "DE411DA3-0968-49BA-8BA5-3DEE8C393042",
+          "image": "",
+          "name": "Business Services",
+          "displayOrder": 2155,
+          "count": 36
+        },
+        {
+          "id": "6576AA15-6946-4A4D-A2B7-788A1A23A49C",
+          "image": "",
+          "name": "Dealership - Franchise",
+          "displayOrder": 2156,
+          "count": 11
+        },
+        {
+          "id": "AAC68E3A-4222-4494-B6EE-41F4EA11C73E",
+          "image": "",
+          "name": "Equipment For Business",
+          "displayOrder": 2157,
+          "count": 832
+        },
+        {
+          "id": "AE8B3D15-9E42-44F2-91F6-EA26556C3243",
+          "image": "",
+          "name": "Generators & Power Equipment",
+          "displayOrder": 2158,
+          "count": 270
+        },
+        {
+          "id": "0871F761-3960-40B8-9DF6-661256271C13",
+          "image": "",
+          "name": "Machinery",
+          "displayOrder": 2159,
+          "count": 972
+        },
+        {
+          "id": "97137982-B990-43B7-8C9A-F14EE4AB048F",
+          "image": "",
+          "name": "Office Electronics",
+          "displayOrder": 2160,
+          "count": 445
+        },
+        {
+          "id": "F43934BA-E0AE-4AD3-9334-D26C9F69398D",
+          "image": "",
+          "name": "Office Furniture & Fixtures",
+          "displayOrder": 2161,
+          "count": 506
+        },
+        {
+          "id": "6EEF5861-81AE-4F65-93CD-9BA74E6F9D83",
+          "image": "",
+          "name": "Others",
+          "displayOrder": 2162,
+          "count": 367
+        },
+        {
+          "id": "1A022C54-1A3C-4F51-9FD0-5E56A35898C9",
+          "image": "",
+          "name": "Raw Materials",
+          "displayOrder": 2163,
+          "count": 211
+        },
+        {
+          "id": "8B2CE588-1E2F-4070-BE8D-08F3DCE2297B",
+          "image": "",
+          "name": "Security & CCTV",
+          "displayOrder": 2164,
+          "count": 2416
+        },
+        {
+          "id": "C89B9229-932A-4AB4-9728-A4FD09FC442E",
+          "image": "",
+          "name": "Supplies For Business",
+          "displayOrder": 2165,
+          "count": 37
+        },
+        {
+          "id": "70A2000B-E0A5-4325-83AE-AC2273877D01",
+          "image": "",
+          "name": "Tools & Small Machines",
+          "displayOrder": 2166,
+          "count": 1853
+        },
+        {
+          "id": "7F8A9401-4170-499E-A967-E79E0F6662A4",
+          "image": "",
+          "name": "Wholesale B2B",
+          "displayOrder": 2167,
+          "count": 132
+        }
+      ],
+      "count": 8210
+    },
+    {
+      "id": "4CCE4A7C-431B-474D-8B58-4FD2DDC191CF",
+      "image": "https://cdn02.hamrobazaar.com/Assets/Category/computer%20and%20peripherals.png",
+      "name": "Computers & Peripherals",
+      "displayOrder": 6,
+      "categories": [
+        {
+          "id": "F277EC93-6C1E-4012-BE54-5D0DC6426B0E",
+          "image": null,
+          "name": "Desktop Accessories",
+          "displayOrder": 2168,
+          "count": 5771
+        },
+        {
+          "id": "8CAC2A8E-7C6F-483D-AEF4-EA16BBF70518",
+          "image": null,
+          "name": "Desktop Components",
+          "displayOrder": 2169,
+          "count": 3287
+        },
+        {
+          "id": "8A6485D9-3B6E-4107-ACE1-BD8F6C07F5FA",
+          "image": null,
+          "name": "Desktop PCs",
+          "displayOrder": 2170,
+          "count": 2296
+        },
+        {
+          "id": "E6E85564-B510-4E08-B20A-AFF37A5A4F6B",
+          "image": null,
+          "name": "Games",
+          "displayOrder": 2171,
+          "count": 246
+        },
+        {
+          "id": "4AEBDDC0-A072-4C01-B67B-6E4DD895B3E7",
+          "image": null,
+          "name": "Graphic & Video Cards",
+          "displayOrder": 2172,
+          "count": 955
+        },
+        {
+          "id": "0AE2F048-FB3C-4314-BF3A-8F4F8255E9D0",
+          "image": "",
+          "name": "Laptop Accessories",
+          "displayOrder": 2173,
+          "count": 5833
+        },
+        {
+          "id": "9CA56080-5357-49BF-8F12-E1A5A33B72B4",
+          "image": null,
+          "name": "Laptops",
+          "displayOrder": 2174,
+          "count": 5002
+        },
+        {
+          "id": "CEFA9E6E-50FE-4FAF-BFD7-305D4CE5092F",
+          "image": null,
+          "name": "Monitors",
+          "displayOrder": 2175,
+          "count": 1537
+        },
+        {
+          "id": "DF8CB6EB-823E-4F5F-83A4-653C71D8094A",
+          "image": "",
+          "name": "Networking Equipment",
+          "displayOrder": 2176,
+          "count": 2940
+        },
+        {
+          "id": "0FCBD6EB-7350-4B4A-B46A-9C0C8B4AB32A",
+          "image": "",
+          "name": "Others",
+          "displayOrder": 2177,
+          "count": 264
+        },
+        {
+          "id": "64FB8929-E2C0-4412-8091-38D7C0D290EC",
+          "image": null,
+          "name": "Printers & Scanners",
+          "displayOrder": 2178,
+          "count": 2392
+        },
+        {
+          "id": "903C0FDE-C522-48B2-8B0C-9256D655BD88",
+          "image": "",
+          "name": "Software",
+          "displayOrder": 2179,
+          "count": 1207
+        },
+        {
+          "id": "63C6EA2B-BA3D-4959-B6FF-3027B68BF2C8",
+          "image": null,
+          "name": "Storage & Optical Drives",
+          "displayOrder": 2180,
+          "count": 4382
+        },
+        {
+          "id": "6B39D0AE-EF59-458E-BB46-45A8015BE53F",
+          "image": "",
+          "name": "Tablet Accessories",
+          "displayOrder": 2181,
+          "count": 655
+        },
+        {
+          "id": "48FFEBEA-6291-4835-9203-0E42CD3B6B30",
+          "image": null,
+          "name": "Tablet PCs & iPads",
+          "displayOrder": 2182,
+          "count": 783
+        },
+        {
+          "id": "125A346E-A3A4-4509-AA62-69025E38FD48",
+          "image": "",
+          "name": "TV Cards",
+          "displayOrder": 2183,
+          "count": 9
+        }
+      ],
+      "count": 37559
+    },
+    {
+      "id": "321B7A06-08FA-430B-8AD7-24CB2B9E82AD",
+      "image": "https://cdn02.hamrobazaar.com/Assets/Category/electronics.png",
+      "name": "Electronics, TVs, & More",
+      "displayOrder": 7,
+      "categories": [
+        {
+          "id": "B807E14F-3F1E-45F9-852E-AB1876223917",
+          "image": "",
+          "name": "Camera Reel Based (Not Digital) ",
+          "displayOrder": 2184,
+          "count": 70
+        },
+        {
+          "id": "63AE4C69-7C7A-4316-8096-505130D6BF00",
+          "image": "",
+          "name": "Digital Camcorders",
+          "displayOrder": 2185,
+          "count": 51
+        },
+        {
+          "id": "ED7D2349-7694-4D35-A996-DE20936CC73C",
+          "image": "",
+          "name": "Digital Camera Accessories and Parts",
+          "displayOrder": 2186,
+          "count": 3396
+        },
+        {
+          "id": "D0A4F1D8-2932-4BB6-9B50-D0666239B8B0",
+          "image": "",
+          "name": "Digital Cameras",
+          "displayOrder": 2187,
+          "count": 1481
+        },
+        {
+          "id": "7BD20DB3-36A3-49F2-B16E-268683B0E9C4",
+          "image": "",
+          "name": "DIY & Hobby Electronics",
+          "displayOrder": 2188,
+          "count": 181
+        },
+        {
+          "id": "8823343C-3818-4572-A011-3FA104C4093A",
+          "image": "",
+          "name": "Drones & Quadcopters",
+          "displayOrder": 2189,
+          "count": 470
+        },
+        {
+          "id": "A83CFF3C-F8A2-4E5B-8724-CBE982CF9528",
+          "image": "",
+          "name": "Headphone & Earphone - Wired",
+          "displayOrder": 2190,
+          "count": 1741
+        },
+        {
+          "id": "40BDB0E2-211F-4DB1-A0CE-23AB1B963EE9",
+          "image": "",
+          "name": "Headphones & Earphones - Wireless",
+          "displayOrder": 2191,
+          "count": 3568
+        },
+        {
+          "id": "CCCA88B4-1FCF-4B5B-98C5-F606B0A9E336",
+          "image": "",
+          "name": "Home Theatres & Audio Systems",
+          "displayOrder": 2192,
+          "count": 722
+        },
+        {
+          "id": "C899D2FB-057C-4034-967A-DB3553D58872",
+          "image": "",
+          "name": "iPod & Media Players",
+          "displayOrder": 2193,
+          "count": 34
+        },
+        {
+          "id": "FE707AC9-7461-45F5-8975-D7A2EC44460F",
+          "image": "",
+          "name": "Others",
+          "displayOrder": 2194,
+          "count": 1217
+        },
+        {
+          "id": "28B8BF11-A457-4F96-92DB-D6798A68EF94",
+          "image": "",
+          "name": "Portable Bluetooth Speakers",
+          "displayOrder": 2195,
+          "count": 1509
+        },
+        {
+          "id": "F768EBA9-878F-4528-84FD-6E4FDCDC3B91",
+          "image": "",
+          "name": "Projectors",
+          "displayOrder": 2196,
+          "count": 881
+        },
+        {
+          "id": "41295CE9-21B2-4ECB-97EE-E0916BEE539C",
+          "image": "",
+          "name": "Set-Top Boxes",
+          "displayOrder": 2197,
+          "count": 48
+        },
+        {
+          "id": "4AEB716F-DAD3-4F36-9C85-356BF7B8894D",
+          "image": "",
+          "name": "Smart Boxes & Cast",
+          "displayOrder": 2198,
+          "count": 175
+        },
+        {
+          "id": "AD54D560-F09B-4E0D-98A0-C917DA879B9D",
+          "image": "",
+          "name": "Soundbars & Big Speakers",
+          "displayOrder": 2199,
+          "count": 643
+        },
+        {
+          "id": "3E8813FB-3F0F-4034-B932-B2E793A09DE5",
+          "image": null,
+          "name": "Television Accessories",
+          "displayOrder": 2200,
+          "count": 335
+        },
+        {
+          "id": "17AF79EA-106B-4C8C-B8EF-4D2FE7D9DE9C",
+          "image": "",
+          "name": "Televisions",
+          "displayOrder": 2201,
+          "count": 1307
+        },
+        {
+          "id": "BA3B6459-D3E2-4669-8A90-F9404F0D6B67",
+          "image": "",
+          "name": "Video Players",
+          "displayOrder": 2202,
+          "count": 92
+        }
+      ],
+      "count": 17921
+    },
+    {
+      "id": "2BD7C928-9F27-4068-8B44-38530D9B1C49",
+      "image": "https://cdn02.hamrobazaar.com/Assets/Category/events%20and%20happenings.png",
+      "name": "Events & Happenings",
+      "displayOrder": 8,
+      "categories": [
+        {
+          "id": "DBACB978-EF53-4EB0-9F17-B70AA59D642A",
+          "image": "",
+          "name": "Dance & Music Concerts",
+          "displayOrder": 2203,
+          "count": 8
+        },
+        {
+          "id": "C1AB0A64-8C11-4827-89C9-9A49C47D9BC5",
+          "image": "",
+          "name": "Exhibitions & Trade Fairs",
+          "displayOrder": 2204,
+          "count": 2
+        },
+        {
+          "id": "196F5BB4-2242-4B8C-9178-D99D64183686",
+          "image": "",
+          "name": "Festivals",
+          "displayOrder": 2205,
+          "count": 110
+        },
+        {
+          "id": "0288C296-9378-45B1-B44E-CE6A41CB68AF",
+          "image": "",
+          "name": "Theatre, Plays & Movies",
+          "displayOrder": 2206,
+          "count": 152
+        }
+      ],
+      "count": 272
+    },
+    {
+      "id": "2DFCB35E-3A8D-416F-BBFB-8E63878AB45D",
+      "image": "https://cdn02.hamrobazaar.com/Assets/Category/Vegetable%20&%20Fruits.png",
+      "name": "Fresh Veggies & Meat",
+      "displayOrder": 9,
+      "categories": [
+        {
+          "id": "6692707C-B52E-44A2-BE1A-D73677C6C777",
+          "image": "",
+          "name": "Fruits",
+          "displayOrder": 2208,
+          "count": 4
+        },
+        {
+          "id": "6DBBC2AA-25BC-4F82-8CD6-95A059687B80",
+          "image": "",
+          "name": "Meat, Eggs & Frozen Products",
+          "displayOrder": 2209,
+          "count": 61
+        },
+        {
+          "id": "E2438D46-3F6C-4213-9454-8BF1EB234D86",
+          "image": "",
+          "name": "Organic Vegetables",
+          "displayOrder": 2211,
+          "count": 20
+        },
+        {
+          "id": "BB18DED4-E134-4A96-8CF9-6373156CDCCD",
+          "image": "",
+          "name": "Others",
+          "displayOrder": 2212,
+          "count": 283
+        },
+        {
+          "id": "F9683989-9524-44B1-AA2E-55C3FE1E3E3C",
+          "image": "",
+          "name": "Rice, Flour & Daal",
+          "displayOrder": 2213,
+          "count": 33
+        }
+      ],
+      "count": 401
+    },
+    {
+      "id": "A4958323-13A3-43EE-8C2E-5684B9AB4FA6",
+      "image": "https://cdn02.hamrobazaar.com/Assets/Category/Home%20Furnishing.png",
+      "name": "Furnishings & Appliances",
+      "displayOrder": 10,
+      "categories": [
+        {
+          "id": "B03E7714-A803-4198-8F0C-DB953EE31C65",
+          "image": "",
+          "name": "Antique & Collectables",
+          "displayOrder": 2214,
+          "count": 249
+        },
+        {
+          "id": "6DCA35B8-926C-427F-8115-2790FA5727F4",
+          "image": "",
+          "name": "Art & Handicraft",
+          "displayOrder": 2215,
+          "count": 621
+        },
+        {
+          "id": "EB6F2A91-FE9B-4A2F-916B-19B50A7A34B3",
+          "image": "",
+          "name": "Bath Sanitary & Fittings",
+          "displayOrder": 2216,
+          "count": 480
+        },
+        {
+          "id": "33EE78E5-1FE2-4C90-809F-AD8B302301AE",
+          "image": "",
+          "name": "Construction Materials",
+          "displayOrder": 2217,
+          "count": 281
+        },
+        {
+          "id": "DD71A233-E736-45C0-8A0C-E306C02728A0",
+          "image": "",
+          "name": "Food & Drinks",
+          "displayOrder": 2218,
+          "count": 212
+        },
+        {
+          "id": "7EA4E35A-BC3E-41AE-B33E-1C18D07114C0",
+          "image": "",
+          "name": "Garden & Outdoor",
+          "displayOrder": 2219,
+          "count": 447
+        },
+        {
+          "id": "FB47882F-27E3-4B9A-A720-080F893FB2FB",
+          "image": null,
+          "name": "Home Appliances",
+          "displayOrder": 2220,
+          "count": 2400
+        },
+        {
+          "id": "327F1607-7EBD-474B-A2F2-C189AC7A01A8",
+          "image": "",
+          "name": "Home Decor & Interiors",
+          "displayOrder": 2221,
+          "count": 3876
+        },
+        {
+          "id": "AEED9E33-3638-4053-A30C-FD7C80834A7E",
+          "image": null,
+          "name": "Home Furniture",
+          "displayOrder": 2222,
+          "count": 7474
+        },
+        {
+          "id": "E4EB9F1A-B4D0-4888-BBB2-568EFC097ABF",
+          "image": "",
+          "name": "Inverters & Generators (upto 2kva)",
+          "displayOrder": 2223,
+          "count": 288
+        },
+        {
+          "id": "A57D2253-BA3C-4676-8E48-B86D47D39C47",
+          "image": null,
+          "name": "Kitchen Appliances",
+          "displayOrder": 2224,
+          "count": 4364
+        },
+        {
+          "id": "13DC3FF3-8962-42F5-804B-9D2465E54313",
+          "image": "",
+          "name": "Kitchenwares & Utensils",
+          "displayOrder": 2225,
+          "count": 1980
+        },
+        {
+          "id": "0821C515-739C-4C9A-96BC-8D860463C0B2",
+          "image": "",
+          "name": "Lighting, Solar & Electricals",
+          "displayOrder": 2226,
+          "count": 893
+        },
+        {
+          "id": "5ACB50D8-8C9D-45B7-BB1E-4A7114E29518",
+          "image": "",
+          "name": "Linens & Mattresses",
+          "displayOrder": 2227,
+          "count": 314
+        },
+        {
+          "id": "20F8B242-A505-43B0-A97F-68BFAB883D99",
+          "image": "",
+          "name": "Others",
+          "displayOrder": 2228,
+          "count": 909
+        },
+        {
+          "id": "B1D7FFF2-363F-4172-818E-6BE8BC6256F5",
+          "image": "",
+          "name": "Tools For Home Improvement",
+          "displayOrder": 2229,
+          "count": 435
+        }
+      ],
+      "count": 25223
+    },
+    {
+      "id": "010F9ADD-2A94-468D-A937-02BB42F50FA2",
+      "image": "https://cdn02.hamrobazaar.com/Assets/Category/Jobs.png",
+      "name": "Jobs",
+      "displayOrder": 11,
+      "categories": [
+        {
+          "id": "7343C1FB-0D81-48D6-A112-3CD23C1E1BDA",
+          "image": "",
+          "name": "Delivery",
+          "displayOrder": 2230,
+          "count": 18
+        },
+        {
+          "id": "BACFBEF3-C85C-43F6-B019-034F6DCAA26F",
+          "image": "",
+          "name": "Digital",
+          "displayOrder": 2231,
+          "count": 29
+        },
+        {
+          "id": "5066B9A5-B181-4E18-91E1-823DF5DCEF9C",
+          "image": "",
+          "name": "Driver",
+          "displayOrder": 2232,
+          "count": 9
+        },
+        {
+          "id": "4972B706-509D-432E-9EB4-909E2ECE158B",
+          "image": "",
+          "name": "Education",
+          "displayOrder": 2233,
+          "count": 39
+        },
+        {
+          "id": "12D99CF6-D67F-49DD-B02F-E7ED8B0C6B0E",
+          "image": "",
+          "name": "Hospitality",
+          "displayOrder": 2234,
+          "count": 79
+        },
+        {
+          "id": "3E5DBA9C-EE70-485F-B506-0FD08233EF65",
+          "image": "",
+          "name": "I am looking for a job",
+          "displayOrder": 2235,
+          "count": 85
+        },
+        {
+          "id": "44DA9B56-C6F0-49B7-A9AF-6FA09A852AED",
+          "image": "",
+          "name": "Internship",
+          "displayOrder": 2236,
+          "count": 8
+        },
+        {
+          "id": "40D3D987-62A8-49A6-9EEA-7144C5AD34B2",
+          "image": "",
+          "name": "Marketing",
+          "displayOrder": 2237,
+          "count": 33
+        },
+        {
+          "id": "4AE1BE2A-A6DF-4A55-8701-8D9399355E28",
+          "image": "",
+          "name": "Office Administration",
+          "displayOrder": 2238,
+          "count": 94
+        },
+        {
+          "id": "EA52E218-38D6-4C6B-8856-4CD3B899404E",
+          "image": "",
+          "name": "Other Jobs",
+          "displayOrder": 2239,
+          "count": 111
+        },
+        {
+          "id": "0B5FF04C-0A3B-469D-9D37-1172E8F09325",
+          "image": "",
+          "name": "Part-Time Jobs",
+          "displayOrder": 2240,
+          "count": 14
+        },
+        {
+          "id": "5FA56149-98CE-4B22-A924-02565101631A",
+          "image": "",
+          "name": "Sales Assistant",
+          "displayOrder": 2241,
+          "count": 36
+        },
+        {
+          "id": "B95E9185-8166-48C8-8081-A48EAC075850",
+          "image": "",
+          "name": "Tech",
+          "displayOrder": 2242,
+          "count": 12
+        }
+      ],
+      "count": 567
+    },
+    {
+      "id": "0618E1EF-00AF-4EAC-8E07-4978A2C7BB5E",
+      "image": "https://cdn02.hamrobazaar.com/Assets/Category/mobile%20phone.png",
+      "name": "Mobile Phones & Accessories",
+      "displayOrder": 12,
+      "categories": [
+        {
+          "id": "A1EB3FC0-C34B-4298-9ECC-CD81F83C2E76",
+          "image": "",
+          "name": "Accessories",
+          "displayOrder": 2243,
+          "count": 16434
+        },
+        {
+          "id": "2A2C15D9-9A08-4E77-A292-F8AD803C2490",
+          "image": null,
+          "name": "Mobile Phone Handsets",
+          "displayOrder": 2244,
+          "count": 5384
+        }
+      ],
+      "count": 21818
+    },
+    {
+      "id": "4326E6AE-BBB1-4C91-984E-55FAB6A08864",
+      "image": "https://cdn02.hamrobazaar.com/Assets/Category/music.png",
+      "name": "Music Instruments",
+      "displayOrder": 13,
+      "categories": [
+        {
+          "id": "08B76311-5801-40EF-AC47-C28DE4E1FB7D",
+          "image": "",
+          "name": "Amps & Speakers",
+          "displayOrder": 2283,
+          "count": 870
+        },
+        {
+          "id": "B2D78A25-6FC0-4E4B-A0F1-57FDDFB449CE",
+          "image": "",
+          "name": "DJ Gear & Lighting",
+          "displayOrder": 2284,
+          "count": 52
+        },
+        {
+          "id": "FDEAB0B9-5171-4BD3-8EFE-67929623BBC5",
+          "image": "",
+          "name": "Instrument - Cajons",
+          "displayOrder": 2285,
+          "count": 60
+        },
+        {
+          "id": "8F4D0D83-2F45-4B0E-9B05-3C2686F13768",
+          "image": "",
+          "name": "Instrument - Drums",
+          "displayOrder": 2286,
+          "count": 214
+        },
+        {
+          "id": "7F0EC5AD-1F13-4BFD-83F1-8EDF7FD9CE4F",
+          "image": "",
+          "name": "Instrument - Guitars",
+          "displayOrder": 2287,
+          "count": 1656
+        },
+        {
+          "id": "85A78863-1E1E-4F38-8AC1-0DDABB1928F0",
+          "image": "",
+          "name": "Instrument - Keyboards & Pianos",
+          "displayOrder": 2288,
+          "count": 322
+        },
+        {
+          "id": "FE2DFD17-13E7-42FF-8796-1DF3491C2450",
+          "image": "",
+          "name": "Instrument - Others",
+          "displayOrder": 2289,
+          "count": 369
+        },
+        {
+          "id": "9E0BED73-EC90-40B6-AF90-3A3867C30CAF",
+          "image": "",
+          "name": "Microphones",
+          "displayOrder": 2290,
+          "count": 1214
+        },
+        {
+          "id": "6017A9E0-AFD2-49E3-A256-654792DD21B8",
+          "image": "",
+          "name": "Mixers & Studio Equipment",
+          "displayOrder": 2291,
+          "count": 606
+        },
+        {
+          "id": "1C5EA504-2CE2-47DB-9C64-C43C5EC9E1DF",
+          "image": "",
+          "name": "Other Music Accessories",
+          "displayOrder": 2292,
+          "count": 643
+        },
+        {
+          "id": "DABC576E-DAD9-45CA-A465-D0481BA2784C",
+          "image": "",
+          "name": "Pedals & Processors for Guitar",
+          "displayOrder": 2293,
+          "count": 726
+        }
+      ],
+      "count": 6732
+    },
+    {
+      "id": "ED8521A5-AF28-4B9F-A2A2-514C0471C8F8",
+      "image": "https://cdn02.hamrobazaar.com/Assets/Category/pets%20and%20pet%20care.png",
+      "name": "Pets & Pet Care",
+      "displayOrder": 14,
+      "categories": [
+        {
+          "id": "2731DE64-10AD-4FA1-AB35-7D1CFD882EF3",
+          "image": "",
+          "name": "Aquarium & Fish Accessories",
+          "displayOrder": 2294,
+          "count": 295
+        },
+        {
+          "id": "98F09759-4AD2-4F7A-A837-B43F6DF29B6A",
+          "image": "",
+          "name": "Kennel & Dog Accessories",
+          "displayOrder": 2295,
+          "count": 203
+        },
+        {
+          "id": "CEEAF1B5-0EDA-47B1-BA73-8CCA89C372C1",
+          "image": "",
+          "name": "Other Pet Accessories",
+          "displayOrder": 2296,
+          "count": 137
+        },
+        {
+          "id": "2A6348CF-7B3C-46EF-BC57-6EB86EEF3BF5",
+          "image": "",
+          "name": "Pet - Cats",
+          "displayOrder": 2297,
+          "count": 6
+        },
+        {
+          "id": "43DA4779-2F0F-4676-85AC-27EFA26AF604",
+          "image": "",
+          "name": "Pet - Dogs",
+          "displayOrder": 2298,
+          "count": 301
+        },
+        {
+          "id": "10618392-1142-410C-95A9-622A315A9B10",
+          "image": "",
+          "name": "Pet - Fish",
+          "displayOrder": 2299,
+          "count": 95
+        },
+        {
+          "id": "0AF60201-3ECA-4E28-ABB0-D221653D99F2",
+          "image": "",
+          "name": "Pet - Other Pets",
+          "displayOrder": 2300,
+          "count": 57
+        },
+        {
+          "id": "B81CEC42-8CF6-469D-8121-70C21360FBB8",
+          "image": "",
+          "name": "Pet Services",
+          "displayOrder": 2301,
+          "count": 30
+        }
+      ],
+      "count": 1124
+    },
+    {
+      "id": "64129939-8ED5-4B9F-A1F5-985EC42324A8",
+      "image": "https://cdn02.hamrobazaar.com/Assets/Category/donation.png",
+      "name": "Pets for Adoption & Free Stuff",
+      "displayOrder": 15,
+      "categories": [
+        {
+          "id": "C6756915-048E-4007-A39B-BA889371FC47",
+          "image": "",
+          "name": "Others",
+          "displayOrder": 2305,
+          "count": 5
+        },
+        {
+          "id": "0488865F-F105-45F1-B454-E4EC8D52C2EE",
+          "image": "",
+          "name": "Pet Adoption",
+          "displayOrder": 2306,
+          "count": 18
+        }
+      ],
+      "count": 23
+    },
+    {
+      "id": "06B8B8E6-4CDE-4D79-AE65-38B8BAA9FF17",
+      "image": "https://cdn02.hamrobazaar.com/Assets/Category/real%20estate.png",
+      "name": "Real Estate",
+      "displayOrder": 16,
+      "categories": [
+        {
+          "id": "237B5864-5C80-46A3-AC73-ACAFCF2E8E5C",
+          "image": null,
+          "name": "Business & Shop For Sale",
+          "displayOrder": 2307,
+          "count": 1022
+        },
+        {
+          "id": "890B268A-6DAC-4C35-9B80-946AFFF13441",
+          "image": "",
+          "name": "Flatmates & Paying Guests",
+          "displayOrder": 2308,
+          "count": 79
+        },
+        {
+          "id": "0E1281CE-7C55-4821-BE0A-62C566CCD577",
+          "image": null,
+          "name": "For Rent - Flat & Apartment",
+          "displayOrder": 2309,
+          "count": 4457
+        },
+        {
+          "id": "5C236040-EAB5-4C16-8954-41A0F2F780CE",
+          "image": null,
+          "name": "For Rent - House",
+          "displayOrder": 2310,
+          "count": 3029
+        },
+        {
+          "id": "52869B8F-6C05-46F5-94D3-8ECAD6D273CA",
+          "image": null,
+          "name": "For Rent - Land",
+          "displayOrder": 2311,
+          "count": 358
+        },
+        {
+          "id": "77433461-DCC8-4ABC-94A6-C3AA5D92B545",
+          "image": null,
+          "name": "For Rent - Office Space",
+          "displayOrder": 2312,
+          "count": 2249
+        },
+        {
+          "id": "A9C70559-16C7-49D8-988B-9AC3C9F975E7",
+          "image": null,
+          "name": "For Rent - Shutter & Shop Space",
+          "displayOrder": 2313,
+          "count": 733
+        },
+        {
+          "id": "FAE90931-F7AF-4A21-B1D5-64D9BC8E9966",
+          "image": null,
+          "name": "For Sale - Apartment",
+          "displayOrder": 2314,
+          "count": 253
+        },
+        {
+          "id": "772C51F2-C967-41ED-A183-5D53876AC400",
+          "image": null,
+          "name": "For Sale - Commercial Building",
+          "displayOrder": 2315,
+          "count": 140
+        },
+        {
+          "id": "56C5F377-50C1-42A4-B6C2-24A8B3235DC7",
+          "image": null,
+          "name": "For Sale - House",
+          "displayOrder": 2316,
+          "count": 4230
+        },
+        {
+          "id": "7305909A-83CA-4AAD-B474-FC6E02963642",
+          "image": null,
+          "name": "For Sale - Land",
+          "displayOrder": 2317,
+          "count": 6115
+        }
+      ],
+      "count": 22665
+    },
+    {
+      "id": "AA71A415-8970-46FF-A775-D1BC2089CB87",
+      "image": "https://cdn02.hamrobazaar.com/Assets/Category/services.png",
+      "name": "Services",
+      "displayOrder": 17,
+      "categories": [
+        {
+          "id": "5AE44C2F-3607-4D4B-9A44-56010187D6B5",
+          "image": "",
+          "name": "Advertising, Printing & Publication",
+          "displayOrder": 2319,
+          "count": 634
+        },
+        {
+          "id": "38D14DDC-1300-4108-95CB-C81ECF6446A4",
+          "image": "",
+          "name": "Classes - Learning, Hobby & Music",
+          "displayOrder": 2320,
+          "count": 65
+        },
+        {
+          "id": "640266A5-7745-431F-AB91-16FD5CA85FE3",
+          "image": "",
+          "name": "Coaching & Tutors",
+          "displayOrder": 2321,
+          "count": 220
+        },
+        {
+          "id": "E3E063B6-2327-4259-900C-45571A9FDD57",
+          "image": "",
+          "name": "Computers - Sales & Repair",
+          "displayOrder": 2322,
+          "count": 169
+        },
+        {
+          "id": "AA7A5B46-CE72-4B13-997E-6D11E0A4A962",
+          "image": "",
+          "name": "Computers - Web & Design",
+          "displayOrder": 2323,
+          "count": 223
+        },
+        {
+          "id": "91669945-3CCA-4958-AC99-736D6E639B17",
+          "image": "",
+          "name": "Courses - Education & Training",
+          "displayOrder": 2324,
+          "count": 139
+        },
+        {
+          "id": "20B52CA3-3D72-47BF-8A8A-909018B3BECE",
+          "image": "",
+          "name": "Electronics Repair",
+          "displayOrder": 2325,
+          "count": 442
+        },
+        {
+          "id": "039610E8-F47E-482A-A5F0-E2211704E835",
+          "image": "",
+          "name": "Event Planners & Caterers",
+          "displayOrder": 2326,
+          "count": 22
+        },
+        {
+          "id": "F1303AB4-717D-4BFE-9FCB-4BC03730A731",
+          "image": "",
+          "name": "Financial & Legal",
+          "displayOrder": 2327,
+          "count": 80
+        },
+        {
+          "id": "E1F13B18-BC15-4262-B72E-1BAFC8E9DB0E",
+          "image": "",
+          "name": "Health, Fitness & Beauty",
+          "displayOrder": 2328,
+          "count": 54
+        },
+        {
+          "id": "96467FCA-573F-4287-BE20-F1D95AE52A4D",
+          "image": "",
+          "name": "Home Construction & Design",
+          "displayOrder": 2329,
+          "count": 504
+        },
+        {
+          "id": "4EE492D6-F73C-4A0D-9F8A-04F5681EB0FB",
+          "image": "",
+          "name": "Home Repair & Maintainence",
+          "displayOrder": 2330,
+          "count": 587
+        },
+        {
+          "id": "2F143876-A5A1-47D9-BA4C-44CE999D3A9D",
+          "image": "",
+          "name": "Movers, Couriers & Transport",
+          "displayOrder": 2331,
+          "count": 480
+        },
+        {
+          "id": "74842E3E-26BB-4BD3-BD99-81534BCCB52E",
+          "image": "",
+          "name": "Music, Video & Photography",
+          "displayOrder": 2332,
+          "count": 486
+        },
+        {
+          "id": "1ACC4A1E-B903-40DD-8DE1-9FFEB7366217",
+          "image": "",
+          "name": "Other Services",
+          "displayOrder": 2333,
+          "count": 456
+        },
+        {
+          "id": "FCC06178-CABC-4D7D-AD86-815310D38824",
+          "image": "",
+          "name": "Writing, Designing & Translating",
+          "displayOrder": 2334,
+          "count": 109
+        }
+      ],
+      "count": 4670
+    },
+    {
+      "id": "1AC175FB-718A-4236-8139-927A71425667",
+      "image": "https://cdn02.hamrobazaar.com/Assets/Category/Sports.png",
+      "name": "Sports & Fitness",
+      "displayOrder": 18,
+      "categories": [
+        {
+          "id": "358778E2-EDF0-4597-B9F7-7A2E9F709D3D",
+          "image": "",
+          "name": "Bicycle Parts & Accessories",
+          "displayOrder": 2335,
+          "count": 783
+        },
+        {
+          "id": "8DC81FF7-0542-45A0-9561-73989BE9F5AE",
+          "image": "",
+          "name": "Bicycles",
+          "displayOrder": 2336,
+          "count": 1081
+        },
+        {
+          "id": "9C4DE3C7-02ED-4BA0-ABD8-668D8E544A80",
+          "image": "",
+          "name": "Fitness & Gym Equipment",
+          "displayOrder": 2337,
+          "count": 1543
+        },
+        {
+          "id": "DFA3125C-64EF-4AEA-90C0-E3F6DA7919B6",
+          "image": "",
+          "name": "Fitness Supplements",
+          "displayOrder": 2338,
+          "count": 423
+        },
+        {
+          "id": "B92AA29D-2213-483C-B00F-9B0F653B5C26",
+          "image": "",
+          "name": "Other Sporting Goods",
+          "displayOrder": 2339,
+          "count": 776
+        },
+        {
+          "id": "48EEB792-2900-40A8-85CB-ABF80375252A",
+          "image": "",
+          "name": "Outdoor & Hiking",
+          "displayOrder": 2340,
+          "count": 165
+        }
+      ],
+      "count": 4771
+    },
+    {
+      "id": "1A8B66E7-E37B-402D-90BA-F58F6D1EA757",
+      "image": "https://cdn02.hamrobazaar.com/Assets/Category/Toys%20and%20video%20games.png",
+      "name": "Toys & Video Games",
+      "displayOrder": 19,
+      "categories": [
+        {
+          "id": "8629D55E-531A-4B41-8623-F40DE0D5396E",
+          "image": "",
+          "name": "Gaming Accessories",
+          "displayOrder": 2341,
+          "count": 353
+        },
+        {
+          "id": "60F03EF0-18A7-44E8-9583-999BE5219680",
+          "image": null,
+          "name": "Gaming Consoles",
+          "displayOrder": 2342,
+          "count": 444
+        },
+        {
+          "id": "570B56A8-EC4B-4F45-A8CA-ACADB1CDBF3D",
+          "image": null,
+          "name": "Gaming Discs & Cartidges",
+          "displayOrder": 2343,
+          "count": 421
+        },
+        {
+          "id": "1962346C-50FB-45E3-B675-D2446C1BD3FD",
+          "image": "",
+          "name": "Others",
+          "displayOrder": 2344,
+          "count": 133
+        },
+        {
+          "id": "06F5F1CE-AC3F-44CC-A42D-8AFD609A6417",
+          "image": "",
+          "name": "Toys - Educational",
+          "displayOrder": 2345,
+          "count": 369
+        },
+        {
+          "id": "C45E2416-ECA1-40C3-B28C-FEC46910ACCB",
+          "image": "",
+          "name": "Toys - General",
+          "displayOrder": 2346,
+          "count": 577
+        },
+        {
+          "id": "28F00B84-9D10-444C-92FB-40A44B6443B1",
+          "image": "",
+          "name": "Toys - Outdoor",
+          "displayOrder": 2347,
+          "count": 386
+        },
+        {
+          "id": "1D1A9AEB-1EFA-462A-BB7E-C56CCAA9D756",
+          "image": "",
+          "name": "Toys - Remote Controlled",
+          "displayOrder": 2348,
+          "count": 174
+        },
+        {
+          "id": "41318E0F-FCFD-41A1-9E15-5C2B5E1E6105",
+          "image": "",
+          "name": "Toys - Stuffed, Dolls & Figures",
+          "displayOrder": 2349,
+          "count": 707
+        }
+      ],
+      "count": 3564
+    },
+    {
+      "id": "2DB25FE7-6354-4AAB-9863-AACE8195209B",
+      "image": "https://cdn02.hamrobazaar.com/Assets/Category/Travel%20tour.png",
+      "name": "Travel, Tours & Packages",
+      "displayOrder": 20,
+      "categories": [
+        {
+          "id": "5338E763-44C2-47E5-B7F8-98A24D4EC665",
+          "image": "",
+          "name": "AirTickets",
+          "displayOrder": 2350,
+          "count": 135
+        },
+        {
+          "id": "342704C6-093F-420A-BB7D-D71944E81DF5",
+          "image": "",
+          "name": "Bus, Train Tickets",
+          "displayOrder": 2351,
+          "count": 22
+        },
+        {
+          "id": "8001CC1F-5946-43F6-879C-EBCD763384B2",
+          "image": "",
+          "name": "Car & Bike Rentals",
+          "displayOrder": 2352,
+          "count": 627
+        },
+        {
+          "id": "DA2B19C8-314A-43EE-ABD4-9C128E7FD1F9",
+          "image": "",
+          "name": "Day Trips & Excursions",
+          "displayOrder": 2353,
+          "count": 18
+        },
+        {
+          "id": "44C1F9D5-460F-4C14-B6E5-88FED37F0B6C",
+          "image": "",
+          "name": "Hotels & Homestays",
+          "displayOrder": 2354,
+          "count": 13
+        },
+        {
+          "id": "9336F9F1-04F7-433E-9A18-B046DD68B54F",
+          "image": "",
+          "name": "Others",
+          "displayOrder": 2355,
+          "count": 34
+        },
+        {
+          "id": "C666700A-B4C2-486A-A495-A83CC99CB50A",
+          "image": "",
+          "name": "Tour Packages - Domestic",
+          "displayOrder": 2356,
+          "count": 103
+        },
+        {
+          "id": "BCD41B18-B8C7-4D0D-937B-18037A646FC3",
+          "image": "",
+          "name": "Tour Packages - International",
+          "displayOrder": 2357,
+          "count": 21
+        },
+        {
+          "id": "4796D385-EF0F-4F6F-8CA8-6AF04F59EBDA",
+          "image": "",
+          "name": "Trekking Packages",
+          "displayOrder": 2358,
+          "count": 10
+        }
+      ],
+      "count": 983
+    },
+    {
+      "id": "EFCFA464-D829-41F9-A3BD-6BA522EEC92E",
+      "image": "https://cdn02.hamrobazaar.com/Assets/Category/Want%20to%20Buy.png",
+      "name": "Want To Buy (Buyer's List)",
+      "displayOrder": 21,
+      "categories": [
+        {
+          "id": "CC25DDDC-C695-4576-8447-6A54B64C3B44",
+          "image": "",
+          "name": "Apparels & Accessories",
+          "displayOrder": 2359,
+          "count": 4
+        },
+        {
+          "id": "20B683E0-98ED-48B0-9C33-C0BFB9950334",
+          "image": "",
+          "name": "Beauty & Health",
+          "displayOrder": 2360,
+          "count": 1
+        },
+        {
+          "id": "07FD589D-51C7-4F56-BB88-DD14BC22A665",
+          "image": "",
+          "name": "Business & Industrial",
+          "displayOrder": 2361,
+          "count": 8
+        },
+        {
+          "id": "11CD25B0-9F96-4CB4-B69F-96AC23BD765D",
+          "image": "",
+          "name": "Cameras & Optics",
+          "displayOrder": 2362,
+          "count": 3
+        },
+        {
+          "id": "5BAAE28B-70C5-4D4B-A34A-20D07250F6E0",
+          "image": "",
+          "name": "Cars & Bikes",
+          "displayOrder": 2363,
+          "count": 27
+        },
+        {
+          "id": "5CBA43C4-DB74-4125-9E63-BE16F3E9EA5B",
+          "image": "",
+          "name": "Computers & Peripherals",
+          "displayOrder": 2364,
+          "count": 12
+        },
+        {
+          "id": "9CAD8E98-5B16-49CE-932B-41205AA8304E",
+          "image": "",
+          "name": "Consumer Electronics",
+          "displayOrder": 2365,
+          "count": 8
+        },
+        {
+          "id": "BC8A793F-C491-483C-91B0-1B85CA732295",
+          "image": "",
+          "name": "Home, Furnishing & Appliances",
+          "displayOrder": 2366,
+          "count": 3
+        },
+        {
+          "id": "9104D481-FE59-4AD5-870E-5F658852EFC0",
+          "image": "",
+          "name": "Mobiles & Accessories",
+          "displayOrder": 2367,
+          "count": 33
+        },
+        {
+          "id": "FCE048A1-2B10-4026-B093-A63B005A0CEB",
+          "image": "",
+          "name": "Music & Sports",
+          "displayOrder": 2368,
+          "count": 5
+        },
+        {
+          "id": "65ED633C-00E3-468F-B67A-647A86C47969",
+          "image": "",
+          "name": "Real Estate",
+          "displayOrder": 2370,
+          "count": 67
+        },
+        {
+          "id": "538440E6-34D8-43D0-934D-8E205C9DACB4",
+          "image": "",
+          "name": "Services",
+          "displayOrder": 2371,
+          "count": 9
+        },
+        {
+          "id": "763A2DB9-E218-4F5C-ACBD-8E87DEAFAFA4",
+          "image": "",
+          "name": "Toys & Video Games",
+          "displayOrder": 2372,
+          "count": 3
+        }
+      ],
+      "count": 183
+    },
+    {
+      "id": "00000000-0000-0000-0000-000000000000",
+      "image": "https://cdn02.hamrobazaar.com/Assets/Category/hbselect.png",
+      "isHBSelect": true,
+      "name": "HB Select",
+      "parentCategory": null,
+      "categories": [
+        {
+          "categories": [],
+          "id": "77433461-DCC8-4ABC-94A6-C3AA5D92B545",
+          "image": null,
+          "isHBSelect": true,
+          "name": "For Rent - Office Space",
+          "parentCategory": null,
+          "count": 14
+        },
+        {
+          "categories": [],
+          "id": "0E1281CE-7C55-4821-BE0A-62C566CCD577",
+          "image": null,
+          "isHBSelect": true,
+          "name": "For Rent - Flat & Apartment",
+          "parentCategory": null,
+          "count": 6
+        }
+      ],
+      "count": 20
+    }
+  ],
+  "meta": {
+    "pageNumber": 0,
+    "pageSize": 0,
+    "totalPages": 0,
+    "totalRecords": 0
+  },
+  "status": { "message": null, "redirect": null, "status": true }
+}

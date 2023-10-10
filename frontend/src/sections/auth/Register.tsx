@@ -1,9 +1,7 @@
 import {
   Button,
   Checkbox,
-  createStyles,
   PasswordInput,
-  rem,
   TextInput,
   Title,
 } from '@mantine/core';
@@ -12,24 +10,12 @@ import { useDjRestAuthRegisterCreate } from '../../../orval/dj-rest-auth/dj-rest
 import { useForm } from '@mantine/form';
 import { useState } from 'react';
 import OtpCard from './OtpCard';
-
-const useStyles = createStyles((theme) => ({
-  form: {
-    borderRight: `${rem(1)} solid ${
-      theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.colors.gray[3]
-    }`,
-    minHeight: '100vh',
-    maxWidth: rem(450),
-    paddingTop: rem(80),
-
-    [theme.fn.smallerThan('sm')]: {
-      maxWidth: '100%',
-    },
-  },
-}));
+import { notifications } from '@mantine/notifications';
 
 const Register = () => {
   const [step, setStep] = useState<Boolean>(false);
+  const [pNumber, setpNumber] = useState<string>('');
+
   const postRegister = useDjRestAuthRegisterCreate();
   const router = useRouter();
   const form = useForm({
@@ -43,19 +29,50 @@ const Register = () => {
     },
   });
 
-  const handleRegister = (values: { username: string; password: string; name: string }) => {
+  const handleRegister = (values: {
+    username: string;
+    password: string;
+    name: string;
+  }) => {
+    setpNumber(values.username);
     const data = {
       username: values.username,
       name: values.name,
       password: values.password,
     };
+    /* notifications.show({
+      id: 'register',
+      title: `Signing you up`,
+      message: `Please wait while we register you`,
+      loading: true,
+      autoClose: false,
+      withCloseButton: false,
+    });*/
     postRegister.mutate(
       { data },
       {
         onSuccess: (data) => {
           setStep(true);
         },
-      }
+        onError: (error: any) => {
+          console.log(error);
+          notifications.show({
+            id: 'register',
+            title: `Registration Failed`,
+            color: 'red',
+            message: `${
+              error['response']['data']['email'] ||
+              error['response']['data']['username'] ||
+              error['response']['data']['non_field_errors'] ||
+              error['response']['data']['password1']
+            }`,
+            loading: false,
+
+            autoClose: true,
+            withCloseButton: true,
+          });
+        },
+      },
     );
   };
   return (
@@ -70,12 +87,14 @@ const Register = () => {
               label="Number"
               placeholder="9837372722"
               size="md"
+              required
               {...form.getInputProps('username')}
             />
             <TextInput
               label="username"
               placeholder="Hari"
               size="md"
+              required
               {...form.getInputProps('name')}
             />
             <PasswordInput
@@ -83,6 +102,7 @@ const Register = () => {
               placeholder="Your password"
               mt="md"
               size="md"
+              required
               {...form.getInputProps('password')}
             />
             <Checkbox label="Keep me logged in" mt="xl" size="md" />
@@ -92,7 +112,7 @@ const Register = () => {
           </form>
         </div>
       )}
-      {step && <OtpCard />}
+      {step && <OtpCard phone_number={pNumber} />}
     </>
   );
 };
