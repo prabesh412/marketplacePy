@@ -1,4 +1,4 @@
-import { getDefaultStore } from '@/utils/PageDefaults';
+import { getDefaultStore } from '@/components/utils/PageDefaults';
 import { QueryClient, dehydrate } from '@tanstack/react-query';
 import { NextPageContext } from 'next';
 import { useRouter } from 'next/router';
@@ -37,7 +37,7 @@ import {
   IconPhoto,
   IconShare,
 } from '@tabler/icons-react';
-import ListingDetailLayout from '@/layouts/ListingDetail';
+import ListingDetailLayout from '@/components/layouts/ListingDetail';
 
 export async function getServerSideProps(ctx: NextPageContext) {
   const { slug } = ctx.query;

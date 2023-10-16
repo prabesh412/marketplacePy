@@ -1,4 +1,4 @@
-import { getDefaultStore } from '@/utils/PageDefaults';
+import { getDefaultStore } from '@/components/utils/PageDefaults';
 import { QueryClient, dehydrate } from '@tanstack/react-query';
 import { NextPageContext } from 'next';
 

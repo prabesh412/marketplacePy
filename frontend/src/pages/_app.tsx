@@ -6,6 +6,7 @@ import StoreProvider from '@/zustand/StoreProvider';
 import Background from '@/components/global/Background';
 import { NextPage } from 'next';
 import { ReactNode } from 'react';
+import { RouterTransition } from '@/components/global/RouterTransition';
 
 const customTheme: MantineThemeOverride = {
   colorScheme: 'dark',
@@ -26,6 +27,7 @@ export default function App({ Component, pageProps }: Props) {
 
   return (
     <MantineProvider withGlobalStyles withNormalizeCSS theme={customTheme}>
+      <RouterTransition />
       <Notifications />
       <StoreProvider {...pageProps.initialZustandState}>
         <QueryClientProvider client={new QueryClient()}>

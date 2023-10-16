@@ -13,6 +13,7 @@ const useAddListingForm = () => {
         location: '',
         sub_category: '',
         main_category: '',
+        images: [],
       },
     },
     validate: {

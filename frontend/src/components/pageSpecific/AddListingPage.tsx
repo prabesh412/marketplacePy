@@ -8,14 +8,16 @@ import { IconArrowLeft, IconArrowRight } from '@tabler/icons-react';
 import { useListingsCreate } from '../../../orval/listings/listings';
 import ListingAdded from '../add-listing/ListingAdded';
 import { notifications } from '@mantine/notifications';
+import { useImageListingCreate } from '../../../orval/image-listing/image-listing';
 
 const AddListingPage = () => {
   const [active, setActive] = useState(1);
   const [submitted, setSubmitted] = useState(false);
   const [listingAdded, setListingAdded] = useState(false);
   const creatingListing = useListingsCreate();
-
+  const listingImage = useImageListingCreate();
   const form = useAddListingForm();
+
   const handleNextClick = () => {
     if (active === 1) {
       if (!form.validate().hasErrors) {
@@ -50,7 +52,6 @@ const AddListingPage = () => {
     });
     creatingListing.mutate(requestData, {
       onSuccess: () => {
-        
         setSubmitted(true);
         setListingAdded(true);
         notifications.update({
