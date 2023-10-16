@@ -1,11 +1,11 @@
 import { useStore } from '@/zustand/store';
 import { dehydrate, QueryClient } from '@tanstack/react-query';
 import { NextPageContext } from 'next';
-import { getDefaultStore } from '@/utils/PageDefaults';
+import { getDefaultStore } from '@/components/utils/PageDefaults';
 import { ReactElement } from 'react';
-import { Page } from '@/ui';
-import HomeSection from '@/sections/Home';
-import HomeLayout from '@/layouts/HomeLayout';
+import { Page } from '@/components/ui';
+import HomeSection from '@/components/sections/Home';
+import HomeLayout from '@/components/layouts/HomeLayout';
 import {
   categoryList,
   getCategoryListQueryKey,

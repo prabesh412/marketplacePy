@@ -1,9 +1,9 @@
 import { Container } from '@mantine/core';
 import { dehydrate, QueryClient } from '@tanstack/react-query';
 import { ReactElement } from 'react';
-import { getDefaultStore } from '@/utils/PageDefaults';
+import { getDefaultStore } from '@/components/utils/PageDefaults';
 import { NextPageContext } from 'next';
-import AddListingLayout from '@/layouts/AddListing';
+import AddListingLayout from '@/components/layouts/AddListing';
 import AddListingPage from '@/components/pageSpecific/AddListingPage';
 
 export const getServerSideProps = async (ctx: NextPageContext) => {

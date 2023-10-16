@@ -3,12 +3,13 @@ import { createContext, useContext } from 'react';
 import { createStore, useStore as useZustandStore } from 'zustand';
 import { AXIOS_INSTANCE } from '../../orval/api/custom-instance';
 import { User } from '../../orval/model';
+import { usersMeRetrieve } from '../../orval/users/users';
 
 interface StoreInterface {
   setAccessToken: (accessToken: string) => void;
   accessToken: string | null;
   axiosRun: (token: string) => void;
-  setProfile: (profile: User) => void;
+  setProfile: (token: string) => void;
   profile: User | null;
   logout: () => void;
 }
@@ -53,8 +54,15 @@ export const initializeStore = (
         });
       }
     },
-    setProfile: (profile) => {
-      set((state) => ({ ...state, profile: profile }));
+    setProfile: async (token) => {
+      if (token) {
+        AXIOS_INSTANCE.interceptors.request.use(function (config) {
+          config.headers.Authorization = token ? `Token ${token}` : null;
+          return config;
+        });
+        const profile = await usersMeRetrieve();
+        set((state) => ({ ...state, profile: profile }));
+      }
     },
     logout: () => {
       set(() => ({ accessToken: null }));

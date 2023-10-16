@@ -2,30 +2,30 @@ import { Group, Text, rem } from '@mantine/core';
 import { IconUpload, IconPhoto, IconX } from '@tabler/icons-react';
 import { Dropzone, DropzoneProps, IMAGE_MIME_TYPE } from '@mantine/dropzone';
 import { useState } from 'react';
-import { useCategoryList } from '../../../orval/category/category';
+import useAddListingForm from './UseAddListingForm';
 
-const ImageDropper = (props: Partial<DropzoneProps>) => {
-  const [imageDropping, setimageDropping] = useState(false);
+const ImageDropper = () => {
+  const [imageDropping, setImageDropping] = useState(false);
   const [imageCount, setImageCount] = useState(0);
+  const form = useAddListingForm();
+
+  const handleDrop = (files: []) => {
+    setImageDropping(true);
+    if (imageCount + files.length <= 5) {
+      setImageCount(imageCount + files.length);
+      const images = files.map((file) => file?.path);
+      form.setFieldValue('firstStep.images', images);
+    } else {
+      console.log('Maximum image limit reached');
+    }
+  };
 
   return (
     <Dropzone
-      onDrop={(files: File[]) => {
-        setimageDropping(true);
-        if (imageCount + files.length <= 5) {
-          setImageCount(imageCount + files.length);
-          console.log('accepted files', files);
-        } else {
-          console.log('Maximum image limit reached');
-        }
-      }}
-      // onReject={(files: File) => {
-      //   console.log('rejected files', files);
-      // }}
+      onDrop={handleDrop}
       maxSize={3 * 1024 ** 2}
       accept={IMAGE_MIME_TYPE}
       maxFiles={5}
-      {...props}
     >
       <Group
         position="center"
