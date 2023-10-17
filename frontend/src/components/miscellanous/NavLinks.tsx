@@ -14,6 +14,7 @@ import {
   IconChevronLeft,
   IconChevronRight,
 } from '@tabler/icons-react';
+import { useRouter } from 'next/router';
 
 const useStyles = createStyles((theme) => ({
   control: {
@@ -79,6 +80,7 @@ export function LinksGroup({
   const { classes, theme } = useStyles();
   const hasLinks = Array.isArray(links);
   const [opened, setOpened] = useState(initiallyOpened || false);
+  const router = useRouter();
   const ChevronIcon = theme.dir === 'ltr' ? IconChevronRight : IconChevronLeft;
   const items = (hasLinks ? links : []).map((link) => (
     <Text<'a'>
@@ -86,7 +88,7 @@ export function LinksGroup({
       className={classes.link}
       href={link.link}
       key={link.label}
-      onClick={(event) => event.preventDefault()}
+      onClick={() => router.push(link.link)}
     >
       {link.label}
     </Text>
