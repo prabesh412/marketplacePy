@@ -7,6 +7,7 @@ import {
   Avatar,
   rem,
 } from '@mantine/core';
+import { User } from '../../../../orval/model';
 
 const useStyles = createStyles((theme) => ({
   card: {
@@ -39,8 +40,18 @@ const useStyles = createStyles((theme) => ({
     marginLeft: theme.spacing.sm,
   },
 }));
-
-const MainProductCard = () => {
+interface MainProductCardProps {
+  title: string;
+  image: string;
+  price: string;
+  user: User;
+}
+const SearchProductCard = ({
+  title,
+  image,
+  price,
+  user,
+}: MainProductCardProps) => {
   const { classes } = useStyles();
 
   return (
@@ -58,21 +69,18 @@ const MainProductCard = () => {
           </div>
           <div className={classes.body}>
             <Text tt="uppercase" c="dimmed" fw={700} size="xs" mb={rem(5)}>
-              Gadgets
+              Like new
             </Text>
-            <Text className={classes.title} mb="xs">
-              New Dell laptop for sale, one month vayo
+            <Text w={'90%'} truncate className={classes.title} mb="xs">
+              {title}
             </Text>
             <Text tt="uppercase" c="dimmed" mb={'xs'} fw={700} size="sm">
-              रू 50,000
+              रू. {price}
             </Text>
             <Group>
               <Group spacing="xs" noWrap>
-                <Avatar
-                  size={20}
-                  src="https://images.unsplash.com/photo-1628890923662-2cb23c2e0cfe?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=200&q=80"
-                />
-                <Text size="xs">Prashant Uprety</Text>
+                <Avatar size={20} src={user.image} />
+                <Text size="xs">{user.name}</Text>
               </Group>
               <Group>
                 <Text size="xs" c="dimmed">
@@ -86,4 +94,4 @@ const MainProductCard = () => {
     </div>
   );
 };
-export default MainProductCard;
+export default SearchProductCard;

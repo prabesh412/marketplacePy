@@ -22,6 +22,7 @@ import {
   IconCategory,
 } from '@tabler/icons-react';
 import DefaultSideNav from '../navigation/DefaultSideNav';
+import { useRouter } from 'next/router';
 
 const useStyles = createStyles((theme) => ({
   textInput: {
@@ -80,6 +81,8 @@ const HomepageSearchArea = (props: TextInputProps) => {
   const theme = useMantineTheme();
   const { classes } = useStyles();
   const [isSideNavOpen, setSideNavOpen] = useState(false);
+  const [searchValue, setSearchValue] = useState('');
+  const router = useRouter();
 
   return (
     <>
@@ -97,6 +100,8 @@ const HomepageSearchArea = (props: TextInputProps) => {
             <TextInput
               className={classes.textInput}
               radius="md"
+              value={searchValue}
+              onChange={(event) => setSearchValue(event.target.value)}
               size="md"
               placeholder="Search for what you are looking for and we will handle the rest."
               rightSectionWidth={50}
@@ -106,6 +111,11 @@ const HomepageSearchArea = (props: TextInputProps) => {
                   radius="xl"
                   color={theme.primaryColor}
                   variant="filled"
+                  onClick={() => {
+                    if (searchValue) {
+                      router.push(`/search?title__icontains=${searchValue}`);
+                    }
+                  }}
                 >
                   <IconSearch
                     style={{ width: rem(18), height: rem(18) }}
