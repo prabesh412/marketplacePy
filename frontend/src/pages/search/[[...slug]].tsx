@@ -6,6 +6,7 @@ import React, { ReactElement } from 'react';
 
 import {
   getListingsListQueryKey,
+  listingsList,
   useListingsList,
 } from '../../../orval/listings/listings';
 
@@ -70,9 +71,11 @@ export async function getServerSideProps(ctx: NextPageContext) {
   const zustandStore = await getDefaultStore(ctx);
 
   await queryClient.prefetchQuery(
-    getListingsListQueryKey(),
-    () => useListingsList(slug),
-    {},
+    getListingsListQueryKey(slug),
+    () => listingsList(slug),
+    {
+      staleTime: Infinity,
+    },
   );
 
   return {

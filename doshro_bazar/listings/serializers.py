@@ -18,20 +18,21 @@ class ListingViewImageSerializer(serializers.ModelSerializer):
         fields = "__all__"
     
 class ListingsSerializer(serializers.ModelSerializer):
-    images = ListingViewImageSerializer( read_only=True, many=True)
+    images = ListingViewImageSerializer(read_only=True, many=True)
     user = UserSerializer(read_only=True)
-                    
+    views = serializers.IntegerField(read_only=True, source="views.views") 
+
     class Meta:
         model = Listings
         fields = "__all__"
-        read_only_fields = ["slug", "created_at", "updated_at"]
+        read_only_fields = ["slug", "created_at", "updated_at", "views"]
 
 
 class ListingsInputSerializer(serializers.ModelSerializer):
     class Meta:
         model = Listings
         fields = "__all__"
-        read_only_fields = [ "user","slug", "created_at", "updated_at"]
+        read_only_fields = [ "user","slug", "created_at", "updated_at", "views", "status"]
 
  
 

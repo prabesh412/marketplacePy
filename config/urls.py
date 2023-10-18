@@ -21,6 +21,8 @@ urlpatterns = [
 # API URLS
 urlpatterns += [
     # API base url
+    path('silk/', include('silk.urls', namespace='silk')),
+
     path("api/", include("config.api_router")),
     # DRF auth token
     path("api/schema/", SpectacularAPIView.as_view(), name="api-schema"),
