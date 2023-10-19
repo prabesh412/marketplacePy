@@ -144,16 +144,6 @@ const Login = () => {
           </Button>
         </form>
       </Container>
-      <Container style=
-      {{ 
-        margin: '0 auto', maxWidth: 'auto', textAlign: 'center', marginTop: '40px', 
-      }}>
-      <img
-        src="https://assets-cdn.kantipurdaily.com/uploads/source/ads/emi520x120-0882023070419.gif"
-        alt="ad gif"
-        style={{maxWidth: '100%', maxHeight: 'auto', margin: 'auto', borderRadius: 'md', objectFit: 'contain' , }}
-      />
-      </Container>
     </>
   );
 };

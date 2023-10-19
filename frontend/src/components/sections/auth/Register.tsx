@@ -4,6 +4,9 @@ import {
   PasswordInput,
   TextInput,
   Title,
+  Paper,
+  Text,
+  Container,
 } from '@mantine/core';
 import { useRouter } from 'next/router';
 import { useDjRestAuthRegisterCreate } from '../../../../orval/dj-rest-auth/dj-rest-auth';
@@ -79,9 +82,18 @@ const Register = () => {
     <>
       {!step && (
         <div>
-          <Title order={2} ta="center" mt="md" mb={50}>
-            Welcome to DoshroBazar
-          </Title>
+        <Paper shadow="xl" radius="sm" p="xl" style ={{ 
+        backgroundColor:'#878585',borderRadius:'8px',position:'relative'
+        }}>
+        <Text fz="xl" lh="lg" color='#000000' weight={750} >Make a Bargain</Text>
+        <Text fz="sm" lh="md" color='#C3BFBF' weight={600}>
+        Welcome to DoshroBazar 
+        </Text>
+      </Paper>
+            
+      <Container style={{ 
+        background: 'black', padding: '20px', borderRadius: '8px' ,position:'relative',top:'40px'
+        }}>
           <form onSubmit={form.onSubmit((values) => handleRegister(values))}>
             <TextInput
               label="Number"
@@ -91,7 +103,7 @@ const Register = () => {
               {...form.getInputProps('username')}
             />
             <TextInput
-              label="username"
+              label="Username"
               placeholder="Hari"
               size="md"
               required
@@ -99,7 +111,7 @@ const Register = () => {
             />
             <PasswordInput
               label="Password"
-              placeholder="Your password"
+              placeholder="Password"
               mt="md"
               size="md"
               required
@@ -110,6 +122,7 @@ const Register = () => {
               Register
             </Button>
           </form>
+          </Container>
         </div>
       )}
       {step && <OtpCard phone_number={pNumber} />}

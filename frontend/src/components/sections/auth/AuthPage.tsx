@@ -68,6 +68,16 @@ export function AuthPage() {
           </Text>
           </Container>
         )}
+         <Container style=
+      {{ 
+        position: 'relative', 
+      }}>
+      <img
+        src="https://assets-cdn.kantipurdaily.com/uploads/source/ads/emi520x120-0882023070419.gif"
+        alt="ad gif"
+        style={{maxWidth: '100%', maxHeight: 'auto', margin: 'auto', borderRadius: 'md', objectFit: 'contain',position:'absolute' ,left:'50%',right:'50%',transform:'translate(180%,-450%)'}}
+      />
+      </Container>
       </Paper>
     </div>
   );
