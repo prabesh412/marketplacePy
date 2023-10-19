@@ -47,9 +47,11 @@ export async function getServerSideProps(ctx: NextPageContext) {
   await queryClient.prefetchQuery(
     getListingsRetrieveQueryKey(slug as string),
     () => listingsRetrieve(slug as string),
-    {},
+    {
+      staleTime: Infinity,
+    },
   );
-
+  console.log(dehydrate(queryClient));
   return {
     props: {
       dehydratedState: dehydrate(queryClient),
