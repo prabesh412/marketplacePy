@@ -10,6 +10,5 @@ export interface UserRegister {
   /** Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only. */
   username: string;
   name?: string;
-  password: string;
-  image?: string | null;
+  image?: string;
 }

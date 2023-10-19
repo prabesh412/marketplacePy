@@ -37,8 +37,8 @@ def fill_users_db():
    
 
 def run():
-    fill_users_db()
+    fill_category_db()
 
 
 if __name__ == '__main__': 
-    fill_category_db()
+    run()

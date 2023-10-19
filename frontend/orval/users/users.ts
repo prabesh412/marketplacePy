@@ -5,7 +5,11 @@
  * Documentation of API endpoints of doshro_bazar
  * OpenAPI spec version: 1.0.0
  */
-import { useQuery, useInfiniteQuery, useMutation } from '@tanstack/react-query';
+import {
+  useQuery,
+  useInfiniteQuery,
+  useMutation
+} from '@tanstack/react-query'
 import type {
   UseQueryOptions,
   UseInfiniteQueryOptions,
@@ -14,534 +18,341 @@ import type {
   MutationFunction,
   UseQueryResult,
   UseInfiniteQueryResult,
-  QueryKey,
-} from '@tanstack/react-query';
+  QueryKey
+} from '@tanstack/react-query'
 import type {
   PaginatedUserList,
   UsersListParams,
   User,
-  PatchedUser,
-} from '.././model';
+  UserRequest,
+  PatchedUserRequest
+} from '.././model'
 import { customInstance } from '.././api/custom-instance';
 
-export const usersList = (params?: UsersListParams, signal?: AbortSignal) => {
-  return customInstance<PaginatedUserList>({
-    url: `/api/users/`,
-    method: 'get',
-    params,
-    signal,
-  });
-};
 
-export const getUsersListQueryKey = (params?: UsersListParams) =>
-  [`/api/users/`, ...(params ? [params] : [])] as const;
-
-export const getUsersListInfiniteQueryOptions = <
-  TData = Awaited<ReturnType<typeof usersList>>,
-  TError = unknown,
->(
-  params?: UsersListParams,
-  options?: {
-    query?: UseInfiniteQueryOptions<
-      Awaited<ReturnType<typeof usersList>>,
-      TError,
-      TData
-    >;
-  },
-): UseInfiniteQueryOptions<
-  Awaited<ReturnType<typeof usersList>>,
-  TError,
-  TData
-> & { queryKey: QueryKey } => {
-  const { query: queryOptions } = options ?? {};
-
-  const queryKey = queryOptions?.queryKey ?? getUsersListQueryKey(params);
-
-  const queryFn: QueryFunction<Awaited<ReturnType<typeof usersList>>> = ({
-    signal,
-  }) => usersList(params, signal);
-
-  return {
-    queryKey,
-    queryFn,
-    staleTime: Infinity,
-    refetchOnWindowFocus: false,
-    retry: 2,
-    ...queryOptions,
-  };
-};
-
-export type UsersListInfiniteQueryResult = NonNullable<
-  Awaited<ReturnType<typeof usersList>>
->;
-export type UsersListInfiniteQueryError = unknown;
-
-export const useUsersListInfinite = <
-  TData = Awaited<ReturnType<typeof usersList>>,
-  TError = unknown,
->(
-  params?: UsersListParams,
-  options?: {
-    query?: UseInfiniteQueryOptions<
-      Awaited<ReturnType<typeof usersList>>,
-      TError,
-      TData
-    >;
-  },
-): UseInfiniteQueryResult<TData, TError> & { queryKey: QueryKey } => {
-  const queryOptions = getUsersListInfiniteQueryOptions(params, options);
-
-  const query = useInfiniteQuery(queryOptions) as UseInfiniteQueryResult<
-    TData,
-    TError
-  > & { queryKey: QueryKey };
-
-  query.queryKey = queryOptions.queryKey;
-
-  return query;
-};
-
-export const getUsersListQueryOptions = <
-  TData = Awaited<ReturnType<typeof usersList>>,
-  TError = unknown,
->(
-  params?: UsersListParams,
-  options?: {
-    query?: UseQueryOptions<
-      Awaited<ReturnType<typeof usersList>>,
-      TError,
-      TData
-    >;
-  },
-): UseQueryOptions<Awaited<ReturnType<typeof usersList>>, TError, TData> & {
-  queryKey: QueryKey;
-} => {
-  const { query: queryOptions } = options ?? {};
-
-  const queryKey = queryOptions?.queryKey ?? getUsersListQueryKey(params);
-
-  const queryFn: QueryFunction<Awaited<ReturnType<typeof usersList>>> = ({
-    signal,
-  }) => usersList(params, signal);
-
-  return {
-    queryKey,
-    queryFn,
-    staleTime: Infinity,
-    refetchOnWindowFocus: false,
-    retry: 2,
-    ...queryOptions,
-  };
-};
-
-export type UsersListQueryResult = NonNullable<
-  Awaited<ReturnType<typeof usersList>>
->;
-export type UsersListQueryError = unknown;
-
-export const useUsersList = <
-  TData = Awaited<ReturnType<typeof usersList>>,
-  TError = unknown,
->(
-  params?: UsersListParams,
-  options?: {
-    query?: UseQueryOptions<
-      Awaited<ReturnType<typeof usersList>>,
-      TError,
-      TData
-    >;
-  },
-): UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
-  const queryOptions = getUsersListQueryOptions(params, options);
-
-  const query = useQuery(queryOptions) as UseQueryResult<TData, TError> & {
-    queryKey: QueryKey;
-  };
-
-  query.queryKey = queryOptions.queryKey;
-
-  return query;
-};
-
-export const usersRetrieve = (username: string, signal?: AbortSignal) => {
-  return customInstance<User>({
-    url: `/api/users/${username}/`,
-    method: 'get',
-    signal,
-  });
-};
-
-export const getUsersRetrieveQueryKey = (username: string) =>
-  [`/api/users/${username}/`] as const;
-
-export const getUsersRetrieveInfiniteQueryOptions = <
-  TData = Awaited<ReturnType<typeof usersRetrieve>>,
-  TError = unknown,
->(
-  username: string,
-  options?: {
-    query?: UseInfiniteQueryOptions<
-      Awaited<ReturnType<typeof usersRetrieve>>,
-      TError,
-      TData
-    >;
-  },
-): UseInfiniteQueryOptions<
-  Awaited<ReturnType<typeof usersRetrieve>>,
-  TError,
-  TData
-> & { queryKey: QueryKey } => {
-  const { query: queryOptions } = options ?? {};
-
-  const queryKey = queryOptions?.queryKey ?? getUsersRetrieveQueryKey(username);
-
-  const queryFn: QueryFunction<Awaited<ReturnType<typeof usersRetrieve>>> = ({
-    signal,
-  }) => usersRetrieve(username, signal);
-
-  return {
-    queryKey,
-    queryFn,
-    enabled: !!username,
-    staleTime: Infinity,
-    refetchOnWindowFocus: false,
-    retry: 2,
-    ...queryOptions,
-  };
-};
-
-export type UsersRetrieveInfiniteQueryResult = NonNullable<
-  Awaited<ReturnType<typeof usersRetrieve>>
->;
-export type UsersRetrieveInfiniteQueryError = unknown;
-
-export const useUsersRetrieveInfinite = <
-  TData = Awaited<ReturnType<typeof usersRetrieve>>,
-  TError = unknown,
->(
-  username: string,
-  options?: {
-    query?: UseInfiniteQueryOptions<
-      Awaited<ReturnType<typeof usersRetrieve>>,
-      TError,
-      TData
-    >;
-  },
-): UseInfiniteQueryResult<TData, TError> & { queryKey: QueryKey } => {
-  const queryOptions = getUsersRetrieveInfiniteQueryOptions(username, options);
-
-  const query = useInfiniteQuery(queryOptions) as UseInfiniteQueryResult<
-    TData,
-    TError
-  > & { queryKey: QueryKey };
-
-  query.queryKey = queryOptions.queryKey;
-
-  return query;
-};
-
-export const getUsersRetrieveQueryOptions = <
-  TData = Awaited<ReturnType<typeof usersRetrieve>>,
-  TError = unknown,
->(
-  username: string,
-  options?: {
-    query?: UseQueryOptions<
-      Awaited<ReturnType<typeof usersRetrieve>>,
-      TError,
-      TData
-    >;
-  },
-): UseQueryOptions<Awaited<ReturnType<typeof usersRetrieve>>, TError, TData> & {
-  queryKey: QueryKey;
-} => {
-  const { query: queryOptions } = options ?? {};
-
-  const queryKey = queryOptions?.queryKey ?? getUsersRetrieveQueryKey(username);
-
-  const queryFn: QueryFunction<Awaited<ReturnType<typeof usersRetrieve>>> = ({
-    signal,
-  }) => usersRetrieve(username, signal);
-
-  return {
-    queryKey,
-    queryFn,
-    enabled: !!username,
-    staleTime: Infinity,
-    refetchOnWindowFocus: false,
-    retry: 2,
-    ...queryOptions,
-  };
-};
-
-export type UsersRetrieveQueryResult = NonNullable<
-  Awaited<ReturnType<typeof usersRetrieve>>
->;
-export type UsersRetrieveQueryError = unknown;
-
-export const useUsersRetrieve = <
-  TData = Awaited<ReturnType<typeof usersRetrieve>>,
-  TError = unknown,
->(
-  username: string,
-  options?: {
-    query?: UseQueryOptions<
-      Awaited<ReturnType<typeof usersRetrieve>>,
-      TError,
-      TData
-    >;
-  },
-): UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
-  const queryOptions = getUsersRetrieveQueryOptions(username, options);
-
-  const query = useQuery(queryOptions) as UseQueryResult<TData, TError> & {
-    queryKey: QueryKey;
-  };
-
-  query.queryKey = queryOptions.queryKey;
-
-  return query;
-};
-
-export const usersUpdate = (username: string, user: User) => {
-  return customInstance<User>({
-    url: `/api/users/${username}/`,
-    method: 'put',
-    headers: { 'Content-Type': 'application/json' },
-    data: user,
-  });
-};
-
-export const getUsersUpdateMutationOptions = <
-  TError = unknown,
-  TContext = unknown,
->(options?: {
-  mutation?: UseMutationOptions<
-    Awaited<ReturnType<typeof usersUpdate>>,
-    TError,
-    { username: string; data: User },
-    TContext
-  >;
-}): UseMutationOptions<
-  Awaited<ReturnType<typeof usersUpdate>>,
-  TError,
-  { username: string; data: User },
-  TContext
-> => {
-  const { mutation: mutationOptions } = options ?? {};
-
-  const mutationFn: MutationFunction<
-    Awaited<ReturnType<typeof usersUpdate>>,
-    { username: string; data: User }
-  > = (props) => {
-    const { username, data } = props ?? {};
-
-    return usersUpdate(username, data);
-  };
-
-  return { mutationFn, ...mutationOptions };
-};
-
-export type UsersUpdateMutationResult = NonNullable<
-  Awaited<ReturnType<typeof usersUpdate>>
->;
-export type UsersUpdateMutationBody = User;
-export type UsersUpdateMutationError = unknown;
-
-export const useUsersUpdate = <TError = unknown, TContext = unknown>(options?: {
-  mutation?: UseMutationOptions<
-    Awaited<ReturnType<typeof usersUpdate>>,
-    TError,
-    { username: string; data: User },
-    TContext
-  >;
-}) => {
-  const mutationOptions = getUsersUpdateMutationOptions(options);
-
-  return useMutation(mutationOptions);
-};
-export const usersPartialUpdate = (
-  username: string,
-  patchedUser: PatchedUser,
+export const usersList = (
+    params?: UsersListParams,
+ signal?: AbortSignal
 ) => {
-  return customInstance<User>({
-    url: `/api/users/${username}/`,
-    method: 'patch',
-    headers: { 'Content-Type': 'application/json' },
-    data: patchedUser,
-  });
-};
+      return customInstance<PaginatedUserList>(
+      {url: `/api/users/`, method: 'get',
+        params, signal
+    },
+      );
+    }
+  
 
-export const getUsersPartialUpdateMutationOptions = <
-  TError = unknown,
-  TContext = unknown,
->(options?: {
-  mutation?: UseMutationOptions<
-    Awaited<ReturnType<typeof usersPartialUpdate>>,
-    TError,
-    { username: string; data: PatchedUser },
-    TContext
-  >;
-}): UseMutationOptions<
-  Awaited<ReturnType<typeof usersPartialUpdate>>,
-  TError,
-  { username: string; data: PatchedUser },
-  TContext
-> => {
-  const { mutation: mutationOptions } = options ?? {};
+export const getUsersListQueryKey = (params?: UsersListParams,) => [`/api/users/`, ...(params ? [params]: [])] as const;
+  
 
-  const mutationFn: MutationFunction<
-    Awaited<ReturnType<typeof usersPartialUpdate>>,
-    { username: string; data: PatchedUser }
-  > = (props) => {
-    const { username, data } = props ?? {};
+    
+export const getUsersListInfiniteQueryOptions = <TData = Awaited<ReturnType<typeof usersList>>, TError = unknown>(params?: UsersListParams, options?: { query?:UseInfiniteQueryOptions<Awaited<ReturnType<typeof usersList>>, TError, TData>, }
+): UseInfiniteQueryOptions<Awaited<ReturnType<typeof usersList>>, TError, TData> & { queryKey: QueryKey } => {
+const {query: queryOptions} = options ?? {};
 
-    return usersPartialUpdate(username, data);
-  };
+  const queryKey =  queryOptions?.queryKey ?? getUsersListQueryKey(params);
 
-  return { mutationFn, ...mutationOptions };
-};
+  
+  
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof usersList>>> = ({ signal }) => usersList(params, signal);
+    
+      
+      
+   return  { queryKey, queryFn,   staleTime: Infinity, refetchOnWindowFocus: false, retry: 2,  ...queryOptions}}
 
-export type UsersPartialUpdateMutationResult = NonNullable<
-  Awaited<ReturnType<typeof usersPartialUpdate>>
->;
-export type UsersPartialUpdateMutationBody = PatchedUser;
-export type UsersPartialUpdateMutationError = unknown;
+export type UsersListInfiniteQueryResult = NonNullable<Awaited<ReturnType<typeof usersList>>>
+export type UsersListInfiniteQueryError = unknown
 
-export const useUsersPartialUpdate = <
-  TError = unknown,
-  TContext = unknown,
->(options?: {
-  mutation?: UseMutationOptions<
-    Awaited<ReturnType<typeof usersPartialUpdate>>,
-    TError,
-    { username: string; data: PatchedUser },
-    TContext
-  >;
-}) => {
-  const mutationOptions = getUsersPartialUpdateMutationOptions(options);
+export const useUsersListInfinite = <TData = Awaited<ReturnType<typeof usersList>>, TError = unknown>(
+ params?: UsersListParams, options?: { query?:UseInfiniteQueryOptions<Awaited<ReturnType<typeof usersList>>, TError, TData>, }
 
-  return useMutation(mutationOptions);
-};
-export const usersMeRetrieve = (signal?: AbortSignal) => {
-  return customInstance<User>({ url: `/api/users/me/`, method: 'get', signal });
-};
+  ):  UseInfiniteQueryResult<TData, TError> & { queryKey: QueryKey } => {
+
+  const queryOptions = getUsersListInfiniteQueryOptions(params,options)
+
+  const query = useInfiniteQuery(queryOptions) as  UseInfiniteQueryResult<TData, TError> & { queryKey: QueryKey };
+
+  query.queryKey = queryOptions.queryKey ;
+
+  return query;
+}
+
+export const getUsersListQueryOptions = <TData = Awaited<ReturnType<typeof usersList>>, TError = unknown>(params?: UsersListParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof usersList>>, TError, TData>, }
+): UseQueryOptions<Awaited<ReturnType<typeof usersList>>, TError, TData> & { queryKey: QueryKey } => {
+const {query: queryOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getUsersListQueryKey(params);
+
+  
+  
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof usersList>>> = ({ signal }) => usersList(params, signal);
+    
+      
+      
+   return  { queryKey, queryFn,   staleTime: Infinity, refetchOnWindowFocus: false, retry: 2,  ...queryOptions}}
+
+export type UsersListQueryResult = NonNullable<Awaited<ReturnType<typeof usersList>>>
+export type UsersListQueryError = unknown
+
+export const useUsersList = <TData = Awaited<ReturnType<typeof usersList>>, TError = unknown>(
+ params?: UsersListParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof usersList>>, TError, TData>, }
+
+  ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
+
+  const queryOptions = getUsersListQueryOptions(params,options)
+
+  const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
+
+  query.queryKey = queryOptions.queryKey ;
+
+  return query;
+}
+
+export const usersRetrieve = (
+    username: string,
+ signal?: AbortSignal
+) => {
+      return customInstance<User>(
+      {url: `/api/users/${username}/`, method: 'get', signal
+    },
+      );
+    }
+  
+
+export const getUsersRetrieveQueryKey = (username: string,) => [`/api/users/${username}/`] as const;
+  
+
+    
+export const getUsersRetrieveInfiniteQueryOptions = <TData = Awaited<ReturnType<typeof usersRetrieve>>, TError = unknown>(username: string, options?: { query?:UseInfiniteQueryOptions<Awaited<ReturnType<typeof usersRetrieve>>, TError, TData>, }
+): UseInfiniteQueryOptions<Awaited<ReturnType<typeof usersRetrieve>>, TError, TData> & { queryKey: QueryKey } => {
+const {query: queryOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getUsersRetrieveQueryKey(username);
+
+  
+  
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof usersRetrieve>>> = ({ signal }) => usersRetrieve(username, signal);
+    
+      
+      
+   return  { queryKey, queryFn, enabled: !!(username),  staleTime: Infinity, refetchOnWindowFocus: false, retry: 2,  ...queryOptions}}
+
+export type UsersRetrieveInfiniteQueryResult = NonNullable<Awaited<ReturnType<typeof usersRetrieve>>>
+export type UsersRetrieveInfiniteQueryError = unknown
+
+export const useUsersRetrieveInfinite = <TData = Awaited<ReturnType<typeof usersRetrieve>>, TError = unknown>(
+ username: string, options?: { query?:UseInfiniteQueryOptions<Awaited<ReturnType<typeof usersRetrieve>>, TError, TData>, }
+
+  ):  UseInfiniteQueryResult<TData, TError> & { queryKey: QueryKey } => {
+
+  const queryOptions = getUsersRetrieveInfiniteQueryOptions(username,options)
+
+  const query = useInfiniteQuery(queryOptions) as  UseInfiniteQueryResult<TData, TError> & { queryKey: QueryKey };
+
+  query.queryKey = queryOptions.queryKey ;
+
+  return query;
+}
+
+export const getUsersRetrieveQueryOptions = <TData = Awaited<ReturnType<typeof usersRetrieve>>, TError = unknown>(username: string, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof usersRetrieve>>, TError, TData>, }
+): UseQueryOptions<Awaited<ReturnType<typeof usersRetrieve>>, TError, TData> & { queryKey: QueryKey } => {
+const {query: queryOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getUsersRetrieveQueryKey(username);
+
+  
+  
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof usersRetrieve>>> = ({ signal }) => usersRetrieve(username, signal);
+    
+      
+      
+   return  { queryKey, queryFn, enabled: !!(username),  staleTime: Infinity, refetchOnWindowFocus: false, retry: 2,  ...queryOptions}}
+
+export type UsersRetrieveQueryResult = NonNullable<Awaited<ReturnType<typeof usersRetrieve>>>
+export type UsersRetrieveQueryError = unknown
+
+export const useUsersRetrieve = <TData = Awaited<ReturnType<typeof usersRetrieve>>, TError = unknown>(
+ username: string, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof usersRetrieve>>, TError, TData>, }
+
+  ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
+
+  const queryOptions = getUsersRetrieveQueryOptions(username,options)
+
+  const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
+
+  query.queryKey = queryOptions.queryKey ;
+
+  return query;
+}
+
+export const usersUpdate = (
+    username: string,
+    userRequest: UserRequest,
+ ) => {
+      return customInstance<User>(
+      {url: `/api/users/${username}/`, method: 'put',
+      headers: {'Content-Type': 'application/json', },
+      data: userRequest
+    },
+      );
+    }
+  
+
+
+export const getUsersUpdateMutationOptions = <TError = unknown,
+    
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof usersUpdate>>, TError,{username: string;data: UserRequest}, TContext>, }
+): UseMutationOptions<Awaited<ReturnType<typeof usersUpdate>>, TError,{username: string;data: UserRequest}, TContext> => {
+ const {mutation: mutationOptions} = options ?? {};
+
+      
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof usersUpdate>>, {username: string;data: UserRequest}> = (props) => {
+          const {username,data} = props ?? {};
+
+          return  usersUpdate(username,data,)
+        }
+
+        
+
+ 
+   return  { mutationFn, ...mutationOptions }}
+
+    export type UsersUpdateMutationResult = NonNullable<Awaited<ReturnType<typeof usersUpdate>>>
+    export type UsersUpdateMutationBody = UserRequest
+    export type UsersUpdateMutationError = unknown
+
+    export const useUsersUpdate = <TError = unknown,
+    
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof usersUpdate>>, TError,{username: string;data: UserRequest}, TContext>, }
+) => {
+    
+      const mutationOptions = getUsersUpdateMutationOptions(options);
+     
+      return useMutation(mutationOptions);
+    }
+    export const usersPartialUpdate = (
+    username: string,
+    patchedUserRequest: PatchedUserRequest,
+ ) => {
+      return customInstance<User>(
+      {url: `/api/users/${username}/`, method: 'patch',
+      headers: {'Content-Type': 'application/json', },
+      data: patchedUserRequest
+    },
+      );
+    }
+  
+
+
+export const getUsersPartialUpdateMutationOptions = <TError = unknown,
+    
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof usersPartialUpdate>>, TError,{username: string;data: PatchedUserRequest}, TContext>, }
+): UseMutationOptions<Awaited<ReturnType<typeof usersPartialUpdate>>, TError,{username: string;data: PatchedUserRequest}, TContext> => {
+ const {mutation: mutationOptions} = options ?? {};
+
+      
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof usersPartialUpdate>>, {username: string;data: PatchedUserRequest}> = (props) => {
+          const {username,data} = props ?? {};
+
+          return  usersPartialUpdate(username,data,)
+        }
+
+        
+
+ 
+   return  { mutationFn, ...mutationOptions }}
+
+    export type UsersPartialUpdateMutationResult = NonNullable<Awaited<ReturnType<typeof usersPartialUpdate>>>
+    export type UsersPartialUpdateMutationBody = PatchedUserRequest
+    export type UsersPartialUpdateMutationError = unknown
+
+    export const useUsersPartialUpdate = <TError = unknown,
+    
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof usersPartialUpdate>>, TError,{username: string;data: PatchedUserRequest}, TContext>, }
+) => {
+    
+      const mutationOptions = getUsersPartialUpdateMutationOptions(options);
+     
+      return useMutation(mutationOptions);
+    }
+    export const usersMeRetrieve = (
+    
+ signal?: AbortSignal
+) => {
+      return customInstance<User>(
+      {url: `/api/users/me/`, method: 'get', signal
+    },
+      );
+    }
+  
 
 export const getUsersMeRetrieveQueryKey = () => [`/api/users/me/`] as const;
+  
 
-export const getUsersMeRetrieveInfiniteQueryOptions = <
-  TData = Awaited<ReturnType<typeof usersMeRetrieve>>,
-  TError = unknown,
->(options?: {
-  query?: UseInfiniteQueryOptions<
-    Awaited<ReturnType<typeof usersMeRetrieve>>,
-    TError,
-    TData
-  >;
-}): UseInfiniteQueryOptions<
-  Awaited<ReturnType<typeof usersMeRetrieve>>,
-  TError,
-  TData
-> & { queryKey: QueryKey } => {
-  const { query: queryOptions } = options ?? {};
+    
+export const getUsersMeRetrieveInfiniteQueryOptions = <TData = Awaited<ReturnType<typeof usersMeRetrieve>>, TError = unknown>( options?: { query?:UseInfiniteQueryOptions<Awaited<ReturnType<typeof usersMeRetrieve>>, TError, TData>, }
+): UseInfiniteQueryOptions<Awaited<ReturnType<typeof usersMeRetrieve>>, TError, TData> & { queryKey: QueryKey } => {
+const {query: queryOptions} = options ?? {};
 
-  const queryKey = queryOptions?.queryKey ?? getUsersMeRetrieveQueryKey();
+  const queryKey =  queryOptions?.queryKey ?? getUsersMeRetrieveQueryKey();
 
-  const queryFn: QueryFunction<Awaited<ReturnType<typeof usersMeRetrieve>>> = ({
-    signal,
-  }) => usersMeRetrieve(signal);
+  
+  
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof usersMeRetrieve>>> = ({ signal }) => usersMeRetrieve(signal);
+    
+      
+      
+   return  { queryKey, queryFn,   staleTime: Infinity, refetchOnWindowFocus: false, retry: 2,  ...queryOptions}}
 
-  return {
-    queryKey,
-    queryFn,
-    staleTime: Infinity,
-    refetchOnWindowFocus: false,
-    retry: 2,
-    ...queryOptions,
-  };
-};
+export type UsersMeRetrieveInfiniteQueryResult = NonNullable<Awaited<ReturnType<typeof usersMeRetrieve>>>
+export type UsersMeRetrieveInfiniteQueryError = unknown
 
-export type UsersMeRetrieveInfiniteQueryResult = NonNullable<
-  Awaited<ReturnType<typeof usersMeRetrieve>>
->;
-export type UsersMeRetrieveInfiniteQueryError = unknown;
+export const useUsersMeRetrieveInfinite = <TData = Awaited<ReturnType<typeof usersMeRetrieve>>, TError = unknown>(
+  options?: { query?:UseInfiniteQueryOptions<Awaited<ReturnType<typeof usersMeRetrieve>>, TError, TData>, }
 
-export const useUsersMeRetrieveInfinite = <
-  TData = Awaited<ReturnType<typeof usersMeRetrieve>>,
-  TError = unknown,
->(options?: {
-  query?: UseInfiniteQueryOptions<
-    Awaited<ReturnType<typeof usersMeRetrieve>>,
-    TError,
-    TData
-  >;
-}): UseInfiniteQueryResult<TData, TError> & { queryKey: QueryKey } => {
-  const queryOptions = getUsersMeRetrieveInfiniteQueryOptions(options);
+  ):  UseInfiniteQueryResult<TData, TError> & { queryKey: QueryKey } => {
 
-  const query = useInfiniteQuery(queryOptions) as UseInfiniteQueryResult<
-    TData,
-    TError
-  > & { queryKey: QueryKey };
+  const queryOptions = getUsersMeRetrieveInfiniteQueryOptions(options)
 
-  query.queryKey = queryOptions.queryKey;
+  const query = useInfiniteQuery(queryOptions) as  UseInfiniteQueryResult<TData, TError> & { queryKey: QueryKey };
+
+  query.queryKey = queryOptions.queryKey ;
 
   return query;
-};
+}
 
-export const getUsersMeRetrieveQueryOptions = <
-  TData = Awaited<ReturnType<typeof usersMeRetrieve>>,
-  TError = unknown,
->(options?: {
-  query?: UseQueryOptions<
-    Awaited<ReturnType<typeof usersMeRetrieve>>,
-    TError,
-    TData
-  >;
-}): UseQueryOptions<
-  Awaited<ReturnType<typeof usersMeRetrieve>>,
-  TError,
-  TData
-> & { queryKey: QueryKey } => {
-  const { query: queryOptions } = options ?? {};
+export const getUsersMeRetrieveQueryOptions = <TData = Awaited<ReturnType<typeof usersMeRetrieve>>, TError = unknown>( options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof usersMeRetrieve>>, TError, TData>, }
+): UseQueryOptions<Awaited<ReturnType<typeof usersMeRetrieve>>, TError, TData> & { queryKey: QueryKey } => {
+const {query: queryOptions} = options ?? {};
 
-  const queryKey = queryOptions?.queryKey ?? getUsersMeRetrieveQueryKey();
+  const queryKey =  queryOptions?.queryKey ?? getUsersMeRetrieveQueryKey();
 
-  const queryFn: QueryFunction<Awaited<ReturnType<typeof usersMeRetrieve>>> = ({
-    signal,
-  }) => usersMeRetrieve(signal);
+  
+  
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof usersMeRetrieve>>> = ({ signal }) => usersMeRetrieve(signal);
+    
+      
+      
+   return  { queryKey, queryFn,   staleTime: Infinity, refetchOnWindowFocus: false, retry: 2,  ...queryOptions}}
 
-  return {
-    queryKey,
-    queryFn,
-    staleTime: Infinity,
-    refetchOnWindowFocus: false,
-    retry: 2,
-    ...queryOptions,
-  };
-};
+export type UsersMeRetrieveQueryResult = NonNullable<Awaited<ReturnType<typeof usersMeRetrieve>>>
+export type UsersMeRetrieveQueryError = unknown
 
-export type UsersMeRetrieveQueryResult = NonNullable<
-  Awaited<ReturnType<typeof usersMeRetrieve>>
->;
-export type UsersMeRetrieveQueryError = unknown;
+export const useUsersMeRetrieve = <TData = Awaited<ReturnType<typeof usersMeRetrieve>>, TError = unknown>(
+  options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof usersMeRetrieve>>, TError, TData>, }
 
-export const useUsersMeRetrieve = <
-  TData = Awaited<ReturnType<typeof usersMeRetrieve>>,
-  TError = unknown,
->(options?: {
-  query?: UseQueryOptions<
-    Awaited<ReturnType<typeof usersMeRetrieve>>,
-    TError,
-    TData
-  >;
-}): UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
-  const queryOptions = getUsersMeRetrieveQueryOptions(options);
+  ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
 
-  const query = useQuery(queryOptions) as UseQueryResult<TData, TError> & {
-    queryKey: QueryKey;
-  };
+  const queryOptions = getUsersMeRetrieveQueryOptions(options)
 
-  query.queryKey = queryOptions.queryKey;
+  const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
+
+  query.queryKey = queryOptions.queryKey ;
 
   return query;
-};
+}
+

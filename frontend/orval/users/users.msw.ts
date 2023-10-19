@@ -5,93 +5,52 @@
  * Documentation of API endpoints of doshro_bazar
  * OpenAPI spec version: 1.0.0
  */
-import { rest } from 'msw';
-import { faker } from '@faker-js/faker';
+import {
+  rest
+} from 'msw'
+import {
+  faker
+} from '@faker-js/faker'
 
-export const getUsersListMock = () => ({
-  count: faker.helpers.arrayElement([
-    faker.datatype.number({ min: undefined, max: undefined }),
-    undefined,
-  ]),
-  next: faker.helpers.arrayElement([
-    faker.helpers.arrayElement([faker.internet.url(), null]),
-    undefined,
-  ]),
-  previous: faker.helpers.arrayElement([
-    faker.helpers.arrayElement([faker.internet.url(), null]),
-    undefined,
-  ]),
-  results: faker.helpers.arrayElement([
-    Array.from(
-      { length: faker.datatype.number({ min: 1, max: 10 }) },
-      (_, i) => i + 1,
-    ).map(() => ({
-      username: faker.random.word(),
-      name: faker.helpers.arrayElement([faker.random.word(), undefined]),
-      image: faker.helpers.arrayElement([faker.internet.url(), undefined]),
-    })),
-    undefined,
-  ]),
-});
+export const getUsersListMock = () => ({count: faker.helpers.arrayElement([faker.datatype.number({min: undefined, max: undefined}), undefined]), next: faker.helpers.arrayElement([faker.helpers.arrayElement([faker.internet.url(), null]), undefined]), previous: faker.helpers.arrayElement([faker.helpers.arrayElement([faker.internet.url(), null]), undefined]), results: faker.helpers.arrayElement([Array.from({ length: faker.datatype.number({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({username: faker.random.word(), name: faker.helpers.arrayElement([faker.random.word(), undefined]), image: faker.helpers.arrayElement([faker.internet.url(), undefined])})), undefined])})
 
-export const getUsersRetrieveMock = () => ({
-  username: faker.random.word(),
-  name: faker.helpers.arrayElement([faker.random.word(), undefined]),
-  image: faker.helpers.arrayElement([faker.internet.url(), undefined]),
-});
+export const getUsersRetrieveMock = () => ({username: faker.random.word(), name: faker.helpers.arrayElement([faker.random.word(), undefined]), image: faker.helpers.arrayElement([faker.internet.url(), undefined])})
 
-export const getUsersUpdateMock = () => ({
-  username: faker.random.word(),
-  name: faker.helpers.arrayElement([faker.random.word(), undefined]),
-  image: faker.helpers.arrayElement([faker.internet.url(), undefined]),
-});
+export const getUsersUpdateMock = () => ({username: faker.random.word(), name: faker.helpers.arrayElement([faker.random.word(), undefined]), image: faker.helpers.arrayElement([faker.internet.url(), undefined])})
 
-export const getUsersPartialUpdateMock = () => ({
-  username: faker.random.word(),
-  name: faker.helpers.arrayElement([faker.random.word(), undefined]),
-  image: faker.helpers.arrayElement([faker.internet.url(), undefined]),
-});
+export const getUsersPartialUpdateMock = () => ({username: faker.random.word(), name: faker.helpers.arrayElement([faker.random.word(), undefined]), image: faker.helpers.arrayElement([faker.internet.url(), undefined])})
 
-export const getUsersMeRetrieveMock = () => ({
-  username: faker.random.word(),
-  name: faker.helpers.arrayElement([faker.random.word(), undefined]),
-  image: faker.helpers.arrayElement([faker.internet.url(), undefined]),
-});
+export const getUsersMeRetrieveMock = () => ({username: faker.random.word(), name: faker.helpers.arrayElement([faker.random.word(), undefined]), image: faker.helpers.arrayElement([faker.internet.url(), undefined])})
 
 export const getUsersMSW = () => [
-  rest.get('*/api/users/', (_req, res, ctx) => {
-    return res(
-      ctx.delay(1000),
-      ctx.status(200, 'Mocked status'),
-      ctx.json(getUsersListMock()),
-    );
-  }),
-  rest.get('*/api/users/:username/', (_req, res, ctx) => {
-    return res(
-      ctx.delay(1000),
-      ctx.status(200, 'Mocked status'),
-      ctx.json(getUsersRetrieveMock()),
-    );
-  }),
-  rest.put('*/api/users/:username/', (_req, res, ctx) => {
-    return res(
-      ctx.delay(1000),
-      ctx.status(200, 'Mocked status'),
-      ctx.json(getUsersUpdateMock()),
-    );
-  }),
-  rest.patch('*/api/users/:username/', (_req, res, ctx) => {
-    return res(
-      ctx.delay(1000),
-      ctx.status(200, 'Mocked status'),
-      ctx.json(getUsersPartialUpdateMock()),
-    );
-  }),
-  rest.get('*/api/users/me/', (_req, res, ctx) => {
-    return res(
-      ctx.delay(1000),
-      ctx.status(200, 'Mocked status'),
-      ctx.json(getUsersMeRetrieveMock()),
-    );
-  }),
-];
+rest.get('*/api/users/', (_req, res, ctx) => {
+        return res(
+          ctx.delay(1000),
+          ctx.status(200, 'Mocked status'),
+ctx.json(getUsersListMock()),
+        )
+      }),rest.get('*/api/users/:username/', (_req, res, ctx) => {
+        return res(
+          ctx.delay(1000),
+          ctx.status(200, 'Mocked status'),
+ctx.json(getUsersRetrieveMock()),
+        )
+      }),rest.put('*/api/users/:username/', (_req, res, ctx) => {
+        return res(
+          ctx.delay(1000),
+          ctx.status(200, 'Mocked status'),
+ctx.json(getUsersUpdateMock()),
+        )
+      }),rest.patch('*/api/users/:username/', (_req, res, ctx) => {
+        return res(
+          ctx.delay(1000),
+          ctx.status(200, 'Mocked status'),
+ctx.json(getUsersPartialUpdateMock()),
+        )
+      }),rest.get('*/api/users/me/', (_req, res, ctx) => {
+        return res(
+          ctx.delay(1000),
+          ctx.status(200, 'Mocked status'),
+ctx.json(getUsersMeRetrieveMock()),
+        )
+      }),]

@@ -6,8 +6,8 @@
  * OpenAPI spec version: 1.0.0
  */
 
-export type SchemaRetrieveFormat =
-  (typeof SchemaRetrieveFormat)[keyof typeof SchemaRetrieveFormat];
+export type SchemaRetrieveFormat = typeof SchemaRetrieveFormat[keyof typeof SchemaRetrieveFormat];
+
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const SchemaRetrieveFormat = {

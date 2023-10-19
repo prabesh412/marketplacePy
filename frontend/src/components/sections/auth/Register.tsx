@@ -80,7 +80,7 @@ const Register = () => {
       {!step && (
         <div>
           <Title order={2} ta="center" mt="md" mb={50}>
-            Register to DoshroBazar
+            Welcome to DoshroBazar
           </Title>
           <form onSubmit={form.onSubmit((values) => handleRegister(values))}>
             <TextInput
@@ -106,7 +106,7 @@ const Register = () => {
               {...form.getInputProps('password')}
             />
             <Checkbox label="Keep me logged in" mt="xl" size="md" />
-            <Button fullWidth mt="xl" size="md" type="submit">
+            <Button fullWidth mt="xl" size="md" type="submit" variant="gradient" gradient={{ from: 'indigo', to: 'teal', deg: 90 }}>
               Register
             </Button>
           </form>

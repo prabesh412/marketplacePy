@@ -5,31 +5,28 @@
  * Documentation of API endpoints of doshro_bazar
  * OpenAPI spec version: 1.0.0
  */
-import { rest } from 'msw';
-import { faker } from '@faker-js/faker';
+import {
+  rest
+} from 'msw'
+import {
+  faker
+} from '@faker-js/faker'
 
-export const getSchemaRetrieveMock = () =>
-  faker.helpers.arrayElement([
-    {
-      cll9gqiwm0000zkub6tep6jyr: {},
-    },
-    {
-      cll9gqiwn0001zkubara8agpa: {},
-    },
-    {
-      cll9gqiwn0002zkubaedrcf3x: {},
-    },
-    {
-      cll9gqiwn0003zkub6tahcsju: {},
-    },
-  ]);
+export const getSchemaRetrieveMock = () => (faker.helpers.arrayElement([{
+        'clnud1e8t000064v7fx698c3i': {}
+      }, {
+        'clnud1e8u000164v7dh7nc4b4': {}
+      }, {
+        'clnud1e8u000264v73rn38zor': {}
+      }, {
+        'clnud1e8v000364v7arrm1hh4': {}
+      }]))
 
 export const getSchemaMSW = () => [
-  rest.get('*/api/schema/', (_req, res, ctx) => {
-    return res(
-      ctx.delay(1000),
-      ctx.status(200, 'Mocked status'),
-      ctx.json(getSchemaRetrieveMock()),
-    );
-  }),
-];
+rest.get('*/api/schema/', (_req, res, ctx) => {
+        return res(
+          ctx.delay(1000),
+          ctx.status(200, 'Mocked status'),
+ctx.json(getSchemaRetrieveMock()),
+        )
+      }),]

@@ -1,4 +1,4 @@
-import { Anchor, createStyles, Paper, rem, Text } from '@mantine/core';
+import { Anchor, createStyles, Paper, rem, Text,Container } from '@mantine/core';
 import { useState } from 'react';
 import Login from './Login';
 import Register from './Register';
@@ -39,23 +39,34 @@ export function AuthPage() {
   };
 
   return (
+    
     <div className={classes.wrapper}>
       <Paper className={classes.form} radius={0} p={30}>
         {activeTab === 'login' ? <Login /> : <Register />}
         {activeTab === 'login' ? (
+          <Container style={{ 
+            position: 'relative', 
+            paddingTop: '50px', 
+            }}>
           <Text ta="center" mt="md">
             Don&apos;t have an account?{' '}
             <Anchor<'a'> href="#" weight={700} onClick={() => handleTabChange('register')}>
               Register
             </Anchor>
           </Text>
+          </Container>
         ) : (
+          <Container style={{ 
+            position: 'relative', 
+            paddingTop: '50px', 
+            }}>
           <Text ta="center" mt="md">
             Already have an account?
             <Anchor<'a'> href="#" weight={700} onClick={() => handleTabChange('login')}>
               Login
             </Anchor>
           </Text>
+          </Container>
         )}
       </Paper>
     </div>

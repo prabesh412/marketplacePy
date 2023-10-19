@@ -6,6 +6,10 @@ import {
   rem,
   TextInput,
   Title,
+  Container,
+  Text,
+  Paper,
+  Anchor,
 } from '@mantine/core';
 
 import { useDjRestAuthLoginCreate } from '../../../../orval/dj-rest-auth/dj-rest-auth';
@@ -17,6 +21,7 @@ import { notifications } from '@mantine/notifications';
 
 const useStyles = createStyles((theme) => ({
   form: {
+
     borderRight: `${rem(1)} solid ${
       theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.colors.gray[3]
     }`,
@@ -28,7 +33,11 @@ const useStyles = createStyles((theme) => ({
       maxWidth: '100%',
     },
   },
+
 }));
+
+
+
 const Login = () => {
   const { classes } = useStyles();
   const postLogin = useDjRestAuthLoginCreate();
@@ -95,33 +104,58 @@ const Login = () => {
       },
     );
   };
+  
+  
   return (
     <>
-      <div>
-        <Title order={2} ta="center" mt="md" mb={50}>
-          Login to DoshroBazar
-        </Title>
+    
+      <Paper shadow="xl" radius="sm" p="xl" style ={{ 
+        backgroundColor:'#878585',borderRadius:'8px',position:'relative'
+        }}>
+      <Text fz="xl" lh="lg" color='#000000' weight={750} >For existing user</Text>
+      <Text fz="sm" lh="md" color='#C3BFBF' weight={600}>
+        Login to DoshroBazar 
+      </Text>
+    </Paper>
+      
+      <Container style={{ 
+        background: 'black', padding: '20px', borderRadius: '8px' ,position:'relative',top:'40px'
+        }}>
         <form onSubmit={form.onSubmit((values) => login(values))}>
           <TextInput
-            label="username or number"
-            placeholder="9837372722"
-            size="md"
+            label="Username or number"
+            placeholder="9800000000"
+            size="md" 
             {...form.getInputProps('username')}
+            styles={{
+              label: { fontWeight: 700 },
+            }}
           />
           <PasswordInput
             label="Password"
-            placeholder="Your password"
+            placeholder="Password"
             mt="md"
             size="md"
             {...form.getInputProps('password')}
           />
           <Checkbox label="Keep me logged in" mt="xl" size="md" />
-          <Button fullWidth mt="xl" size="md" type="submit">
+          <Button fullWidth mt="xl" size="md" type="submit" variant="gradient" gradient={{ from: 'indigo', to: 'teal', deg: 90 }}>
             Login
           </Button>
         </form>
-      </div>
+      </Container>
+      <Container style=
+      {{ 
+        margin: '0 auto', maxWidth: 'auto', textAlign: 'center', marginTop: '40px', 
+      }}>
+      <img
+        src="https://assets-cdn.kantipurdaily.com/uploads/source/ads/emi520x120-0882023070419.gif"
+        alt="ad gif"
+        style={{maxWidth: '100%', maxHeight: 'auto', margin: 'auto', borderRadius: 'md', objectFit: 'contain' , }}
+      />
+      </Container>
     </>
   );
 };
+
 export default Login;

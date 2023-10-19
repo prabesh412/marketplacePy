@@ -5,23 +5,27 @@
  * Documentation of API endpoints of doshro_bazar
  * OpenAPI spec version: 1.0.0
  */
-import { useQuery, useInfiniteQuery } from '@tanstack/react-query';
+import {
+  useQuery,
+  useInfiniteQuery
+} from '@tanstack/react-query'
 import type {
   UseQueryOptions,
   UseInfiniteQueryOptions,
   QueryFunction,
   UseQueryResult,
   UseInfiniteQueryResult,
-  QueryKey,
-} from '@tanstack/react-query';
+  QueryKey
+} from '@tanstack/react-query'
 import type {
   SchemaRetrieve200One,
   SchemaRetrieve200Two,
   SchemaRetrieve200Three,
   SchemaRetrieve200Four,
-  SchemaRetrieveParams,
-} from '.././model';
+  SchemaRetrieveParams
+} from '.././model'
 import { customInstance } from '.././api/custom-instance';
+
 
 /**
  * OpenApi3 schema for this API. Format can be selected via content negotiation.
@@ -30,145 +34,80 @@ import { customInstance } from '.././api/custom-instance';
 - JSON: application/vnd.oai.openapi+json
  */
 export const schemaRetrieve = (
-  params?: SchemaRetrieveParams,
-  signal?: AbortSignal,
+    params?: SchemaRetrieveParams,
+ signal?: AbortSignal
 ) => {
-  return customInstance<
-    | SchemaRetrieve200One
-    | SchemaRetrieve200Two
-    | SchemaRetrieve200Three
-    | SchemaRetrieve200Four
-  >({ url: `/api/schema/`, method: 'get', params, signal });
-};
+      return customInstance<SchemaRetrieve200One | SchemaRetrieve200Two | SchemaRetrieve200Three | SchemaRetrieve200Four>(
+      {url: `/api/schema/`, method: 'get',
+        params, signal
+    },
+      );
+    }
+  
 
-export const getSchemaRetrieveQueryKey = (params?: SchemaRetrieveParams) =>
-  [`/api/schema/`, ...(params ? [params] : [])] as const;
+export const getSchemaRetrieveQueryKey = (params?: SchemaRetrieveParams,) => [`/api/schema/`, ...(params ? [params]: [])] as const;
+  
 
-export const getSchemaRetrieveInfiniteQueryOptions = <
-  TData = Awaited<ReturnType<typeof schemaRetrieve>>,
-  TError = unknown,
->(
-  params?: SchemaRetrieveParams,
-  options?: {
-    query?: UseInfiniteQueryOptions<
-      Awaited<ReturnType<typeof schemaRetrieve>>,
-      TError,
-      TData
-    >;
-  },
-): UseInfiniteQueryOptions<
-  Awaited<ReturnType<typeof schemaRetrieve>>,
-  TError,
-  TData
-> & { queryKey: QueryKey } => {
-  const { query: queryOptions } = options ?? {};
+    
+export const getSchemaRetrieveInfiniteQueryOptions = <TData = Awaited<ReturnType<typeof schemaRetrieve>>, TError = unknown>(params?: SchemaRetrieveParams, options?: { query?:UseInfiniteQueryOptions<Awaited<ReturnType<typeof schemaRetrieve>>, TError, TData>, }
+): UseInfiniteQueryOptions<Awaited<ReturnType<typeof schemaRetrieve>>, TError, TData> & { queryKey: QueryKey } => {
+const {query: queryOptions} = options ?? {};
 
-  const queryKey = queryOptions?.queryKey ?? getSchemaRetrieveQueryKey(params);
+  const queryKey =  queryOptions?.queryKey ?? getSchemaRetrieveQueryKey(params);
 
-  const queryFn: QueryFunction<Awaited<ReturnType<typeof schemaRetrieve>>> = ({
-    signal,
-  }) => schemaRetrieve(params, signal);
+  
+  
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof schemaRetrieve>>> = ({ signal }) => schemaRetrieve(params, signal);
+    
+      
+      
+   return  { queryKey, queryFn,   staleTime: Infinity, refetchOnWindowFocus: false, retry: 2,  ...queryOptions}}
 
-  return {
-    queryKey,
-    queryFn,
-    staleTime: Infinity,
-    refetchOnWindowFocus: false,
-    retry: 2,
-    ...queryOptions,
-  };
-};
+export type SchemaRetrieveInfiniteQueryResult = NonNullable<Awaited<ReturnType<typeof schemaRetrieve>>>
+export type SchemaRetrieveInfiniteQueryError = unknown
 
-export type SchemaRetrieveInfiniteQueryResult = NonNullable<
-  Awaited<ReturnType<typeof schemaRetrieve>>
->;
-export type SchemaRetrieveInfiniteQueryError = unknown;
+export const useSchemaRetrieveInfinite = <TData = Awaited<ReturnType<typeof schemaRetrieve>>, TError = unknown>(
+ params?: SchemaRetrieveParams, options?: { query?:UseInfiniteQueryOptions<Awaited<ReturnType<typeof schemaRetrieve>>, TError, TData>, }
 
-export const useSchemaRetrieveInfinite = <
-  TData = Awaited<ReturnType<typeof schemaRetrieve>>,
-  TError = unknown,
->(
-  params?: SchemaRetrieveParams,
-  options?: {
-    query?: UseInfiniteQueryOptions<
-      Awaited<ReturnType<typeof schemaRetrieve>>,
-      TError,
-      TData
-    >;
-  },
-): UseInfiniteQueryResult<TData, TError> & { queryKey: QueryKey } => {
-  const queryOptions = getSchemaRetrieveInfiniteQueryOptions(params, options);
+  ):  UseInfiniteQueryResult<TData, TError> & { queryKey: QueryKey } => {
 
-  const query = useInfiniteQuery(queryOptions) as UseInfiniteQueryResult<
-    TData,
-    TError
-  > & { queryKey: QueryKey };
+  const queryOptions = getSchemaRetrieveInfiniteQueryOptions(params,options)
 
-  query.queryKey = queryOptions.queryKey;
+  const query = useInfiniteQuery(queryOptions) as  UseInfiniteQueryResult<TData, TError> & { queryKey: QueryKey };
+
+  query.queryKey = queryOptions.queryKey ;
 
   return query;
-};
+}
 
-export const getSchemaRetrieveQueryOptions = <
-  TData = Awaited<ReturnType<typeof schemaRetrieve>>,
-  TError = unknown,
->(
-  params?: SchemaRetrieveParams,
-  options?: {
-    query?: UseQueryOptions<
-      Awaited<ReturnType<typeof schemaRetrieve>>,
-      TError,
-      TData
-    >;
-  },
-): UseQueryOptions<
-  Awaited<ReturnType<typeof schemaRetrieve>>,
-  TError,
-  TData
-> & { queryKey: QueryKey } => {
-  const { query: queryOptions } = options ?? {};
+export const getSchemaRetrieveQueryOptions = <TData = Awaited<ReturnType<typeof schemaRetrieve>>, TError = unknown>(params?: SchemaRetrieveParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof schemaRetrieve>>, TError, TData>, }
+): UseQueryOptions<Awaited<ReturnType<typeof schemaRetrieve>>, TError, TData> & { queryKey: QueryKey } => {
+const {query: queryOptions} = options ?? {};
 
-  const queryKey = queryOptions?.queryKey ?? getSchemaRetrieveQueryKey(params);
+  const queryKey =  queryOptions?.queryKey ?? getSchemaRetrieveQueryKey(params);
 
-  const queryFn: QueryFunction<Awaited<ReturnType<typeof schemaRetrieve>>> = ({
-    signal,
-  }) => schemaRetrieve(params, signal);
+  
+  
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof schemaRetrieve>>> = ({ signal }) => schemaRetrieve(params, signal);
+    
+      
+      
+   return  { queryKey, queryFn,   staleTime: Infinity, refetchOnWindowFocus: false, retry: 2,  ...queryOptions}}
 
-  return {
-    queryKey,
-    queryFn,
-    staleTime: Infinity,
-    refetchOnWindowFocus: false,
-    retry: 2,
-    ...queryOptions,
-  };
-};
+export type SchemaRetrieveQueryResult = NonNullable<Awaited<ReturnType<typeof schemaRetrieve>>>
+export type SchemaRetrieveQueryError = unknown
 
-export type SchemaRetrieveQueryResult = NonNullable<
-  Awaited<ReturnType<typeof schemaRetrieve>>
->;
-export type SchemaRetrieveQueryError = unknown;
+export const useSchemaRetrieve = <TData = Awaited<ReturnType<typeof schemaRetrieve>>, TError = unknown>(
+ params?: SchemaRetrieveParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof schemaRetrieve>>, TError, TData>, }
 
-export const useSchemaRetrieve = <
-  TData = Awaited<ReturnType<typeof schemaRetrieve>>,
-  TError = unknown,
->(
-  params?: SchemaRetrieveParams,
-  options?: {
-    query?: UseQueryOptions<
-      Awaited<ReturnType<typeof schemaRetrieve>>,
-      TError,
-      TData
-    >;
-  },
-): UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
-  const queryOptions = getSchemaRetrieveQueryOptions(params, options);
+  ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
 
-  const query = useQuery(queryOptions) as UseQueryResult<TData, TError> & {
-    queryKey: QueryKey;
-  };
+  const queryOptions = getSchemaRetrieveQueryOptions(params,options)
 
-  query.queryKey = queryOptions.queryKey;
+  const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
+
+  query.queryKey = queryOptions.queryKey ;
 
   return query;
-};
+}
+

@@ -99,6 +99,7 @@ export function AuthPage() {
             Login
           </Button>
         </form>
+  
         <Text ta="center" mt="md">
           Don&apos;t have an account?{' '}
           <Anchor<'a'>

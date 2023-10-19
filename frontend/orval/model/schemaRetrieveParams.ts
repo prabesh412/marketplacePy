@@ -9,6 +9,6 @@ import type { SchemaRetrieveFormat } from './schemaRetrieveFormat';
 import type { SchemaRetrieveLang } from './schemaRetrieveLang';
 
 export type SchemaRetrieveParams = {
-  format?: SchemaRetrieveFormat;
-  lang?: SchemaRetrieveLang;
+format?: SchemaRetrieveFormat;
+lang?: SchemaRetrieveLang;
 };
