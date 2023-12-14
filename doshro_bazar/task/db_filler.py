@@ -34,11 +34,24 @@ def fill_users_db():
         user_objects.append(User(id=random.randint(1,100000), name=product["creatorInfo"]['createdByName'], username=product["creatorInfo"]['createdByUsername']))
 
     User.objects.bulk_create(user_objects, ignore_conflicts=True)
-   
+
+
+def fill_listings_db():
+    file_path = os.path.join(os.path.dirname(__file__), 'mock', 'computer.json')
+    with open(file_path, 'r') as f:
+        data = json.load(f)
+    products  = data['data']
+    listing_objects = []
+    for product in products:
+        listing_objects.append(Listings(id=random.randint(1,100000), name=product["name"], description=product["description"], price=product["price"], category_id=product["category"], user_id=product["creatorInfo"]["createdBy"], slug=slugify(product["name"])))
+
+    Listings.objects.bulk_create(listing_objects, ignore_conflicts=True)
+
+
 
 def run():
-    fill_users_db()
+    fill_category_db()
 
 
 if __name__ == '__main__': 
-    fill_category_db()
+    run()
