@@ -168,7 +168,7 @@ const FirstStep = ({ form }: any) => {
             data-autofocus={form.errors?.description !== undefined}
           />
 
-          <ImageDropper />
+          <ImageDropper form={form} />
         </FocusTrap>
       </Stack>
     </div>

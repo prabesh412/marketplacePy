@@ -30,16 +30,20 @@ export default function App({ Component, pageProps }: Props) {
   const getLayout = Component.getLayout || ((page: ReactNode) => page);
   const [queryClient] = useState(() => new QueryClient());
   return (
-    <MantineProvider withGlobalStyles withNormalizeCSS theme={customTheme}>
-      <StoreProvider {...pageProps.initialZustandState}>
-        <QueryClientProvider client={queryClient}>
-          <Hydrate state={pageProps?.dehydratedState}>
+    <StoreProvider {...pageProps.initialZustandState}>
+      <QueryClientProvider client={queryClient}>
+        <Hydrate state={pageProps?.dehydratedState}>
+          <MantineProvider
+            withGlobalStyles
+            withNormalizeCSS
+            theme={customTheme}
+          >
             <RouterTransition />
             <Notifications />
             <Background>{getLayout(<Component {...pageProps} />)}</Background>
-          </Hydrate>
-        </QueryClientProvider>
-      </StoreProvider>
-    </MantineProvider>
+          </MantineProvider>
+        </Hydrate>
+      </QueryClientProvider>
+    </StoreProvider>
   );
 }

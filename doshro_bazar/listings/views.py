@@ -66,9 +66,10 @@ class ListingImageViewSet(CreateModelMixin, GenericViewSet):
     queryset = ListingImage.objects.all()
     serializer_class = ListingImageSerializer
     filter_backends = (filters_new.DjangoFilterBackend, )
-    parser_classes = (FormParser, MultiPartParser,)
+    parser_classes = ( MultiPartParser,)
 
     def create(self, request, *args, **kwargs):
+
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         listing = Listings.objects.get(slug=request.data["listing"])

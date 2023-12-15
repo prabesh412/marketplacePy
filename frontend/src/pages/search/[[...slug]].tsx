@@ -14,6 +14,7 @@ import SearchLayout from '@/components/layouts/SearchLayout';
 import RecentListingCard from '@/components/pageSpecific/search/SearchProductCard';
 import { Divider, createStyles } from '@mantine/core';
 import AdvertisementImage from '@/components/miscellanous/AdvertisementImage';
+import { Listings } from '../../../orval/model/listings';
 
 const useStyles = createStyles((theme) => ({
   parent: {
@@ -98,7 +99,7 @@ export default function Search() {
       <div className={classes.mainContent}>
         <div>
           {listingDetail?.results && listingDetail.results.length > 0 ? (
-            listingDetail?.results?.map((listing) => (
+            listingDetail?.results?.map((listing: Listings) => (
               <RecentListingCard
                 title={listing.title}
                 image={listing.title}

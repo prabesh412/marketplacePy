@@ -3,7 +3,7 @@ import { useStore } from '@/zustand/store';
 
 const Background = (props: any) => {
   return (
-    <Paper style={{ height: '100vh' }} sx={(theme) => ({})}>
+    <Paper style={{ minHeight: '90vh' }} sx={(theme) => ({})} radius={0}>
       {props.children}
     </Paper>
   );

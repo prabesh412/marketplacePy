@@ -18,6 +18,7 @@ import {
   Grid,
   Group,
   Image,
+  SimpleGrid,
   Tabs,
   Text,
   Title,
@@ -38,6 +39,10 @@ import {
   IconShare,
 } from '@tabler/icons-react';
 import ListingDetailLayout from '@/components/layouts/ListingDetail';
+import {
+  categoryList,
+  getCategoryListQueryKey,
+} from '../../../../orval/category/category';
 
 export async function getServerSideProps(ctx: NextPageContext) {
   const { slug } = ctx.query;
@@ -51,7 +56,11 @@ export async function getServerSideProps(ctx: NextPageContext) {
       staleTime: Infinity,
     },
   );
-  console.log(dehydrate(queryClient));
+  await queryClient.prefetchQuery(
+    getCategoryListQueryKey(),
+    () => categoryList(),
+    {},
+  );
   return {
     props: {
       dehydratedState: dehydrate(queryClient),
@@ -107,57 +116,23 @@ export default function ListingDetail() {
           </Group>
         </Group>
       </Group>
-      <Grid gutter="xs">
-        <Grid.Col span={4}>
+      <SimpleGrid
+        cols={5}
+        breakpoints={[{ maxWidth: 'sm', cols: 1 }]}
+        mt={
+          listingDetail?.images && listingDetail?.images?.length > 0 ? 'xl' : 0
+        }
+      >
+        {listingDetail?.images?.map((image) => (
           <Image
-            radius={'md'}
-            src={
-              'https://cdn02.hamrobazaar.com/User/Posts/2023/10/09/2f5b7daf-9d87-3ea8-f4ba-421a5f0c974f.webp?x-image-process=image/resize,m_lfit,h_500,w_500'
-            }
+            src={image.image}
+            alt={image.image}
+            height={rem(200)}
+            fit="contain"
+            key={image.id}
           />
-        </Grid.Col>
-        <Grid.Col span={4}>
-          {' '}
-          <Image
-            radius={'md'}
-            src={
-              'https://cdn02.hamrobazaar.com/User/Posts/2023/10/09/2f5b7daf-9d87-3ea8-f4ba-421a5f0c974f.webp?x-image-process=image/resize,m_lfit,h_500,w_500'
-            }
-          />
-        </Grid.Col>
-        <Grid.Col span={4}>
-          <div style={{ position: 'relative' }}>
-            <Image
-              src={
-                'https://cdn02.hamrobazaar.com/User/Posts/2023/10/09/2f5b7daf-9d87-3ea8-f4ba-421a5f0c974f.webp?x-image-process=image/resize,m_lfit,h_500,w_500'
-              }
-            />
-            <div
-              style={{
-                position: 'absolute',
-                top: 0,
-                left: 0,
-                width: '100%',
-                height: '100%',
-                backgroundColor: 'rgba(0, 0, 0, 0.5)',
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}
-            >
-              <ActionIcon
-                size={40}
-                radius="xl"
-                color="primary"
-                variant="filled"
-              >
-                <IconCameraPlus />
-              </ActionIcon>
-            </div>
-          </div>
-        </Grid.Col>
-      </Grid>
+        ))}
+      </SimpleGrid>
       <Group spacing={2} mt={'md'}>
         <IconMapPinFilled color="grey" />
         <Text underline c={'dimmed'} size={'sm'}>

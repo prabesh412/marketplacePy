@@ -14,22 +14,45 @@ const AddListingPage = () => {
   const [active, setActive] = useState(1);
   const [submitted, setSubmitted] = useState(false);
   const [listingAdded, setListingAdded] = useState(false);
-  const creatingListing = useListingsCreate();
-  const listingImage = useImageListingCreate();
+  const { mutate: listingMutation } = useListingsCreate({});
+  const { mutate: listingImagesMutation } = useImageListingCreate({});
   const form = useAddListingForm();
 
-  const handleNextClick = () => {
-    if (active === 1) {
-      if (!form.validate().hasErrors) {
-        setActive((current) => current + 1);
-      }
+  const handleNextClick = async () => {
+    if (active === 1 && !form.validate().hasErrors) {
+      setActive((current) => current + 1);
     } else if (active === 2) {
-      createAd();
+      await createAd();
     }
   };
 
   const prevStep = () => setActive((current) => current - 1);
-  const createAd = () => {
+
+  const handleSuccessNotification = () => {
+    notifications.update({
+      id: 'Listing',
+      title: 'Listing added',
+      color: 'green',
+      message: 'Congratulations, Listing added successfully',
+      loading: false,
+      autoClose: true,
+      withCloseButton: true,
+    });
+  };
+
+  const handleErrorResponse = () => {
+    notifications.update({
+      id: 'Listing',
+      title: 'Listing added',
+      color: 'red',
+      message: 'Whoops, an unexpected error occurred!',
+      loading: false,
+      autoClose: true,
+      withCloseButton: true,
+    });
+  };
+
+  const createAd = async () => {
     const values = form.values.firstStep;
 
     const requestData = {
@@ -42,6 +65,7 @@ const AddListingPage = () => {
         phone_number: values.phone_number.toString(),
       },
     };
+
     notifications.show({
       id: 'Listing',
       title: `Listing is getting added`,
@@ -50,32 +74,26 @@ const AddListingPage = () => {
       autoClose: false,
       withCloseButton: false,
     });
-    creatingListing.mutate(requestData, {
-      onSuccess: () => {
-        setSubmitted(true);
-        setListingAdded(true);
-        notifications.update({
-          id: 'Listing',
-          title: `Listing added`,
-          color: 'green',
-          message: 'Congratulation, Listing added successfully',
-          loading: false,
-          autoClose: true,
-
-          withCloseButton: true,
-        });
+    listingMutation(requestData, {
+      onSuccess: async (res) => {
+        listingImagesMutation(
+          {
+            data: {
+              listing: res.slug,
+              image: values.images,
+            },
+          },
+          {
+            onSuccess: () => {
+              setSubmitted(true);
+              setListingAdded(true);
+              handleSuccessNotification();
+            },
+          },
+        );
       },
-      onError: (error) => {
-        notifications.update({
-          id: 'Listing',
-          title: `Listing added`,
-          color: 'red',
-          message: 'whoops, unexpected error occured!',
-          loading: false,
-          autoClose: true,
-
-          withCloseButton: true,
-        });
+      onError: () => {
+        handleErrorResponse();
       },
     });
   };
