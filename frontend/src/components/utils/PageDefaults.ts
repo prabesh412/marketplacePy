@@ -2,7 +2,7 @@ import nookies from 'nookies';
 import { initializeStore } from '@/zustand/store';
 import { NextPageContext, GetServerSidePropsContext } from 'next';
 import { usersMeRetrieve } from '../../../orval/users/users';
-import { AXIOS_INSTANCE } from '../../../orval/api/custom-instance';
+import { AXIOS_INSTANCE } from '../../../custom-instance';
 
 export const getDefaultStore = async (
   ctx: NextPageContext | GetServerSidePropsContext,

@@ -1,7 +1,7 @@
 import { destroyCookie, setCookie } from 'nookies';
 import { createContext, useContext } from 'react';
 import { createStore, useStore as useZustandStore } from 'zustand';
-import { AXIOS_INSTANCE } from '../../orval/api/custom-instance';
+import { AXIOS_INSTANCE } from '../../custom-instance';
 import { User } from '../../orval/model';
 import { usersMeRetrieve } from '../../orval/users/users';
 
