@@ -43,7 +43,7 @@ const useStyles = createStyles((theme) => ({
   header: {
     backgroundColor:
       theme.colorScheme === 'dark'
-        ? theme.colors.dark[6]
+        ? theme.colors.gray[9]
         : theme.colors.gray[1],
   },
 

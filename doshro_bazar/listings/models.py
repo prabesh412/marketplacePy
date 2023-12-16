@@ -36,6 +36,10 @@ class Listings(AbstractClient):
     phone_number = models.CharField(max_length=255, null=True, blank=True)
     slug = models.SlugField(max_length=500, default = None, blank = True, unique=True, primary_key = True)
     views = models.ForeignKey('listings.ListingViews', on_delete=models.CASCADE, related_name="listing_views", null=True, blank=True)
+    is_scraped = models.BooleanField(default=False, null=True, blank=True)
+    is_featured = models.BooleanField(default=False, null=True, blank=True)
+    link_to_original = models.CharField(max_length=255, null=True, blank=True)
+    banner_image = models.CharField(max_length=255, null=True, blank=True)
 
     def __str__(self):
         return self.title

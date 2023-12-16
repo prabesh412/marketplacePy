@@ -14,8 +14,8 @@ import { RouterTransition } from '@/components/global/RouterTransition';
 
 const customTheme: MantineThemeOverride = {
   colorScheme: 'dark',
-  primaryColor: 'cyan',
-  primaryShade: 5,
+  primaryColor: 'green',
+  primaryShade: 9,
 };
 
 type Page<P = {}> = NextPage<P> & {
