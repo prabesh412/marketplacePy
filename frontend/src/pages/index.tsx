@@ -28,7 +28,7 @@ export async function getServerSideProps(ctx: NextPageContext) {
 
   await queryClient.prefetchQuery(
     getListingsListQueryKey(),
-    () => listingsList(),
+    () => listingsList({ page: 1 }),
     {},
   );
 

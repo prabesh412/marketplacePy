@@ -17,7 +17,7 @@ import {
   IconDotsVertical,
   IconMaximize,
 } from '@tabler/icons-react';
-import { ListingImage } from '../../../orval/model';
+import { ListingImage, ListingViewImage } from '../../../orval/model';
 
 const useStyles = createStyles((theme) => ({
   cardContainer: {
@@ -80,7 +80,7 @@ const useStyles = createStyles((theme) => ({
 interface CardProps {
   id: string;
   title: string;
-  image: ListingImage[];
+  image: Blob[];
   condition: string;
   price: string;
 }
@@ -113,7 +113,7 @@ export function FeaturedCarouselCard({
                     imageProps={{ loading: 'lazy' }}
                     alt={`listing image ${index}`}
                     withPlaceholder
-                    src={images?.image?.length > 0 ? images?.image : null}
+                    src={URL.createObjectURL(images)}
                     radius="md"
                     height={130}
                   />

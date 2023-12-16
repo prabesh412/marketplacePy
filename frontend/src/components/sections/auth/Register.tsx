@@ -1,6 +1,7 @@
 import {
   Button,
   Checkbox,
+  Divider,
   PasswordInput,
   TextInput,
   Title,
@@ -79,36 +80,53 @@ const Register = () => {
     <>
       {!step && (
         <div>
-          <Title order={2} ta="center" mt="md" mb={50}>
-            Register to DoshroBazar
+          <Title order={3} mt="xl" mb={'md'}>
+            Register
           </Title>
           <form onSubmit={form.onSubmit((values) => handleRegister(values))}>
             <TextInput
-              label="Number"
-              placeholder="9837372722"
-              size="md"
+              placeholder="Registered Phone Number"
+              size="lg"
+              radius={'lg'}
+              pb={'xl'}
+              type="number"
               required
               {...form.getInputProps('username')}
             />
             <TextInput
-              label="username"
-              placeholder="Hari"
-              size="md"
+              placeholder="Username"
+              size="lg"
+              radius={'lg'}
+              pb={'xl'}
               required
               {...form.getInputProps('name')}
             />
             <PasswordInput
-              label="Password"
-              placeholder="Your password"
-              mt="md"
-              size="md"
+              placeholder="Password"
+              size="lg"
+              radius={'lg'}
+              pb={'xl'}
               required
               {...form.getInputProps('password')}
             />
-            <Checkbox label="Keep me logged in" mt="xl" size="md" />
-            <Button fullWidth mt="xl" size="md" type="submit">
+            <Divider size={3} />
+            <Checkbox
+              mt={'xl'}
+              label={`I hereby accept the Terms and Condition of Doshrodeal.`}
+              size="sm"
+            />
+            <Button
+              radius={'lg'}
+              fullWidth
+              mt="xl"
+              size="lg"
+              type="submit"
+              loading={postRegister.isLoading}
+              disabled={postRegister.isLoading}
+            >
               Register
             </Button>
+            <Divider size={1} c={'dimmed'} mt={'xl'} />
           </form>
         </div>
       )}

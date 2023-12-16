@@ -4,7 +4,11 @@ import useAddListingForm from '../add-listing/UseAddListingForm';
 import ListingStepper from '../add-listing/ListingStepper';
 import SecondStep from '../add-listing/SecondStep';
 import { Button, Group, Step } from '@mantine/core';
-import { IconArrowLeft, IconArrowRight } from '@tabler/icons-react';
+import {
+  IconArrowLeft,
+  IconArrowRight,
+  IconPhotoCancel,
+} from '@tabler/icons-react';
 import { useListingsCreate } from '../../../orval/listings/listings';
 import ListingAdded from '../add-listing/ListingAdded';
 import { notifications } from '@mantine/notifications';
@@ -51,7 +55,6 @@ const AddListingPage = () => {
       withCloseButton: true,
     });
   };
-
   const createAd = async () => {
     const values = form.values.firstStep;
 

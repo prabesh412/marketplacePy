@@ -1,4 +1,4 @@
-import { Anchor, createStyles, Paper, rem, Text } from '@mantine/core';
+import { Anchor, Card, createStyles, Paper, rem, Text } from '@mantine/core';
 import { useState } from 'react';
 import Login from './Login';
 import Register from './Register';
@@ -7,8 +7,9 @@ const useStyles = createStyles((theme) => ({
   wrapper: {
     minHeight: '100vh',
     backgroundSize: 'cover',
+
     backgroundImage:
-      'https://images.unsplash.com/photo-1484242857719-4b9144542727?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1280&q=80url()',
+      'url(https://hamrobazaar.blr1.cdn.digitaloceanspaces.com/Assets/Search.gif)',
   },
 
   form: {
@@ -16,7 +17,7 @@ const useStyles = createStyles((theme) => ({
       theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.colors.gray[3]
     }`,
     minHeight: '100vh',
-    maxWidth: rem(450),
+    maxWidth: rem(550),
     paddingTop: rem(80),
 
     [theme.fn.smallerThan('sm')]: {
@@ -25,7 +26,10 @@ const useStyles = createStyles((theme) => ({
   },
 
   title: {
-    color: theme.colorScheme === 'dark' ? theme.white : theme.black,
+    color:
+      theme.colorScheme === 'dark'
+        ? theme.colors.gray[9]
+        : theme.colors.gray[1],
     fontFamily: `Greycliff CF, ${theme.fontFamily}`,
   },
 }));
@@ -34,26 +38,42 @@ export function AuthPage() {
   const { classes } = useStyles();
   const [activeTab, setActiveTab] = useState('login');
 
-  const handleTabChange = (tab: any) => {
+  const handleTabChange = (tab: string) => {
     setActiveTab(tab);
   };
 
   return (
     <div className={classes.wrapper}>
       <Paper className={classes.form} radius={0} p={30}>
+        <Card h={100} radius={'md'} p={'lg'}>
+          <Text size={20} fw={'bold'}>
+            Make a deal
+          </Text>
+          <Text fw={'lighter'} c={'dimmed'}>
+            Welcome to DoshroDeal 🤝
+          </Text>
+        </Card>
         {activeTab === 'login' ? <Login /> : <Register />}
         {activeTab === 'login' ? (
-          <Text ta="center" mt="md">
+          <Text size={'md'} mt="md">
             Don&apos;t have an account?{' '}
-            <Anchor<'a'> href="#" weight={700} onClick={() => handleTabChange('register')}>
-              Register
+            <Anchor<'a'>
+              href="#"
+              weight={300}
+              onClick={() => handleTabChange('register')}
+            >
+              Register Here
             </Anchor>
           </Text>
         ) : (
-          <Text ta="center" mt="md">
-            Already have an account?
-            <Anchor<'a'> href="#" weight={700} onClick={() => handleTabChange('login')}>
-              Login
+          <Text size={'md'} mt="md">
+            Already have an account?{' '}
+            <Anchor<'a'>
+              href="#"
+              weight={300}
+              onClick={() => handleTabChange('login')}
+            >
+              {''}Login
             </Anchor>
           </Text>
         )}

@@ -21,12 +21,14 @@ const useStyles = createStyles((theme) => ({
     minHeight: '100vh',
     backgroundSize: 'cover',
     backgroundImage:
-      'url(https://images.unsplash.com/photo-1484242857719-4b9144542727?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1280&q=80)',
+      'https://images.unsplash.com/photo-1484242857719-4b9144542727?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1280&q=80',
   },
 
   form: {
     borderRight: `${rem(1)} solid ${
-      theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.colors.gray[3]
+      theme.colorScheme === 'light'
+        ? theme.colors.gray[1]
+        : theme.colors.dark[4]
     }`,
     minHeight: '100vh',
     maxWidth: rem(450),
@@ -99,7 +101,7 @@ export function AuthPage() {
             Login
           </Button>
         </form>
-        <Text ta="center" mt="md">
+        <Text mt="md">
           Don&apos;t have an account?{' '}
           <Anchor<'a'>
             href="#"

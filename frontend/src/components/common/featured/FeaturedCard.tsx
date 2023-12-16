@@ -16,6 +16,8 @@ import {
   IconHeart,
   IconStarFilled,
 } from '@tabler/icons-react';
+import { Listings } from '../../../../orval/model';
+import { Router, useRouter } from 'next/router';
 
 const useStyles = createStyles((theme) => ({
   card: {
@@ -48,12 +50,21 @@ const useStyles = createStyles((theme) => ({
     },
   },
 }));
-const FeaturedCard = ({}) => {
+type listing = {
+  listing: Listings;
+};
+const FeaturedCard = ({ listing }: listing) => {
   const theme = useMantineTheme();
   const { classes } = useStyles();
+  const router = useRouter();
   return (
     <>
       <Card
+        onClick={() =>
+          listing?.is_scraped
+            ? window.open(listing.link_to_original as string)
+            : router.push(`/listing/listing-detail/${listing?.slug}`)
+        }
         className={classes.card}
         radius={'md'}
         shadow="sm"
@@ -65,9 +76,9 @@ const FeaturedCard = ({}) => {
         }}
       >
         <Card.Section
-          pl={'md'}
-          pr={'md'}
-          pt={'md'}
+          pl={'xs'}
+          pr={'xs'}
+          pt={'xs'}
           sx={{
             alignItems: 'center',
             position: 'relative',
@@ -112,16 +123,14 @@ const FeaturedCard = ({}) => {
 
           <Image
             className={classes.image}
-            src={
-              'https://cdn02.hamrobazaar.com/User/Posts/2023/09/24/21eb311d-ee4f-8ea2-06e5-ee4d86253add.webp?x-image-process=image/resize,m_lfit,h_500,w_500'
-            }
+            src={listing?.banner_image || listing?.images[0].image}
             height="200px"
             width="100%"
             radius={'md'}
             sx={{
               objectFit: 'cover',
             }}
-            alt={'ddddd'}
+            alt={listing?.title}
             imageProps={{ loading: 'lazy' }}
             withPlaceholder
           />
@@ -130,9 +139,7 @@ const FeaturedCard = ({}) => {
           <Group>
             <Group miw={'63%'} spacing={'xl'} position="apart">
               <div style={{ width: '99%' }}>
-                <Text truncate>
-                  House for sale in kathmandu near buddhanilakantha
-                </Text>
+                <Text truncate>{listing?.title}</Text>
                 <Text c={'dimmed'}>Like New</Text>
               </div>
             </Group>
@@ -140,7 +147,7 @@ const FeaturedCard = ({}) => {
           <Group mt={'xs'} position="apart">
             <Group spacing={5}>
               <IconCurrencyRupeeNepalese />
-              <Text c={'dimmed'}>50,000</Text>
+              <Text c={'dimmed'}>{listing?.price}</Text>
             </Group>
             <Group spacing={5}>
               <IconStarFilled />
@@ -151,24 +158,15 @@ const FeaturedCard = ({}) => {
           </Group>
           <Group mt={'md'} position="apart">
             <Group spacing={5}>
-              <Avatar
-                size={25}
-                radius={'xl'}
-                src="https://images.unsplash.com/photo-1628890923662-2cb23c2e0cfe?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=200&q=80"
-              />
-              <Text
-                className={classes.userName}
-                w={'75%'}
-                truncate="end"
-                size="sm"
-              >
-                Prashant Uprety
+              <Avatar size={20} radius={'xl'} src={listing?.user?.image} />
+              <Text className={classes.userName} truncate="end" size="sm">
+                {listing?.user?.name}
               </Text>
             </Group>
 
             <Group spacing={9}>
               <IconEye />
-              <Text c={'dimmed'}> 4k</Text>
+              <Text c={'dimmed'}> {listing?.views}</Text>
             </Group>
           </Group>
         </Card.Section>

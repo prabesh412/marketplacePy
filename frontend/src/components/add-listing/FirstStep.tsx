@@ -12,7 +12,10 @@ import {
 import ImageDropper from './ImageDropper';
 import { useCategoryList } from '../../../orval/category/category';
 
-const FirstStep = ({ form }: any) => {
+type FirstStepProps = {
+  form: any;
+};
+const FirstStep = ({ form }: FirstStepProps) => {
   const [active, setActive] = useState(false);
 
   const [selectedMainCategory, setSelectedMainCategory] = useState<string>(
@@ -97,7 +100,7 @@ const FirstStep = ({ form }: any) => {
           <TextInput
             required
             label={'Title of listing'}
-            placeholder="Eg:House for sale in Bhaktapur, Radhe Radhe"
+            placeholder="Eg: House for sale in Bhaktapur, Radhe Radhe"
             {...form.getInputProps('firstStep.title')}
             data-autofocus={form.errors?.title !== undefined}
           />

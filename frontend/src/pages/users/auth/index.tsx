@@ -29,9 +29,5 @@ export const getServerSideProps = async (ctx: NextPageContext) => {
 Auth.getLayout = (page: ReactElement) => <AuthLayout>{page}</AuthLayout>;
 
 export default function Auth() {
-  return (
-    <Container fluid>
-      <AuthPage />
-    </Container>
-  );
+  return <AuthPage />;
 }

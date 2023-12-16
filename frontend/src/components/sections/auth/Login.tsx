@@ -2,8 +2,10 @@ import {
   Button,
   Checkbox,
   createStyles,
+  Divider,
   PasswordInput,
   rem,
+  Text,
   TextInput,
   Title,
 } from '@mantine/core';
@@ -98,27 +100,45 @@ const Login = () => {
   return (
     <>
       <div>
-        <Title order={2} ta="center" mt="md" mb={50}>
-          Login to DoshroBazar
+        <Title order={3} mt="xl" mb={'md'}>
+          Login
         </Title>
         <form onSubmit={form.onSubmit((values) => login(values))}>
           <TextInput
-            label="username or number"
-            placeholder="9837372722"
-            size="md"
+            placeholder="Phone Number"
+            size="lg"
+            radius={'lg'}
+            pb={'xl'}
             {...form.getInputProps('username')}
           />
           <PasswordInput
-            label="Password"
-            placeholder="Your password"
-            mt="md"
-            size="md"
+            placeholder="Password"
+            size="lg"
+            radius={'lg'}
+            mb={'xl'}
             {...form.getInputProps('password')}
           />
-          <Checkbox label="Keep me logged in" mt="xl" size="md" />
-          <Button fullWidth mt="xl" size="md" type="submit">
-            Login
+          <Divider size={3} mt={'xl'} />
+          {/* <Checkbox
+            mt={'xl'}
+            label={`I hereby accept the Terms and Condition of Doshrodeal.`}
+            size="sm"
+          /> */}
+          <Button
+            radius={'lg'}
+            fullWidth
+            mt="xl"
+            size="lg"
+            type="submit"
+            loading={postLogin.isLoading}
+            disabled={postLogin.isLoading}
+          >
+            Log in
           </Button>
+          <Text mt={'xl'} size={'xs'} c={'dimmed'}>
+            Forgot your passsword?
+          </Text>
+          <Divider size={1} c={'dimmed'} mt={'xl'} />
         </form>
       </div>
     </>

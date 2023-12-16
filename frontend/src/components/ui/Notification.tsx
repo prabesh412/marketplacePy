@@ -5,7 +5,7 @@ interface PageProps {
   title: string;
   color: string;
 }
-const ShowNotification = ({ message, title, color }: PageProps) => {
+const ShowNotification = ({ title, message, color }: PageProps) => {
   notifications.show({
     id: title,
     title,

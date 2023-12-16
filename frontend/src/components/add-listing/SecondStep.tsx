@@ -11,7 +11,7 @@ const SecondStep = ({ form }: any) => {
       <Box sx={{ position: 'relative', marginTop: '20px' }}>
         <Overlay opacity={0.1} color="#000" />
         <Card>
-          <ListingOverview listing={form.values.firstStep} />
+          <ListingOverview firstStepValues={form.values.firstStep} />
           {/* {listingCopy?.sub_category?.category && <ListingDetail listing={listingCopy} />} */}
         </Card>
       </Box>

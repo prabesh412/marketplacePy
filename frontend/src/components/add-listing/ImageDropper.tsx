@@ -1,5 +1,5 @@
-import { Group, Image, SimpleGrid, Text, rem } from '@mantine/core';
-import { IconUpload, IconPhoto, IconX } from '@tabler/icons-react';
+import { Button, Group, Image, SimpleGrid, Text, rem } from '@mantine/core';
+import { IconUpload, IconPhoto, IconX, IconTrash } from '@tabler/icons-react';
 import {
   Dropzone,
   DropzoneProps,
@@ -7,45 +7,63 @@ import {
   IMAGE_MIME_TYPE,
 } from '@mantine/dropzone';
 import { useState } from 'react';
+import { UseFormReturnType } from '@mantine/form';
+import { notifications } from '@mantine/notifications';
+import { error } from 'console';
+import ShowNotification from '../ui/Notification';
 
 type ImageDropperProps = {
   form: any;
 };
 
 const ImageDropper = ({ form }: ImageDropperProps) => {
-  const [files, setFiles] = useState<FileWithPath[]>([]);
-
   const [imageCount, setImageCount] = useState(0);
 
   const handleDrop = (files: Blob[]) => {
-    if (imageCount + files.length <= 5) {
-      setImageCount(imageCount + files.length);
-
-      form.setFieldValue(`firstStep.images`, files);
-    } else {
-      console.log('Maximum image limit reached');
+    if (imageCount + files.length > 5) {
+      return ShowNotification({
+        title: 'Form Submission Error',
+        message: 'Maximum Image Limit Reached .',
+        color: 'red',
+      });
     }
+
+    setImageCount(imageCount + files.length);
+    const prevImages = form.values.firstStep.images;
+    if (prevImages.length === 0) {
+      console.log('you heere');
+      return form.setFieldValue(`firstStep.images`, files);
+    }
+
+    let allImages: Blob[] = [];
+
+    for (let i = 0; i < prevImages.length; i++) {
+      allImages.push(prevImages[i]);
+    }
+    for (let i = 0; i < files.length; i++) {
+      allImages.push(files[i]);
+    }
+    return form.setFieldValue(`firstStep.images`, allImages);
   };
-  const previews = files.map((file, index) => {
-    const imageUrl = URL.createObjectURL(file);
-    return (
-      <Image
-        key={index}
-        width={150}
-        height={200}
-        src={imageUrl}
-        imageProps={{ onLoad: () => URL.revokeObjectURL(imageUrl) }}
-      />
-    );
-  });
+  const previews = form?.values?.firstStep?.images?.map(
+    (file: Blob, index: number) => {
+      const imageUrl = URL.createObjectURL(file);
+      return (
+        <Image
+          key={index}
+          width={150}
+          height={200}
+          src={imageUrl}
+          imageProps={{ onLoad: () => URL.revokeObjectURL(imageUrl) }}
+        />
+      );
+    },
+  );
 
   return (
     <>
       <Dropzone
-        onDrop={(files) => {
-          setFiles(files);
-          handleDrop(files);
-        }}
+        onDrop={handleDrop}
         maxSize={3 * 1024 ** 2}
         accept={IMAGE_MIME_TYPE}
         maxFiles={5}
@@ -88,25 +106,43 @@ const ImageDropper = ({ form }: ImageDropperProps) => {
           </Dropzone.Idle>
 
           <div>
-            <Text size="xl" inline>
+            <Text size="md" inline>
               Drag images here or click to select images
             </Text>
             <Text size="sm" c="dimmed" inline mt={7}>
-              Attach as many as 5 images of your listing, but shouldnot exceed
-              5mb per image,
-              {imageCount > 0 ? (
-                <strong> {imageCount} Image selected </strong>
+              You have selected
+              {previews.length > 0 ? (
+                <strong>
+                  <strong> {previews.length} </strong>
+                  {''}
+                  {previews.length < 2 ? ' image' : ' images '}
+                </strong>
               ) : (
-                <strong> no image selected</strong>
+                <strong> No image selected</strong>
               )}
             </Text>
           </div>
         </Group>
       </Dropzone>
+      {previews.length >= 1 && (
+        <Group
+          style={{ cursor: 'pointer' }}
+          onClick={() => {
+            form.setFieldValue(`firstStep.images`, []);
+            setImageCount(0);
+          }}
+          spacing={2}
+        >
+          <Text pb={rem(5)} underline>
+            {previews.length < 2 ? 'Clear image' : 'Clear images '}
+          </Text>
+          <IconTrash size={'1.2em'} />
+        </Group>
+      )}
       <SimpleGrid
         cols={5}
         breakpoints={[{ maxWidth: 'sm', cols: 1 }]}
-        mt={previews.length > 0 ? 'xl' : 0}
+        mt={previews.length > 0 ? 'xs' : 0}
       >
         {previews}
       </SimpleGrid>

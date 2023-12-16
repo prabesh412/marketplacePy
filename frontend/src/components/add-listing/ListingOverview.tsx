@@ -4,16 +4,16 @@ import { PlainDivider } from '../miscellanous/PlainDivider';
 import { FeaturedCarouselCard } from '../miscellanous/FeaturedCarouselCard';
 
 interface ListingDetailProps {
-  listing: any;
+  firstStepValues: any;
 }
 
-const ListingOverview = ({ listing }: ListingDetailProps) => {
+const ListingOverview = ({ firstStepValues }: ListingDetailProps) => {
   return (
     <Card sx={{ padding: '2px' }}>
       <Stack sx={{ marginTop: '20px' }}>
         <Text>Title:</Text>
         <Group position="apart">
-          <Title order={2}>{listing.title}</Title>
+          <Title order={2}>{firstStepValues.title}</Title>
           {/* <BookmarkButton listingData={listing} id={listing?.id} /> */}
         </Group>
         {/* {listing?.listing_images && (
@@ -39,7 +39,7 @@ const ListingOverview = ({ listing }: ListingDetailProps) => {
                 [theme.fn.smallerThan('md')]: { fontSize: 20 },
               })}
             >
-              {listing?.description}
+              {firstStepValues?.description}
             </Text>
             <PlainDivider />
             <Text
@@ -57,7 +57,7 @@ const ListingOverview = ({ listing }: ListingDetailProps) => {
                 [theme.fn.smallerThan('md')]: { fontSize: 20 },
               })}
             >
-              {listing?.location}
+              {firstStepValues?.location}
             </Text>
             <PlainDivider />
           </Col>
@@ -65,12 +65,11 @@ const ListingOverview = ({ listing }: ListingDetailProps) => {
           <Col span={12} sm={12} md={8} xs={8} xl={8}>
             <Text mb={'md'}>Listing card:</Text>
             <FeaturedCarouselCard
-              title={listing.title}
-              image={[
-                'https://images.pexels.com/photos/106399/pexels-photo-106399.jpeg?cs=srgb&dl=pexels-binyamin-mellish-106399.jpg&fm=jpg',
-              ]}
+              title={firstStepValues.title}
+              image={firstStepValues.images}
               condition={'New'}
-              price={listing.price}
+              price={firstStepValues.price}
+              id={''}
             />
           </Col>
         </Grid>
