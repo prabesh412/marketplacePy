@@ -9,9 +9,12 @@ from doshro_bazar.listings.serializers import ListingsSerializer, ListingsInputS
 from doshro_bazar.listings.filters import ListingsFilter
 from django.shortcuts import get_object_or_404
 from django.core.cache import cache
-from rest_framework.parsers import MultiPartParser, FormParser
+from rest_framework.parsers import MultiPartParser
 from rest_framework import pagination
 from rest_framework.decorators import action
+from django.utils.decorators import method_decorator
+from django.views.decorators.cache import cache_page
+from django.views.decorators.vary import vary_on_headers
 
 @extend_schema_view(
     retrieve=extend_schema(description="Returns the given Listing."),
@@ -29,7 +32,8 @@ class ListingsViewSet(viewsets.ModelViewSet):
             return ListingsInputSerializer
         return super().get_serializer_class()
 
-
+    @method_decorator(cache_page(60 * 60 * 2))
+    @method_decorator(vary_on_headers("Authorization"))
     def retrieve(self, request, pk=None, *args, **kwargs ):
         instance = get_object_or_404(self.queryset, slug = pk)
         view = cache.get("view", {})

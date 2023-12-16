@@ -6,6 +6,8 @@ from rest_framework.viewsets import GenericViewSet
 from django_filters import rest_framework as filters_new
 from doshro_bazar.category.serializers import CategorySerializer
 from rest_framework.mixins import ListModelMixin
+from django.utils.decorators import method_decorator
+from django.views.decorators.cache import cache_page
 
 
 @extend_schema_view(
@@ -16,3 +18,8 @@ class CategoryViewSet(ListModelMixin, GenericViewSet):
     serializer_class = CategorySerializer
     filter_backends = (filters_new.DjangoFilterBackend, )
     pagination_class = None
+
+
+    @method_decorator(cache_page(60*2))
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
