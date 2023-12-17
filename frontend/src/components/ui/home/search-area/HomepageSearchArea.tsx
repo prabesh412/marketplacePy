@@ -21,7 +21,7 @@ import {
   IconShirt,
   IconCategory,
 } from '@tabler/icons-react';
-import DefaultSideNav from '../../../ui/navigation/DefaultSideNav';
+import DefaultSideNav from '../../navigation/DefaultSideNav';
 import { useRouter } from 'next/router';
 
 const useStyles = createStyles((theme) => ({

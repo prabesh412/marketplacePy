@@ -17,7 +17,7 @@ import {
   IconDotsVertical,
   IconMaximize,
 } from '@tabler/icons-react';
-import { ListingImage, ListingViewImage } from '../../../orval/model';
+import { ListingImage, ListingViewImage } from '../../../../orval/model';
 
 const useStyles = createStyles((theme) => ({
   cardContainer: {
