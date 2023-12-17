@@ -10,7 +10,7 @@ import { useState } from 'react';
 import { UseFormReturnType } from '@mantine/form';
 import { notifications } from '@mantine/notifications';
 import { error } from 'console';
-import ShowNotification from '../../../../ui/Notification';
+import ShowNotification from '../Notification';
 
 type ImageDropperProps = {
   form: any;

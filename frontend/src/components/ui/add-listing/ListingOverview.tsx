@@ -1,7 +1,7 @@
 import React from 'react';
 import { Card, Col, Grid, Group, Stack, Title, Text } from '@mantine/core';
-import { PlainDivider } from '../../../../ui/PlainDivider';
-import { FeaturedCarouselCard } from '../../../../ui/FeaturedCarouselCard';
+import { PlainDivider } from '../PlainDivider';
+import { FeaturedCarouselCard } from '../FeaturedCarouselCard';
 
 interface ListingDetailProps {
   firstStepValues: any;

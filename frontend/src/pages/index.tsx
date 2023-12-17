@@ -10,7 +10,7 @@ import {
   categoryList,
   getCategoryListQueryKey,
 } from '../../orval/category/category';
-import AddListingFloatButton from '@/components/pageSpecific/listing-add/components/add-listing/AddListingFloatButton';
+import AddListingFloatButton from '@/components/ui/add-listing/AddListingFloatButton';
 import {
   getListingsListQueryKey,
   listingsList,
