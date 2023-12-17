@@ -24,7 +24,7 @@ import {
   TextInput,
 } from '@mantine/core';
 import { Listings } from '../../../orval/model/listings';
-import FeaturedCard from '@/components/common/featured/FeaturedCard';
+import FeaturedCard from '@/components/ui/featured/FeaturedCard';
 import { IconAdjustments, IconClearAll } from '@tabler/icons-react';
 import { useForm } from '@mantine/form';
 

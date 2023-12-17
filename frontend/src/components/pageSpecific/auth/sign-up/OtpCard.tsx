@@ -1,5 +1,5 @@
 import { Card, Text, Button, Group, PinInput } from '@mantine/core';
-import { useDjRestAuthOtpCreate } from '../../../../orval/dj-rest-auth/dj-rest-auth';
+import { useDjRestAuthOtpCreate } from '../../../../../orval/dj-rest-auth/dj-rest-auth';
 import { useForm } from '@mantine/form';
 import { notifications } from '@mantine/notifications';
 import { useRouter } from 'next/router';

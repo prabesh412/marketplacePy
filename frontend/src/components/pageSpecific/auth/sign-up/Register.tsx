@@ -7,7 +7,7 @@ import {
   Title,
 } from '@mantine/core';
 import { useRouter } from 'next/router';
-import { useDjRestAuthRegisterCreate } from '../../../../orval/dj-rest-auth/dj-rest-auth';
+import { useDjRestAuthRegisterCreate } from '../../../../../orval/dj-rest-auth/dj-rest-auth';
 import { useForm } from '@mantine/form';
 import { useState } from 'react';
 import OtpCard from './OtpCard';

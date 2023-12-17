@@ -10,7 +10,7 @@ import {
   TextInput,
 } from '@mantine/core';
 import ImageDropper from './ImageDropper';
-import { useCategoryList } from '../../../orval/category/category';
+import { useCategoryList } from '../../../../../../orval/category/category';
 
 type FirstStepProps = {
   form: any;

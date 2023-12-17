@@ -4,13 +4,13 @@ import { NextPageContext } from 'next';
 import { getDefaultStore } from '@/components/utils/PageDefaults';
 import { ReactElement } from 'react';
 import { Page } from '@/components/ui';
-import HomeSection from '@/components/sections/Home';
+import HomeSection from '@/components/pageSpecific/home';
 import HomeLayout from '@/components/layouts/HomeLayout';
 import {
   categoryList,
   getCategoryListQueryKey,
 } from '../../orval/category/category';
-import AddListingFloatButton from '@/components/add-listing/AddListingFloatButton';
+import AddListingFloatButton from '@/components/pageSpecific/listing-add/components/add-listing/AddListingFloatButton';
 import {
   getListingsListQueryKey,
   listingsList,

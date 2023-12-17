@@ -10,7 +10,7 @@ import {
   Title,
 } from '@mantine/core';
 
-import { useDjRestAuthLoginCreate } from '../../../../orval/dj-rest-auth/dj-rest-auth';
+import { useDjRestAuthLoginCreate } from '../../../../../orval/dj-rest-auth/dj-rest-auth';
 import { useRouter } from 'next/router';
 import { useForm } from '@mantine/form';
 import { useStore } from '@/zustand/store';

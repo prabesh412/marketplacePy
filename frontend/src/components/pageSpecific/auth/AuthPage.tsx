@@ -1,7 +1,7 @@
 import { Anchor, Card, createStyles, Paper, rem, Text } from '@mantine/core';
 import { useState } from 'react';
-import Login from './Login';
-import Register from './Register';
+import Login from './sign-in/Login';
+import Register from './sign-up/Register';
 
 const useStyles = createStyles((theme) => ({
   wrapper: {

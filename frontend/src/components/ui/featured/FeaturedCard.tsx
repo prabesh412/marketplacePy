@@ -8,9 +8,11 @@ import {
   createStyles,
   ActionIcon,
   Badge,
+  rem,
 } from '@mantine/core';
 import React from 'react';
 import {
+  IconClock,
   IconCurrencyRupeeNepalese,
   IconEye,
   IconHeart,
@@ -140,7 +142,12 @@ const FeaturedCard = ({ listing }: listing) => {
             <Group miw={'63%'} spacing={'xl'} position="apart">
               <div style={{ width: '99%' }}>
                 <Text truncate>{listing?.title}</Text>
-                <Text c={'dimmed'}>Like New</Text>
+                <Badge className={classes.badge} mt={'sm'} radius={'sm'}>
+                  <Group spacing={3}>
+                    <IconClock style={{ color: '#FFD700' }} size={15} />
+                    <Text> 12hr ago</Text>
+                  </Group>
+                </Badge>
               </div>
             </Group>
           </Group>
