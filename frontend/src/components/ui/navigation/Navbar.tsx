@@ -215,7 +215,6 @@ const Navbar = ({ isHomepage }: HeaderSearchProps) => {
               <Button.Group>
                 {isHomepage ? (
                   <Button
-                    variant="gradient"
                     leftIcon={<IconLogin />}
                     onClick={() => router.push('users/auth')}
                   >

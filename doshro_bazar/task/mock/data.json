@@ -2,7 +2,7 @@
   "data": [
     {
       "id": "D4225D8B-1FAF-453C-AEC3-66CA1C1E2602",
-      "image": "https://cdn02.hamrobazaar.com/Assets/Category/apparels.png",
+      "image": "https://www.bazos.sk/obrazky/oblecenie.webp?t=1",
       "name": "Apparels & Accessories",
       "displayOrder": 1,
       "categories": [
@@ -109,7 +109,7 @@
     },
     {
       "id": "EB9C8147-07C0-4951-A962-381CDB400E37",
-      "image": "https://cdn02.hamrobazaar.com/Assets/Category/automobiles.png",
+      "image": "https://www.bazos.sk/obrazky/auto.webp?t=1",
       "name": "Automobiles",
       "displayOrder": 2,
       "categories": [
@@ -318,7 +318,7 @@
     },
     {
       "id": "4D9D69A1-52D7-41A8-BC17-FFC3777300A2",
-      "image": "https://cdn02.hamrobazaar.com/Assets/Category/business%20and%20industrial.png",
+      "image": "https://www.bazos.sk/obrazky/praca.webp?t=1",
       "name": "Business & Industrial",
       "displayOrder": 5,
       "categories": [
@@ -425,7 +425,7 @@
     },
     {
       "id": "4CCE4A7C-431B-474D-8B58-4FD2DDC191CF",
-      "image": "https://cdn02.hamrobazaar.com/Assets/Category/computer%20and%20peripherals.png",
+      "image": "https://www.bazos.sk/obrazky/pc.webp?t=1",
       "name": "Computers & Peripherals",
       "displayOrder": 6,
       "categories": [
@@ -546,7 +546,7 @@
     },
     {
       "id": "321B7A06-08FA-430B-8AD7-24CB2B9E82AD",
-      "image": "https://cdn02.hamrobazaar.com/Assets/Category/electronics.png",
+      "image": "https://www.bazos.sk/obrazky/elektro.webp?t=1",
       "name": "Electronics, TVs, & More",
       "displayOrder": 7,
       "categories": [
@@ -688,7 +688,7 @@
     },
     {
       "id": "2BD7C928-9F27-4068-8B44-38530D9B1C49",
-      "image": "https://cdn02.hamrobazaar.com/Assets/Category/events%20and%20happenings.png",
+      "image": "https://www.bazos.sk/obrazky/vstupenky.webp?t=1",
       "name": "Events & Happenings",
       "displayOrder": 8,
       "categories": [
@@ -769,7 +769,7 @@
     },
     {
       "id": "A4958323-13A3-43EE-8C2E-5684B9AB4FA6",
-      "image": "https://cdn02.hamrobazaar.com/Assets/Category/Home%20Furnishing.png",
+      "image": "https://www.bazos.sk/obrazky/nabytok.webp?t=1",
       "name": "Furnishings & Appliances",
       "displayOrder": 10,
       "categories": [
@@ -890,7 +890,7 @@
     },
     {
       "id": "010F9ADD-2A94-468D-A937-02BB42F50FA2",
-      "image": "https://cdn02.hamrobazaar.com/Assets/Category/Jobs.png",
+      "image": "https://www.bazos.sk/obrazky/praca.webp?t=1",
       "name": "Jobs",
       "displayOrder": 11,
       "categories": [
@@ -990,7 +990,7 @@
     },
     {
       "id": "0618E1EF-00AF-4EAC-8E07-4978A2C7BB5E",
-      "image": "https://cdn02.hamrobazaar.com/Assets/Category/mobile%20phone.png",
+      "image": "https://www.bazos.sk/obrazky/mobil.webp?t=1",
       "name": "Mobile Phones & Accessories",
       "displayOrder": 12,
       "categories": [
@@ -1013,7 +1013,7 @@
     },
     {
       "id": "4326E6AE-BBB1-4C91-984E-55FAB6A08864",
-      "image": "https://cdn02.hamrobazaar.com/Assets/Category/music.png",
+      "image": "https://www.bazos.sk/obrazky/hudba.webp?t=1",
       "name": "Music Instruments",
       "displayOrder": 13,
       "categories": [
@@ -1187,7 +1187,7 @@
     },
     {
       "id": "06B8B8E6-4CDE-4D79-AE65-38B8BAA9FF17",
-      "image": "https://cdn02.hamrobazaar.com/Assets/Category/real%20estate.png",
+      "image": "https://www.bazos.sk/obrazky/reality.webp?t=1",
       "name": "Real Estate",
       "displayOrder": 16,
       "categories": [
@@ -1394,7 +1394,7 @@
     },
     {
       "id": "1AC175FB-718A-4236-8139-927A71425667",
-      "image": "https://cdn02.hamrobazaar.com/Assets/Category/Sports.png",
+      "image": "https://www.bazos.sk/obrazky/sport.webp?t=1",
       "name": "Sports & Fitness",
       "displayOrder": 18,
       "categories": [
@@ -1517,7 +1517,7 @@
     },
     {
       "id": "2DB25FE7-6354-4AAB-9863-AACE8195209B",
-      "image": "https://cdn02.hamrobazaar.com/Assets/Category/Travel%20tour.png",
+      "image": "https://www.bazos.sk/obrazky/vstupenky.webp?t=1",
       "name": "Travel, Tours & Packages",
       "displayOrder": 20,
       "categories": [

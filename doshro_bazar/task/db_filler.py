@@ -20,7 +20,7 @@ def fill_category_db():
         for child_categories in category["categories"]:
             category_objects.append(Category(id=random.randint(1, 100000), name=child_categories['name'], slug=slugify(child_categories['name']), parent_id=id, id_from_api=child_categories['id']))
         
-        category_objects.append(Category(id=id, name=name, slug=slug, parent_id=None, id_from_api=category['id']))
+        category_objects.append(Category(id=id, name=name, slug=slug, parent_id=None, id_from_api=category['id'], main_category_image=category['image']))
  
     Category.objects.bulk_create(category_objects, ignore_conflicts=True)
     
@@ -70,7 +70,7 @@ def create_link():
 
 
 def run():
-    create_link()
+    fill_category_db()
 
 
 if __name__ == '__main__': 

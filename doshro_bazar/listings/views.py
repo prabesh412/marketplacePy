@@ -31,6 +31,9 @@ class ListingsViewSet(viewsets.ModelViewSet):
         if self.action in ["create", "update", "partial_update"]:
             return ListingsInputSerializer
         return super().get_serializer_class()
+    
+    def list(self, request, *args, **kwargs):
+       return super().list(self, request, *args, **kwargs)
 
     @method_decorator(cache_page(60 * 60 * 2))
     @method_decorator(vary_on_headers("Authorization"))
