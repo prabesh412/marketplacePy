@@ -13,7 +13,7 @@ import { ReactNode, useState } from 'react';
 import { RouterTransition } from '@/components/global/RouterTransition';
 
 const customTheme: MantineThemeOverride = {
-  colorScheme: 'dark',
+  colorScheme: 'light',
   primaryColor: 'green',
   primaryShade: 9,
 };

@@ -1,7 +1,10 @@
 import { useStore } from '@/zustand/store';
 import { dehydrate, QueryClient } from '@tanstack/react-query';
 import { NextPageContext } from 'next';
-import { getDefaultStore } from '@/components/utils/PageDefaults';
+import {
+  getDefaultHomeStore,
+  getDefaultStore,
+} from '@/components/utils/PageDefaults';
 import { ReactElement } from 'react';
 import { Page } from '@/components/ui/common';
 import HomeSection from '@/components/pageSpecific/home';
@@ -18,7 +21,6 @@ import {
 
 export async function getServerSideProps(ctx: NextPageContext) {
   const queryClient = new QueryClient();
-  const zustandStore = await getDefaultStore(ctx);
 
   await queryClient.prefetchQuery(
     getCategoryListQueryKey(),
@@ -27,10 +29,11 @@ export async function getServerSideProps(ctx: NextPageContext) {
   );
 
   await queryClient.prefetchQuery(
-    getListingsListQueryKey(),
+    getListingsListQueryKey({ page: 1 }),
     () => listingsList({ page: 1 }),
     {},
   );
+  const zustandStore = await getDefaultHomeStore(ctx, queryClient);
 
   return {
     props: {

@@ -8,7 +8,7 @@ const Background = (props: any) => {
       sx={(theme) => ({
         backgroundColor:
           theme.colorScheme == 'light'
-            ? theme.colors.gray[1]
+            ? theme.colors.gray[2]
             : theme.colors.dark[4],
         minHeight: '90vh',
       })}

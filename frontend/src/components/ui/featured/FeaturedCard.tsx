@@ -51,6 +51,11 @@ const useStyles = createStyles((theme) => ({
       display: 'none',
     },
   },
+  rating: {
+    '@media (max-width: 575px)': {
+      display: 'none',
+    },
+  },
 }));
 type listing = {
   listing: Listings;
@@ -156,7 +161,7 @@ const FeaturedCard = ({ listing }: listing) => {
               <IconCurrencyRupeeNepalese />
               <Text c={'dimmed'}>{listing?.price}</Text>
             </Group>
-            <Group spacing={5}>
+            <Group className={classes.rating} spacing={5}>
               <IconStarFilled />
               <Text size={'md'} c={'dimmed'}>
                 4.0

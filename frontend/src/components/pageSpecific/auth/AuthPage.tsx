@@ -7,11 +7,15 @@ const useStyles = createStyles((theme) => ({
   wrapper: {
     minHeight: '100vh',
     backgroundSize: 'cover',
-
     backgroundImage:
       'url(https://hamrobazaar.blr1.cdn.digitaloceanspaces.com/Assets/Search.gif)',
   },
-
+  card: {
+    backgroundColor:
+      theme.colorScheme === 'light'
+        ? theme.colors.gray[2]
+        : theme.colors.dark[4],
+  },
   form: {
     borderRight: `${rem(1)} solid ${
       theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.colors.gray[3]
@@ -45,7 +49,7 @@ export function AuthPage() {
   return (
     <div className={classes.wrapper}>
       <Paper className={classes.form} radius={0} p={30}>
-        <Card h={100} radius={'md'} p={'lg'}>
+        <Card className={classes.card} h={100} radius={'md'} p={'lg'}>
           <Text size={20} fw={'bold'}>
             Make a deal
           </Text>

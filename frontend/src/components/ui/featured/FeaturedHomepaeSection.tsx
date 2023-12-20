@@ -1,13 +1,36 @@
-import { Group, Text, Col, Grid, Pagination } from '@mantine/core';
+import React, { useState } from 'react';
+import { Group, Text, Col, Grid, Button } from '@mantine/core';
 import { IconAdjustments } from '@tabler/icons-react';
-import React from 'react';
 import FeaturedCard from './FeaturedCard';
 import { useListingsList } from '../../../../orval/listings/listings';
+import { useStore } from '@/zustand/store';
+import InfiniteScroll from './InfinteScroll';
+
 const FeaturedHomepaeSection = () => {
-  const { data: listing } = useListingsList();
+  const setFeaturedListings = useStore((state) => state.setFeaturedListings);
+  const featuredListingsGlobal = useStore((state) => state.featuredListings);
+  const urlSearchParams = new URLSearchParams(
+    featuredListingsGlobal?.next?.split('?')[1] || '',
+  );
+  const pageNumber = parseInt(urlSearchParams.get('page') || '1', 10);
+  const [page, setPage] = useState(pageNumber - 1);
+  const { data: listing } = useListingsList({ page: page + 1 });
+
+  const fetchMoreData = () => {
+    setPage(page + 1);
+    setFeaturedListings(listing || {});
+  };
+  const isProductAllFetched = () => {
+    const status = !!(
+      (featuredListingsGlobal?.results?.length ?? 0) ===
+      (featuredListingsGlobal?.count ?? 0)
+    );
+    return status;
+  };
+
   return (
     <div style={{ maxWidth: '1200px', margin: 'auto' }}>
-      <Group pt={'xl'} position="apart">
+      <Group position="apart">
         <Text fw={500} size={'xl'}>
           Featured Listing
         </Text>
@@ -16,29 +39,19 @@ const FeaturedHomepaeSection = () => {
           <IconAdjustments color="grey" size="1.5em" />
         </Group>
       </Group>
-      <Grid mb={'xl'} mt={'sm'}>
-        {listing?.results?.map((listings) => (
-          <Col span={6} xs={4} sm={3} md={3} lg={3}>
-            <FeaturedCard listing={listings} />
-          </Col>
-        ))}
-      </Grid>
-      <Pagination
-        mb={'xl'}
-        total={15}
-        position="center"
-        styles={(theme) => ({
-          control: {
-            '&[data-active]': {
-              backgroundImage: theme.fn.gradient({
-                from: 'primary',
-                to: 'primary',
-              }),
-              border: 0,
-            },
-          },
-        })}
-      />
+      <div>
+        <Grid mb={'xl'} mt={'sm'}>
+          {featuredListingsGlobal?.results?.map((listings, index) => (
+            <Col span={6} xs={4} sm={3} md={3} lg={3} key={index}>
+              <FeaturedCard listing={listings} />
+            </Col>
+          ))}
+        </Grid>
+        <InfiniteScroll
+          isProductAllFetched={isProductAllFetched}
+          fetchMoreData={fetchMoreData}
+        />
+      </div>
     </div>
   );
 };

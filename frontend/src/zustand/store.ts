@@ -2,8 +2,9 @@ import { destroyCookie, setCookie } from 'nookies';
 import { createContext, useContext } from 'react';
 import { createStore, useStore as useZustandStore } from 'zustand';
 import { AXIOS_INSTANCE } from '../../custom-instance';
-import { User } from '../../orval/model';
+import { Listings, PaginatedListingsList, User } from '../../orval/model';
 import { usersMeRetrieve } from '../../orval/users/users';
+import { useListingsList } from '../../orval/listings/listings';
 
 interface StoreInterface {
   setAccessToken: (accessToken: string) => void;
@@ -11,12 +12,19 @@ interface StoreInterface {
   axiosRun: (token: string) => void;
   setProfile: (token: string) => void;
   profile: User | null;
+  featuredListings: PaginatedListingsList | null;
+  setFeaturedListings: (list: PaginatedListingsList) => void;
+  featuredListingsNumber: number; // Add this line
+  setFeaturedPageNumber: (number: number) => void;
+
   logout: () => void;
 }
 
 const getDefaultInitialState = () => ({
   accessToken: '',
   profile: null,
+  featuredListings: null,
+  featuredListingsNumber: 1,
 });
 
 export type StoreType = ReturnType<typeof initializeStore>;
@@ -39,6 +47,28 @@ export const initializeStore = (
   return createStore<StoreInterface>((set, get) => ({
     ...getDefaultInitialState(),
     ...preloadedState,
+    setFeaturedPageNumber(number) {
+      set((state) => ({
+        ...state,
+        featuredListingsNumber: number,
+      }));
+    },
+
+    setFeaturedListings: (list: PaginatedListingsList) => {
+      set((state) => ({
+        ...state,
+        featuredListings: {
+          count: list?.count,
+          next: list?.next,
+          previous: list?.previous,
+          results: [
+            ...(state.featuredListings?.results || []),
+            ...(list?.results || []),
+          ],
+        },
+      }));
+    },
+
     setAccessToken: (accessToken: string) => {
       set((state) => ({
         ...state,

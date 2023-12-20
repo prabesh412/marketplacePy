@@ -42,9 +42,7 @@ import DefaultSideNav from './DefaultSideNav';
 const useStyles = createStyles((theme) => ({
   header: {
     backgroundColor:
-      theme.colorScheme === 'dark'
-        ? theme.colors.gray[9]
-        : theme.colors.gray[1],
+      theme.colorScheme === 'dark' ? theme.colors.gray[9] : '#fff',
   },
 
   user: {

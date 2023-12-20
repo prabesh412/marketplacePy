@@ -35,6 +35,7 @@ class ListingsViewSet(viewsets.ModelViewSet):
     def list(self, request, *args, **kwargs):
        return super().list(self, request, *args, **kwargs)
 
+
     @method_decorator(cache_page(60 * 60 * 2))
     @method_decorator(vary_on_headers("Authorization"))
     def retrieve(self, request, pk=None, *args, **kwargs ):
