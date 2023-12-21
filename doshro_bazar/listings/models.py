@@ -17,6 +17,12 @@ class Listings(AbstractClient):
         OPEN = "ON", ("OPEN")
         REMOVED = "RD", ("Removed")
 
+    class ListingCondition(models.TextChoices):
+        NEW = "NW", ("New")
+        USED = "US", ("Used")
+        LIKE_NEW = "LN", ("Like New")
+        BRAND_NEW = "BN", ("Brand New")
+
     title = models.CharField(max_length=255)
     description = models.TextField(null=True, blank=True)
     price = models.DecimalField(max_digits=10, decimal_places=2)
@@ -40,6 +46,12 @@ class Listings(AbstractClient):
     is_featured = models.BooleanField(default=False, null=True, blank=True)
     link_to_original = models.CharField(max_length=255, null=True, blank=True)
     banner_image = models.CharField(max_length=255, null=True, blank=True)
+    is_negotiable = models.BooleanField(default=True, null=True, blank=True)
+    listing_condition = models.CharField(
+        max_length=2, choices=ListingCondition.choices, default=ListingCondition.NEW
+    )
+    listing_features = models.JSONField(null=True, blank=True)
+    is_sfw = models.BooleanField(default=True, null=True, blank=True)
 
     def __str__(self):
         return self.title

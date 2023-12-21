@@ -2,6 +2,14 @@ from django_filters import rest_framework as filters_new
 from doshro_bazar.listings.models import Listings
 
 class ListingsFilter(filters_new.FilterSet):
+    order = filters_new.OrderingFilter(
+        fields=(
+            ('created_at', 'created_at'),
+            ('updated_at', 'updated_at'),
+            ('price', 'price'),
+        )
+    )
+
     class Meta:
         model = Listings
         fields = {
