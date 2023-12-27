@@ -93,6 +93,7 @@ LOCAL_APPS = [
     "doshro_bazar.users",
     "doshro_bazar.listings",
     "doshro_bazar.category",
+    "doshro_bazar.bookmarks"
     # Your stuff: custom apps go here
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
@@ -353,3 +354,13 @@ SPECTACULAR_SETTINGS = {
 }
 # Your stuff...
 # ------------------------------------------------------------------------------
+ACCOUNT_SID='AC9eec6e4fb851d96ff7daa7c8ad099f89'
+AUTH_TOKEN='16109d8865532d676af5171794c1d7aa'
+COUNTRY_CODE='+977'
+TWILIO_PHONE_NUMBER='+9779863723133'
+
+REST_FRAMEWORK_EXTENSIONS = {
+    # 'DEFAULT_CACHE_RESPONSE_TIMEOUT': 60 * 15,
+    # 'DEFAULT_CACHE_KEY_FUNC':'rest_framework_extensions.key_constructor.constructors.DefaultKeyConstructor',
+    'DEFAULT_CACHE_ERRORS': False
+}

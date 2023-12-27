@@ -7,8 +7,13 @@ from rest_framework.viewsets import GenericViewSet
 from rest_framework.parsers import FormParser, MultiPartParser
 import random
 from .serializers import UserSerializer, UserRegisterSerializer, OTPValidationSerializer
+from doshro_bazar.utils.TwilioClient import MessageHandler
 from doshro_bazar.users.models import OTP
 from dj_rest_auth.views import LoginView
+from rest_framework_extensions.cache.decorators import (
+    cache_response
+)
+from doshro_bazar.utils.cache_utils import ProfileKeyConstructor
 
 User = get_user_model()
 
@@ -27,7 +32,7 @@ class CustomLoginView(LoginView):
         
         return response
 
-class UserViewSet(RetrieveModelMixin, ListModelMixin, UpdateModelMixin, GenericViewSet):
+class UserViewSet(UpdateModelMixin, GenericViewSet):
     serializer_class = UserSerializer
     queryset = User.objects.all()
     lookup_field = "username"
@@ -35,9 +40,11 @@ class UserViewSet(RetrieveModelMixin, ListModelMixin, UpdateModelMixin, GenericV
     def get_queryset(self, *args, **kwargs):
         assert isinstance(self.request.user.id, int)
         return self.queryset.filter(id=self.request.user.id)
-
-    @action(detail=False)
+    
+    @cache_response(key_func=ProfileKeyConstructor())
+    @action(detail=False, methods=["GET"])
     def me(self, request):
+        print(request)
         serializer = UserSerializer(request.user, context={"request": request})
         return Response(status=status.HTTP_200_OK, data=serializer.data)
 
@@ -55,7 +62,8 @@ class RegisterViewSet(CreateModelMixin, GenericViewSet):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         serializer.save()
-        generate_otp(serializer.instance)
+        generated_otp = generate_otp(serializer.instance)
+        MessageHandler(serializer.instance.username, generated_otp).send_otp_via_message()
         return Response({"message": "OTP sent for verification!"}, status=status.HTTP_201_CREATED,)
        
     
@@ -71,7 +79,7 @@ class OTPViewSet(CreateModelMixin, GenericViewSet):
         if otp.code == request.data["otp"]:
             user.is_active = True
             otp.used = True
-            otp.save()
+            otp.save() 
             user.save()
             return Response({"message": "User verified!"}, status=status.HTTP_200_OK,)
         else:

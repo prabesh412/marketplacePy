@@ -13,8 +13,9 @@ from rest_framework.parsers import MultiPartParser
 from rest_framework import pagination
 from rest_framework.decorators import action
 from django.utils.decorators import method_decorator
-from django.views.decorators.cache import cache_page
-from django.views.decorators.vary import vary_on_headers
+from rest_framework_extensions.cache.decorators import (
+    cache_response
+)
 
 @extend_schema_view(
     retrieve=extend_schema(description="Returns the given Listing."),
@@ -36,8 +37,7 @@ class ListingsViewSet(viewsets.ModelViewSet):
        return super().list(self, request, *args, **kwargs)
 
 
-    @method_decorator(cache_page(60 * 60 * 2))
-    @method_decorator(vary_on_headers("Authorization"))
+    @cache_response(60 * 30)
     def retrieve(self, request, pk=None, *args, **kwargs ):
         instance = get_object_or_404(self.queryset, slug = pk)
         view = cache.get("view", {})

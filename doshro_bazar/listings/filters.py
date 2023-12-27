@@ -7,6 +7,7 @@ class ListingsFilter(filters_new.FilterSet):
             ('created_at', 'created_at'),
             ('updated_at', 'updated_at'),
             ('price', 'price'),
+            ('views__views', 'views'),
         )
     )
 

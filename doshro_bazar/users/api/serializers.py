@@ -7,6 +7,7 @@ User = get_user_model()
 
 
 class UserSerializer(serializers.ModelSerializer[UserType]):
+    image = serializers.ImageField(required=False)
     class Meta:
         model = User
         fields = ["username", "name", "image"]

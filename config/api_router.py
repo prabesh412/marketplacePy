@@ -4,6 +4,7 @@ from django.urls import include, path
 from doshro_bazar.users.api.views import UserViewSet, RegisterViewSet, OTPViewSet, CustomLoginView
 from doshro_bazar.listings.views import ListingsViewSet, ListingImageViewSet
 from doshro_bazar.category.views import CategoryViewSet
+from doshro_bazar.bookmarks.views import BookmarkViewSet
 
 if settings.DEBUG:
     router = DefaultRouter()
@@ -14,6 +15,7 @@ router.register("users", UserViewSet)
 router.register("listings", ListingsViewSet)
 router.register("category", CategoryViewSet)
 router.register("image-listing", ListingImageViewSet)
+router.register("bookmarks", BookmarkViewSet)
 
 
 app_name = "api"

@@ -70,6 +70,7 @@ def create_link():
 
 
 def run():
+    fill_category_db()
     create_link()
 
 if __name__ == '__main__': 
