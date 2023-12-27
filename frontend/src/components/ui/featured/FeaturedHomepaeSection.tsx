@@ -14,18 +14,17 @@ const FeaturedHomepaeSection = () => {
   );
   const pageNumber = parseInt(urlSearchParams.get('page') || '1', 10);
   const [page, setPage] = useState(pageNumber - 1);
-  const { data: listing } = useListingsList({ page: page + 1 });
+  const { data: listing, status, error } = useListingsList({ page: page + 1 });
 
   const fetchMoreData = () => {
+    if (status === 'loading' || error) return;
     setPage(page + 1);
     setFeaturedListings(listing || {});
   };
   const isProductAllFetched = () => {
-    const status = !!(
-      (featuredListingsGlobal?.results?.length ?? 0) ===
-      (featuredListingsGlobal?.count ?? 0)
-    );
-    return status;
+    const totalProductCount = featuredListingsGlobal?.count ?? 0;
+    const totalFetchedProducts = (page + 1) * 12;
+    return totalFetchedProducts >= totalProductCount;
   };
 
   return (

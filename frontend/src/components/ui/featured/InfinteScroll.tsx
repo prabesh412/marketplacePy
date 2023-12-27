@@ -15,7 +15,7 @@ const InfiniteScroll: React.FC<InfiniteScrollProps> = ({
 
   const handleScroll = () => {
     const { scrollTop, clientHeight, scrollHeight } = document.documentElement;
-    if (!isProductAllFetched()) {
+    if (!isProductAllFetched() && !loading) {
       if (scrollTop + clientHeight >= scrollHeight - 300 && !loading) {
         setLoading(true);
         setTimeout(() => {
@@ -38,7 +38,19 @@ const InfiniteScroll: React.FC<InfiniteScrollProps> = ({
       ref={scrollContainerRef}
       style={{ overflowY: 'auto', maxHeight: '500px' }}
     >
-      {loading && <Loader />}
+      {loading && (
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            height: '100%',
+          }}
+        >
+          <Loader mb={'md'} />
+        </div>
+      )}
+
       {isProductAllFetched() && (
         <Text mb={'md'} align="center">
           Yay! you have caught up all.
