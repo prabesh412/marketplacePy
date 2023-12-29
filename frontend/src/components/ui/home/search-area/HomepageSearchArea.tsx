@@ -10,6 +10,7 @@ import {
   Card,
   Title,
   Button,
+  Text,
 } from '@mantine/core';
 import {
   IconArrowRight,
@@ -177,6 +178,7 @@ const HomepageSearchArea = (props: TextInputProps) => {
                 }
                 {...props}
               />
+
               <SearchCheckBox />
               <Group mb={'sm'}>
                 <Button rightIcon={<IconCategory />}>Browse Categories</Button>

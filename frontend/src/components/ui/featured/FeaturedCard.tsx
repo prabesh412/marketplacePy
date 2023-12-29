@@ -51,6 +51,11 @@ const useStyles = createStyles((theme) => ({
       display: 'none',
     },
   },
+  icon: {
+    '@media (max-width: 575px)': {
+      height: '1.2em',
+    },
+  },
   rating: {
     '@media (max-width: 575px)': {
       display: 'none',
@@ -147,9 +152,9 @@ const FeaturedCard = ({ listing }: listing) => {
             <Group miw={'63%'} spacing={'xl'} position="apart">
               <div style={{ width: '99%' }}>
                 <Text truncate>{listing?.title}</Text>
-                <Badge className={classes.badge} mt={'sm'} radius={'sm'}>
-                  <Group spacing={3}>
-                    <IconClock style={{ color: '#FFD700' }} size={15} />
+                <Badge className={classes.badge} mt={'xs'} radius={'sm'}>
+                  <Group spacing={5}>
+                    <IconClock style={{ color: 'black' }} size={15} />
                     <Text> 12hr ago</Text>
                   </Group>
                 </Badge>
@@ -158,7 +163,7 @@ const FeaturedCard = ({ listing }: listing) => {
           </Group>
           <Group mt={'xs'} position="apart">
             <Group spacing={5}>
-              <IconCurrencyRupeeNepalese />
+              <IconCurrencyRupeeNepalese className={classes.icon} />
               <Text c={'dimmed'}>{listing?.price}</Text>
             </Group>
             <Group className={classes.rating} spacing={5}>

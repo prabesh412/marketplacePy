@@ -88,7 +88,7 @@ const DefaultSideNav = ({
         label={parentCategory.name}
         links={subcategories?.map((subcategory) => ({
           label: subcategory.name,
-          link: `search/?title__icontains=${subcategory.slug}`,
+          link: `search/?title__icontains=${subcategory.id}`,
         }))}
         key={parentCategory.id}
         icon={icons}

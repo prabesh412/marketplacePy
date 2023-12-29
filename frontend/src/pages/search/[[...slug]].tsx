@@ -11,22 +11,27 @@ import {
 } from '../../../orval/listings/listings';
 import SearchLayout from '@/components/layouts/SearchLayout';
 import {
-  Col,
-  Grid,
   Group,
   Select,
-  Title,
   createStyles,
   rem,
   Text,
   Popover,
   Button,
   TextInput,
+  useMantineTheme,
+  ActionIcon,
 } from '@mantine/core';
 import { Listings } from '../../../orval/model/listings';
-import FeaturedCard from '@/components/ui/featured/FeaturedCard';
-import { IconAdjustments, IconClearAll } from '@tabler/icons-react';
+import {
+  IconAdjustments,
+  IconArrowRight,
+  IconClearAll,
+  IconSearch,
+} from '@tabler/icons-react';
 import { useForm } from '@mantine/form';
+import HorizontalCard from '@/components/ui/listing/HorizontalCard';
+import HomepageSearchArea from '@/components/ui/home/search-area/HomepageSearchArea';
 
 const useStyles = createStyles((theme) => ({
   parent: {
@@ -82,7 +87,26 @@ const useStyles = createStyles((theme) => ({
         ? theme.colors.dark[6]
         : theme.colors.gray[1],
     padding: theme.spacing.sm,
+    marginTop: theme.spacing.md,
     borderRadius: theme.radius.md,
+  },
+  textInput: {
+    width: '100%',
+    border: '2px solid gray',
+    borderRadius: theme.radius.xl,
+    '@media (max-width: 575px)': {
+      marginLeft: 0,
+      marginRight: 0,
+      padding: 0,
+      width: '100%',
+      border: 'none',
+    },
+  },
+  actionIcon: {
+    '@media (max-width: 576px)': {
+      width: '10px',
+      height: '10px',
+    },
   },
 }));
 
@@ -99,7 +123,7 @@ interface SortOptions {
 
 export async function getServerSideProps(ctx: NextPageContext) {
   const slug = ctx.query;
-  if (!slug || !slug.title__icontains) {
+  if (!slug || Object.keys(slug).length === 0) {
     return {
       redirect: {
         destination: '/404',
@@ -132,6 +156,8 @@ export default function Search() {
   const slug = router.query;
   const { data: listingDetail } = useListingsList(slug);
   const { classes } = useStyles();
+  const theme = useMantineTheme();
+  const [searchValue, setSearchValue] = useState('');
   const form = useForm<SortOptions>({
     initialValues: {
       condition: '',
@@ -169,14 +195,38 @@ export default function Search() {
 
   return (
     <div style={{ maxWidth: '1200px', margin: 'auto' }}>
-      <Title align="center" mt={'lg'} mb={'lg'} className={classes.title}>
-        {slug?.title__icontains}
-      </Title>
       <div className={classes.sort}>
-        <Group pb={'sm'} position="center" spacing={5}>
-          <Text fw={'dimmed'}>Sort By</Text>
-          <IconAdjustments color="grey" size="1.3em" />
-        </Group>
+        <TextInput
+          mb={'md'}
+          className={classes.textInput}
+          value={searchValue}
+          onChange={(event) => setSearchValue(event.target.value)}
+          size="lg"
+          radius={'xl'}
+          icon={<IconSearch />}
+          placeholder="Search for what you are looking for and we will handle the rest."
+          rightSectionWidth={50}
+          rightSection={
+            <ActionIcon
+              size={40}
+              radius="xl"
+              className={classes.actionIcon}
+              mr={'sm'}
+              color={theme.primaryColor}
+              variant="filled"
+              onClick={() => {
+                if (searchValue) {
+                  router.push(`/search?title__icontains=${searchValue}`);
+                }
+              }}
+            >
+              <IconArrowRight
+                style={{ width: rem(18), height: rem(18) }}
+                stroke={1.5}
+              />
+            </ActionIcon>
+          }
+        />
         <Group pb={'md'} grow>
           <Select
             placeholder="Condition"
@@ -249,45 +299,14 @@ export default function Search() {
           </Text>
         ) &&
         listingDetail?.results?.map((listing: Listings, key: number) => (
-          <div key={key}>
-            <Grid mb={'xl'} mt={'sm'}>
-              <Col span={6} xs={4} sm={3} md={3} lg={3}>
-                <FeaturedCard />
-              </Col>
-              <Col span={6} xs={4} sm={3} md={3} lg={3}>
-                <FeaturedCard />
-              </Col>
-              <Col span={6} xs={4} sm={3} md={3} lg={3}>
-                <FeaturedCard />
-              </Col>
-              <Col span={6} xs={4} sm={3} md={3} lg={3}>
-                <FeaturedCard />
-              </Col>
-              <Col span={6} xs={4} sm={3} md={3} lg={3}>
-                <FeaturedCard />
-              </Col>
-              <Col span={6} xs={4} sm={3} md={3} lg={3}>
-                <FeaturedCard />
-              </Col>
-              <Col span={6} xs={4} sm={3} md={3} lg={3}>
-                <FeaturedCard />
-              </Col>
-              <Col span={6} xs={4} sm={3} md={3} lg={3}>
-                <FeaturedCard />
-              </Col>
-              <Col span={6} xs={4} sm={3} md={3} lg={3}>
-                <FeaturedCard />
-              </Col>
-              <Col span={6} xs={4} sm={3} md={3} lg={3}>
-                <FeaturedCard />
-              </Col>
-              <Col span={6} xs={4} sm={3} md={3} lg={3}>
-                <FeaturedCard />
-              </Col>
-              <Col span={6} xs={4} sm={3} md={3} lg={3}>
-                <FeaturedCard />
-              </Col>
-            </Grid>
+          <div
+            style={{
+              marginTop: theme.spacing.sm,
+              marginBottom: theme.spacing.sm,
+            }}
+            key={key}
+          >
+            <HorizontalCard listing={listing} />
           </div>
         ))
       ) : (

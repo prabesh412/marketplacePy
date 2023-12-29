@@ -2,9 +2,8 @@ import { destroyCookie, setCookie } from 'nookies';
 import { createContext, useContext } from 'react';
 import { createStore, useStore as useZustandStore } from 'zustand';
 import { AXIOS_INSTANCE } from '../../custom-instance';
-import { Listings, PaginatedListingsList, User } from '../../orval/model';
+import { PaginatedListingsList, User } from '../../orval/model';
 import { usersMeRetrieve } from '../../orval/users/users';
-import { useListingsList } from '../../orval/listings/listings';
 
 interface StoreInterface {
   setAccessToken: (accessToken: string) => void;
@@ -19,7 +18,6 @@ interface StoreInterface {
 
   logout: () => void;
 }
-
 const getDefaultInitialState = () => ({
   accessToken: '',
   profile: null,

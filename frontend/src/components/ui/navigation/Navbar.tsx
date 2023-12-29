@@ -110,16 +110,19 @@ const userAction = [
   {
     title: 'Profile',
     icon: <IconUser style={{ width: rem(16), height: rem(16) }} stroke={1.5} />,
+    url: '/users/profile',
   },
   {
     title: 'Saved posts',
     icon: <IconStar style={{ width: rem(16), height: rem(16) }} stroke={1.5} />,
+    url: '/users/profile',
   },
   {
     title: 'Your comments',
     icon: (
       <IconMessage style={{ width: rem(16), height: rem(16) }} stroke={1.5} />
     ),
+    url: '/users/profile',
   },
 ];
 const userSetting = [
@@ -128,6 +131,7 @@ const userSetting = [
     icon: (
       <IconSettings style={{ width: rem(16), height: rem(16) }} stroke={1.5} />
     ),
+    url: '/users/profile',
   },
 ];
 
@@ -140,7 +144,6 @@ const Navbar = ({ isHomepage }: HeaderSearchProps) => {
   const { classes } = useStyles();
   const [userMenuOpened, setUserMenuOpened] = useState(false);
   const [isSideNavOpen, setSideNavOpen] = useState(false);
-
   const router = useRouter();
   const user = useStore((state) => state.profile);
   const logout = useStore((state) => state.logout);
@@ -189,7 +192,12 @@ const Navbar = ({ isHomepage }: HeaderSearchProps) => {
                 <Menu.Dropdown>
                   <>
                     {userAction.map((actions) => (
-                      <Menu.Item icon={actions.icon}>{actions.title}</Menu.Item>
+                      <Menu.Item
+                        onClick={() => router.push(actions.url)}
+                        icon={actions.icon}
+                      >
+                        {actions.title}
+                      </Menu.Item>
                     ))}
                     <Menu.Label>Settings</Menu.Label>
                     {userSetting.map((setting) => (

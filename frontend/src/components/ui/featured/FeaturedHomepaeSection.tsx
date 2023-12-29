@@ -17,13 +17,15 @@ const FeaturedHomepaeSection = () => {
   const { data: listing, status, error } = useListingsList({ page: page + 1 });
 
   const fetchMoreData = () => {
-    if (status === 'loading' || error) return;
-    setPage(page + 1);
-    setFeaturedListings(listing || {});
+    if (status === 'loading' || error || isProductAllFetched()) return;
+    else {
+      setPage(page + 1);
+      setFeaturedListings(listing || {});
+    }
   };
   const isProductAllFetched = () => {
     const totalProductCount = featuredListingsGlobal?.count ?? 0;
-    const totalFetchedProducts = (page + 1) * 12;
+    const totalFetchedProducts = featuredListingsGlobal?.results?.length || 0;
     return totalFetchedProducts >= totalProductCount;
   };
 

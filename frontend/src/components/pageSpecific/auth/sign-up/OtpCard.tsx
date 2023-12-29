@@ -1,10 +1,17 @@
-import { Card, Text, Button, Group, PinInput } from '@mantine/core';
+import { Card, Text, Button, Group, PinInput, rem } from '@mantine/core';
 import { useDjRestAuthOtpCreate } from '../../../../../orval/dj-rest-auth/dj-rest-auth';
 import { useForm } from '@mantine/form';
 import { notifications } from '@mantine/notifications';
 import { useRouter } from 'next/router';
 import { ROOTS_AUTH } from '@/components/routes';
-import { IconLock } from '@tabler/icons-react';
+import {
+  IconLock,
+  IconLockAccess,
+  IconLockBolt,
+  IconLockPin,
+  IconLockSquareRoundedFilled,
+  IconShieldLockFilled,
+} from '@tabler/icons-react';
 import { useMediaQuery } from '@mantine/hooks';
 
 interface OtpProps {
@@ -74,12 +81,12 @@ const OtpCard = ({ phone_number }: OtpProps) => {
         alignItems: 'center',
       }}
     >
-      <Card radius={'md'} shadow="sm" w={'100%'} mt={'xl'} padding="xl">
+      <Card radius={'md'} withBorder w={'100%'} mt={'xl'} padding="xl">
         <Group mb={'sm'} spacing={3} position="center">
-          <Text size={25} fw={'bold'}>
-            OTP Verification
+          <Text pb={rem(3)} size={25} fw={'bold'}>
+            Verification Code
           </Text>
-          <IconLock size={'1.5em'} />
+          <IconShieldLockFilled size={'1.7em'} />
         </Group>
         <Text align="center" size={'md'} c={'dimmed'}>
           We have sent you a verification code to your Mobile Phone. Enter the

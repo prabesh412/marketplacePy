@@ -11,9 +11,9 @@ import {
   useMantineTheme,
 } from '@mantine/core';
 
-import Marquee from 'react-fast-marquee';
 import { useCategoryList } from '../../../../orval/category/category';
 import { Carousel } from '@mantine/carousel';
+import { useRouter } from 'next/router';
 const useStyles = createStyles((theme) => ({
   textInput: {
     width: '100%',
@@ -65,7 +65,7 @@ const CategoryMarquee = () => {
   const theme = useMantineTheme();
   const { classes } = useStyles();
   const { data: categories } = useCategoryList();
-
+  const router = useRouter();
   return (
     <div
       style={{
@@ -91,6 +91,9 @@ const CategoryMarquee = () => {
             !category.parent && (
               <Carousel.Slide>
                 <Box
+                  onClick={() =>
+                    router.push(`/search?category=${category?.id}`)
+                  }
                   key={category.id}
                   w={'200px'}
                   className={classes.categoryBox}
