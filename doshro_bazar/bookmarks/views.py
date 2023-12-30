@@ -34,6 +34,13 @@ class BookmarkViewSet(GenericViewSet, CreateModelMixin, DestroyModelMixin):
         self.perform_destroy(obj)
         return Response(status=status.HTTP_204_NO_CONTENT)
     
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save(user=request.user)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
 
     @action(detail=False)
     def me(self, request, *args, **kwargs):

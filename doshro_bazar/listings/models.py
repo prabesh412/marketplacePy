@@ -57,7 +57,11 @@ class Listings(AbstractClient):
         return self.title
     
     def save(self, *args, **kwargs):
-        self.slug = slugify(self.title)
+        already_exist = Listings.objects.filter(slug = self.slug)
+        if not already_exist:
+            self.slug = slugify(self.title)
+        self.slug = self.slug + "-" + str(uuid.uuid4())[:8]
+
         super(Listings, self).save(*args, **kwargs)
 
 
