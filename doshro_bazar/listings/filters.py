@@ -22,6 +22,12 @@ class ListingsFilter(filters_new.FilterSet):
             'user': ['exact'],
             'created_at': ['exact', 'lt', 'gt'],
             'updated_at': ['exact', 'lt', 'gt'],
+            'category__parent': ['exact'],
+            'listing_condition': ['exact'],
+            'is_sfw': ['exact'],
+            'is_scraped': ['exact'],
+            'is_featured': ['exact'],
         }
 
+ 
 
