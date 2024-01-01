@@ -181,7 +181,13 @@ const HomepageSearchArea = (props: TextInputProps) => {
 
               <SearchCheckBox />
               <Group mb={'sm'}>
-                <Button rightIcon={<IconCategory />}>Browse Categories</Button>
+                <Button
+                  variant="filled"
+                  radius={'xl'}
+                  rightIcon={<IconCategory />}
+                >
+                  Browse Categories
+                </Button>
               </Group>
             </Group>
           </div>

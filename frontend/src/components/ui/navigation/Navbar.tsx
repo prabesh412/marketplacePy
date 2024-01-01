@@ -10,39 +10,39 @@ import {
   UnstyledButton,
   Menu,
   Tabs,
+  Divider,
+  Flex,
 } from '@mantine/core';
 import cx from 'clsx';
-
 import { useDisclosure } from '@mantine/hooks';
 import {
   IconCategory,
   IconClock,
   IconCrown,
-  IconHelp,
   IconHome,
   IconLogin,
-  IconRocket,
+  IconPlus,
+  IconShoppingBag,
   IconStars,
-  IconThumbUp,
   IconUser,
+  IconLogout,
+  IconMessage,
+  IconSettings,
+  IconChevronDown,
+  IconStar,
 } from '@tabler/icons-react';
 import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 import { useStore } from '@/zustand/store';
-
-import {
-  IconLogout,
-  IconStar,
-  IconMessage,
-  IconSettings,
-  IconChevronDown,
-} from '@tabler/icons-react';
 import DefaultSideNav from './DefaultSideNav';
+import Logo from '../../../../public/favicon/logo.png';
+import Image from 'next/image';
 
 const useStyles = createStyles((theme) => ({
   header: {
     backgroundColor:
       theme.colorScheme === 'dark' ? theme.colors.gray[9] : '#fff',
+    height: 80,
   },
 
   user: {
@@ -51,7 +51,6 @@ const useStyles = createStyles((theme) => ({
     padding: `${theme.spacing.xs} ${theme.spacing.sm}`,
     borderRadius: theme.radius.sm,
     transition: 'background-color 100ms ease',
-
     '&:hover': {
       backgroundColor:
         theme.colorScheme === 'dark'
@@ -106,6 +105,7 @@ const useStyles = createStyles((theme) => ({
     },
   },
 }));
+
 const userAction = [
   {
     title: 'Profile',
@@ -125,6 +125,7 @@ const userAction = [
     url: '/users/profile',
   },
 ];
+
 const userSetting = [
   {
     title: 'Account settings',
@@ -150,89 +151,12 @@ const Navbar = ({ isHomepage }: HeaderSearchProps) => {
 
   return (
     <>
-      <div className={classes.header}>
-        <Container size="xl">
-          <Group position="apart">
-            <h3 style={{ cursor: 'pointer' }} onClick={() => router.push('/')}>
-              Doshrodeal
-            </h3>
-            <Burger
-              opened={opened}
-              onClick={toggle}
-              className={classes.burger}
-              size="sm"
-            />
-            {user ? (
-              <Menu
-                width={260}
-                position="bottom-end"
-                transitionProps={{ transition: 'pop-top-right' }}
-                onClose={() => setUserMenuOpened(false)}
-                onOpen={() => setUserMenuOpened(true)}
-                withinPortal
-              >
-                <Menu.Target>
-                  <UnstyledButton
-                    className={cx(classes.user, {
-                      [classes.userActive]: userMenuOpened,
-                    })}
-                  >
-                    <Group spacing={7}>
-                      <Avatar src="" alt={user.name} radius="xl" size={20} />
-                      <Text fw={500} size="sm" lh={1} mr={3}>
-                        {user.name}
-                      </Text>
-                      <IconChevronDown
-                        style={{ width: rem(12), height: rem(12) }}
-                        stroke={1.5}
-                      />
-                    </Group>
-                  </UnstyledButton>
-                </Menu.Target>
-                <Menu.Dropdown>
-                  <>
-                    {userAction.map((actions) => (
-                      <Menu.Item
-                        onClick={() => router.push(actions.url)}
-                        icon={actions.icon}
-                      >
-                        {actions.title}
-                      </Menu.Item>
-                    ))}
-                    <Menu.Label>Settings</Menu.Label>
-                    {userSetting.map((setting) => (
-                      <Menu.Item icon={setting.icon}>{setting.title}</Menu.Item>
-                    ))}
-                    <Menu.Item
-                      onClick={logout}
-                      icon={
-                        <IconLogout
-                          style={{ width: rem(16), height: rem(16) }}
-                          stroke={1.5}
-                        />
-                      }
-                    >
-                      Logout
-                    </Menu.Item>
-                  </>
-                </Menu.Dropdown>
-              </Menu>
-            ) : (
-              <Button.Group>
-                {isHomepage ? (
-                  <Button
-                    leftIcon={<IconLogin />}
-                    onClick={() => router.push('users/auth')}
-                  >
-                    Login
-                  </Button>
-                ) : null}
-              </Button.Group>
-            )}
+      <Container className={classes.header} fluid>
+        <Flex justify={'space-around'} align={'center'} h={'100%'}>
+          <Group pb={'xs'} spacing={4}>
+            <Image src={Logo} alt="as" height={120} width={170} />
           </Group>
-        </Container>
-        <Container size="xl">
-          <Tabs variant="pills" radius="xs" defaultValue="Home">
+          <Tabs variant="pills" radius="xl" defaultValue="Home" pt={'xs'}>
             <Tabs.List className={classes.tabsList}>
               <Tabs.Tab
                 onClick={() => setSideNavOpen(true)}
@@ -271,31 +195,96 @@ const Navbar = ({ isHomepage }: HeaderSearchProps) => {
               >
                 Latest
               </Tabs.Tab>
-              <Tabs.Tab
-                className={classes.tab}
-                value="settings"
-                icon={<IconThumbUp size="0.8rem" />}
-              >
-                Recommended
-              </Tabs.Tab>
-              <Tabs.Tab
-                className={classes.tab}
-                value="settings"
-                icon={<IconRocket size="0.8rem" />}
-              >
-                Boosting
-              </Tabs.Tab>
-              <Tabs.Tab
-                className={classes.tab}
-                value="settings"
-                icon={<IconHelp size="0.8rem" />}
-              >
-                Help & support
-              </Tabs.Tab>
             </Tabs.List>
           </Tabs>
-        </Container>
-      </div>
+          <Burger
+            opened={opened}
+            onClick={() => toggle()}
+            className={classes.burger}
+            size="sm"
+          />
+          <Group spacing={7}>
+            <Button leftIcon={<IconPlus />} variant="light" radius={'xl'}>
+              Create
+            </Button>
+            {user ? (
+              <Menu
+                width={260}
+                position="bottom-end"
+                transitionProps={{ transition: 'pop-top-right' }}
+                onClose={() => setUserMenuOpened(false)}
+                onOpen={() => setUserMenuOpened(true)}
+                withinPortal
+              >
+                <Menu.Target>
+                  <UnstyledButton
+                    className={cx(classes.user, {
+                      [classes.userActive]: userMenuOpened,
+                    })}
+                  >
+                    <Group spacing={5}>
+                      <Avatar
+                        src={user?.image}
+                        alt={user?.name}
+                        radius="xl"
+                        size={20}
+                      />
+                      <Group spacing={1}>
+                        <Text fw={500} size="sm" mr={3}>
+                          {user.name}
+                        </Text>
+                        <IconChevronDown
+                          style={{ width: rem(15), height: rem(15) }}
+                          stroke={2}
+                        />
+                      </Group>
+                    </Group>
+                  </UnstyledButton>
+                </Menu.Target>
+                <Menu.Dropdown>
+                  {userAction.map((action) => (
+                    <Menu.Item
+                      key={action.title}
+                      onClick={() => router.push(action.url)}
+                      icon={action.icon}
+                    >
+                      {action.title}
+                    </Menu.Item>
+                  ))}
+                  <Menu.Label>Settings</Menu.Label>
+                  {userSetting.map((setting) => (
+                    <Menu.Item key={setting.title} icon={setting.icon}>
+                      {setting.title}
+                    </Menu.Item>
+                  ))}
+                  <Menu.Item
+                    onClick={logout}
+                    icon={
+                      <IconLogout
+                        style={{ width: rem(16), height: rem(16) }}
+                        stroke={1.5}
+                      />
+                    }
+                  >
+                    Logout
+                  </Menu.Item>
+                </Menu.Dropdown>
+              </Menu>
+            ) : (
+              isHomepage && (
+                <Button
+                  leftIcon={<IconLogin />}
+                  variant="light"
+                  radius={'xl'}
+                  onClick={() => router.push('users/auth')}
+                >
+                  Login
+                </Button>
+              )
+            )}
+          </Group>
+        </Flex>
+      </Container>
       <DefaultSideNav
         onClose={() => setSideNavOpen(false)}
         isOpen={isSideNavOpen}
