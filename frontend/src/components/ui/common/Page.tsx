@@ -3,14 +3,13 @@ import Head from 'next/head';
 
 interface PageProps {
   children: ReactNode;
-  title: string;
 }
 
-const Page = ({ children, title }: PageProps) => {
+const Page = ({ children }: PageProps) => {
   return (
     <>
       <Head>
-        <title>{title} || Doroso Bazaar</title>
+        <title> Doroso Bazaar</title>
         {/*  TODO : add meta tags  */}
       </Head>
       {children}

@@ -47,7 +47,7 @@ HomePage.getLayout = (page: ReactElement) => <HomeLayout>{page}</HomeLayout>;
 
 export default function HomePage() {
   return (
-    <Page title={'Home'}>
+    <Page>
       <AddListingFloatButton />
       <HomeSection />
     </Page>

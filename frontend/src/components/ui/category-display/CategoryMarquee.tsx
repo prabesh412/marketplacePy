@@ -79,7 +79,8 @@ const CategoryMarquee = () => {
     >
       <Carousel
         align={'start'}
-        withControls={false}
+        withControls
+        controlSize={30}
         loop
         dragFree
         slideSize="1%"
@@ -92,7 +93,7 @@ const CategoryMarquee = () => {
               <Carousel.Slide>
                 <Box
                   onClick={() =>
-                    router.push(`/search?category=${category?.id}`)
+                    router.push(`/search?category__parent=${category?.id}`)
                   }
                   key={category.id}
                   w={'200px'}
@@ -121,8 +122,9 @@ const CategoryMarquee = () => {
       <Divider
         label={<Badge>Category</Badge>}
         labelPosition="center"
-        color={theme.colors.dark[5]}
-        size={2}
+        c={'dimmed'}
+        mb={-5}
+        size={1}
         orientation="horizontal"
       />
     </div>

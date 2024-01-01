@@ -1,8 +1,5 @@
-import { Container } from '@mantine/core';
 import { dehydrate, QueryClient } from '@tanstack/react-query';
-import { AuthPage } from '@/components/pageSpecific/auth/AuthPage';
 import { ReactElement } from 'react';
-import AuthLayout from '@/components/layouts/AuthLayout';
 import { getDefaultStore } from '@/components/utils/PageDefaults';
 import { NextPageContext } from 'next';
 import HomeLayout from '@/components/layouts/HomeLayout';
@@ -11,6 +8,11 @@ import {
   getListingsMeRetrieveQueryKey,
   listingsMeRetrieve,
 } from '../../../../orval/listings/listings';
+import {
+  getUsersMeRetrieveQueryKey,
+  usersMeRetrieve,
+} from '../../../../orval/users/users';
+import { bookmarksProfileRetrieve, getBookmarksProfileRetrieveQueryKey } from '../../../../orval/bookmarks/bookmarks';
 
 export const getServerSideProps = async (ctx: NextPageContext) => {
   const queryClient = new QueryClient();
@@ -29,7 +31,16 @@ export const getServerSideProps = async (ctx: NextPageContext) => {
     () => listingsMeRetrieve(),
     {},
   );
-
+  await queryClient.prefetchQuery(
+    getUsersMeRetrieveQueryKey(),
+    () => usersMeRetrieve(),
+    {},
+  );
+  await queryClient.prefetchQuery(
+    getBookmarksProfileRetrieveQueryKey(),
+    () => bookmarksProfileRetrieve(),
+    {},
+  );
   return {
     props: {
       dehydratedState: dehydrate(queryClient),

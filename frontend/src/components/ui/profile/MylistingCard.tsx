@@ -19,22 +19,59 @@ import {
 } from '@tabler/icons-react';
 import { Listings } from '../../../../orval/model';
 import {
+  getListingsMeRetrieveQueryKey,
   useListingsDestroy,
   useListingsUpdate,
 } from '../../../../orval/listings/listings';
 import { useRouter } from 'next/router';
+import { notifications } from '@mantine/notifications';
+import { useQueryClient } from '@tanstack/react-query';
 
 type HorizontalCardProps = {
   listing: Listings;
 };
 const MylistingCard = ({ listing }: HorizontalCardProps) => {
   const { classes } = useStyles();
-  const {
-    mutate: listingDeleteMutation,
-    isLoading,
-    isSuccess,
-  } = useListingsDestroy();
-  const handleDelete = (slug: string) => listingDeleteMutation({ slug: slug });
+  const deleteMutation = useListingsDestroy();
+  const queryClient = useQueryClient();
+  const handleDelete = (slug: string) => {
+    notifications.show({
+      id: 'userListing',
+      title: `Deleting your listing`,
+      message: `Please wait while we delete your listing`,
+      loading: true,
+      autoClose: false,
+      withCloseButton: false,
+    }),
+      deleteMutation.mutate(
+        { slug: slug },
+        {
+          onSuccess: () => {
+            notifications.update({
+              id: 'userListing',
+              title: `Listing successfully deleted`,
+              color: 'green',
+              message: 'Successfully deleted your listing!',
+              loading: false,
+              autoClose: true,
+              withCloseButton: true,
+            });
+            queryClient.invalidateQueries(getListingsMeRetrieveQueryKey());
+          },
+          onError: () => {
+            notifications.update({
+              id: 'userListing',
+              title: `Error deleting your listing`,
+              color: 'red',
+              message: 'Unexpected error occured while deleting your listing',
+              loading: false,
+              autoClose: true,
+              withCloseButton: true,
+            });
+          },
+        },
+      );
+  };
   const router = useRouter();
   return (
     <Card
@@ -135,7 +172,7 @@ const MylistingCard = ({ listing }: HorizontalCardProps) => {
             c="dimmed"
             size="sm"
           >
-            | <Badge>{listing?.category}</Badge>
+            | <Badge>{listing?.category?.name}</Badge>
           </Text>
         </Group>
         <Text className={classes.description} mt="xs" c="dimmed" size="sm">

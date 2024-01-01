@@ -92,7 +92,7 @@ const useStyles = createStyles((theme) => ({
   },
   textInput: {
     width: '100%',
-    border: '2px solid gray',
+    border: '1px solid gray',
     borderRadius: theme.radius.xl,
     '@media (max-width: 575px)': {
       marginLeft: 0,
@@ -123,7 +123,11 @@ interface SortOptions {
 
 export async function getServerSideProps(ctx: NextPageContext) {
   const slug = ctx.query;
-  if (!slug || Object.keys(slug).length === 0) {
+  if (
+    !slug ||
+    Object.keys(slug).length === 0 ||
+    Object.values(slug).length === 0
+  ) {
     return {
       redirect: {
         destination: '/404',
@@ -201,14 +205,14 @@ export default function Search() {
           className={classes.textInput}
           value={searchValue}
           onChange={(event) => setSearchValue(event.target.value)}
-          size="lg"
+          size="md"
           radius={'xl'}
           icon={<IconSearch />}
-          placeholder="Search for what you are looking for and we will handle the rest."
-          rightSectionWidth={50}
+          placeholder={slug?.title__icontains as string}
+          rightSectionWidth={40}
           rightSection={
             <ActionIcon
-              size={40}
+              size={30}
               radius="xl"
               className={classes.actionIcon}
               mr={'sm'}
@@ -293,24 +297,23 @@ export default function Search() {
       </div>
 
       {listingDetail?.results && listingDetail.results.length > 0 ? (
-        (
-          <Text align="center" fw={'200'} mt={'xs'}>
-            {listingDetail.results.length}
-          </Text>
-        ) &&
-        listingDetail?.results?.map((listing: Listings, key: number) => (
-          <div
-            style={{
-              marginTop: theme.spacing.sm,
-              marginBottom: theme.spacing.sm,
-            }}
-            key={key}
-          >
-            <HorizontalCard listing={listing} />
-          </div>
-        ))
+        <React.Fragment>
+          {listingDetail.results.map((listing: Listings, key: number) => (
+            <div
+              style={{
+                marginTop: theme.spacing.sm,
+                marginBottom: theme.spacing.sm,
+              }}
+              key={listing.slug}
+            >
+              <HorizontalCard listing={listing} />
+            </div>
+          ))}
+        </React.Fragment>
       ) : (
-        <p style={{ textAlign: 'center' }}>No results found</p>
+        <Text mt={'xs'} align="center" c={'dimmed'}>
+          No results found
+        </Text>
       )}
     </div>
   );

@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import { Group, Tabs, Text, useMantineTheme } from '@mantine/core';
 import {
-  IconClockCancel,
+  IconBookmark,
   IconMessageCircle,
   IconPencil,
   IconSettings,
@@ -13,11 +13,12 @@ import { useRouter } from 'next/router';
 import PersonalInfo from './PersonalInfo';
 
 import MylistingCard from './MylistingCard';
+import BookMarks from './Bookmark';
 
 const tabs = [
   { label: 'Personal Info', icon: <IconMessageCircle size="1.2rem" /> },
+  { label: 'Bookmark', icon: <IconBookmark size="1.2rem" /> },
   { label: 'Inbox', icon: <IconMessageCircle size="1.2rem" /> },
-  { label: 'Pending Listings', icon: <IconClockCancel size="1.2rem" /> },
   { label: 'Manage Listings', icon: <IconPencil size="1.2rem" /> },
   { label: 'Public Listings', icon: <IconUpload size="1.2rem" /> },
   { label: 'settings', icon: <IconSettings size="1.2rem" /> },
@@ -43,6 +44,9 @@ const ProfileTab = () => {
 
       <Tabs.Panel value="Personal Info" pt="xs">
         <PersonalInfo />
+      </Tabs.Panel>
+      <Tabs.Panel value="Bookmark" pt="xs">
+        <BookMarks />
       </Tabs.Panel>
 
       <Tabs.Panel value="Public Listings" pt="xs">

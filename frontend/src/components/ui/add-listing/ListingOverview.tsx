@@ -1,15 +1,27 @@
 import React from 'react';
-import { Card, Col, Grid, Group, Stack, Title, Text } from '@mantine/core';
+import {
+  Card,
+  Col,
+  Grid,
+  Group,
+  Stack,
+  Title,
+  Text,
+  useMantineTheme,
+} from '@mantine/core';
 import { PlainDivider } from '../common/PlainDivider';
 import { FeaturedCarouselCard } from '../common/FeaturedCarouselCard';
+import FeaturedCard from '../featured/FeaturedCard';
+import HorizontalCard from '../listing/HorizontalCard';
 
 interface ListingDetailProps {
   firstStepValues: any;
 }
 
 const ListingOverview = ({ firstStepValues }: ListingDetailProps) => {
+  const theme = useMantineTheme();
   return (
-    <Card sx={{ padding: '2px' }}>
+    <Card bg={theme.colors.gray[1]} sx={{ padding: '2px' }}>
       <Stack sx={{ marginTop: '20px' }}>
         <Text>Title:</Text>
         <Group position="apart">
@@ -61,18 +73,14 @@ const ListingOverview = ({ firstStepValues }: ListingDetailProps) => {
             </Text>
             <PlainDivider />
           </Col>
-
-          <Col span={12} sm={12} md={8} xs={8} xl={8}>
-            <Text mb={'md'}>Listing card:</Text>
-            <FeaturedCarouselCard
-              title={firstStepValues.title}
-              image={firstStepValues.images}
-              condition={'New'}
-              price={firstStepValues.price}
-              id={''}
-            />
-          </Col>
         </Grid>
+        <Text>Listing card:</Text>
+
+        <HorizontalCard
+          overViewImage={firstStepValues?.images}
+          listing={firstStepValues}
+        />
+
         <PlainDivider />
       </Stack>
     </Card>

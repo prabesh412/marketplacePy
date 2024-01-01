@@ -128,7 +128,7 @@ const HomepageSearchArea = (props: TextInputProps) => {
         maw={'1200px'}
         m={'auto'}
         className={classes.card}
-        mt={'xl'}
+        mt={'sm'}
         radius={'md'}
       >
         <div className={classes.homepageSearchArea}>

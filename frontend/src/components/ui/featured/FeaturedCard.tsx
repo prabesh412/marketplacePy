@@ -20,6 +20,8 @@ import {
 } from '@tabler/icons-react';
 import { Listings } from '../../../../orval/model';
 import { Router, useRouter } from 'next/router';
+import { useBookmarksCreate } from '../../../../orval/bookmarks/bookmarks';
+import { notifications } from '@mantine/notifications';
 
 const useStyles = createStyles((theme) => ({
   card: {
@@ -63,20 +65,62 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 type listing = {
-  listing: Listings;
+  listing?: Listings;
 };
 const FeaturedCard = ({ listing }: listing) => {
   const theme = useMantineTheme();
   const { classes } = useStyles();
   const router = useRouter();
+  const bookmarkMutation = useBookmarksCreate();
+  const addBookmark = () => {
+    const data = {
+      listing: listing?.slug as string,
+    };
+    notifications.show({
+      id: 'userBookmark',
+      title: `Adding to your bookmark`,
+      message: `Please wait while we add to your bookmark`,
+      loading: true,
+      autoClose: false,
+      withCloseButton: false,
+    }),
+      bookmarkMutation.mutate(
+        { data: data },
+        {
+          onSuccess: () => {
+            notifications.update({
+              id: 'userBookmark',
+              title: `Bookmark successfully added`,
+              color: 'green',
+              message: 'Successfully saved the bookmark!',
+              loading: false,
+              autoClose: true,
+              withCloseButton: true,
+            });
+          },
+          onError: (error: any) => {
+            notifications.update({
+              id: 'userBookmark',
+              title: `Bookmark couldnot be added`,
+              color: 'red',
+              message: 'Bookmark already exist',
+              loading: false,
+              autoClose: true,
+              withCloseButton: true,
+            });
+          },
+        },
+      );
+  };
+
   return (
     <>
       <Card
-        onClick={() =>
-          listing?.is_scraped
-            ? window.open(listing.link_to_original as string)
-            : router.push(`/listing/listing-detail/${listing?.slug}`)
-        }
+        // onClick={() =>
+        //   listing?.is_scraped
+        //     ? window.open(listing.link_to_original as string)
+        //     : router.push(`/listing/listing-detail/${listing?.slug}`)
+        // }
         className={classes.card}
         radius={'md'}
         shadow="sm"
@@ -110,6 +154,7 @@ const FeaturedCard = ({ listing }: listing) => {
               color={theme.primaryColor}
               sx={{ boxShadow: '0 2px 4px 2px rgba(0, 0, 0, 0.5)' }}
               variant="filled"
+              onClick={() => addBookmark()}
             >
               <IconHeart size={24} stroke={1.5} />
             </ActionIcon>
@@ -152,22 +197,25 @@ const FeaturedCard = ({ listing }: listing) => {
             <Group miw={'63%'} spacing={'xl'} position="apart">
               <div style={{ width: '99%' }}>
                 <Text truncate>{listing?.title}</Text>
-                <Badge className={classes.badge} mt={'xs'} radius={'sm'}>
+                <Badge
+                  variant="filled"
+                  className={classes.badge}
+                  mt={'xs'}
+                  radius={'sm'}
+                >
                   <Group spacing={5}>
-                    <IconClock style={{ color: 'black' }} size={15} />
-                    <Text> 12hr ago</Text>
+                    <Text truncate c={'white'}>
+                      {`${listing?.category?.name.slice(0, 11)}...`}
+                    </Text>
                   </Group>
                 </Badge>
               </div>
             </Group>
           </Group>
           <Group mt={'xs'} position="apart">
-            <Group spacing={5}>
-              <IconCurrencyRupeeNepalese className={classes.icon} />
-              <Text c={'dimmed'}>{listing?.price}</Text>
-            </Group>
+            <Text c={'dimmed'}>रू. {listing?.price}</Text>
             <Group className={classes.rating} spacing={5}>
-              <IconStarFilled />
+              <IconStarFilled style={{ color: '#FFD700' }} />
               <Text size={'md'} c={'dimmed'}>
                 4.0
               </Text>
@@ -183,7 +231,7 @@ const FeaturedCard = ({ listing }: listing) => {
 
             <Group spacing={9}>
               <IconEye />
-              <Text c={'dimmed'}> {listing?.views}</Text>
+              <Text c={'dimmed'}> {listing?.views || 0}</Text>
             </Group>
           </Group>
         </Card.Section>

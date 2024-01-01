@@ -1,6 +1,6 @@
 import React from 'react';
 import { Card, Avatar, Text, Group, useMantineTheme } from '@mantine/core';
-import { useStore } from '@/zustand/store';
+import { useUsersMeRetrieve } from '../../../../orval/users/users';
 
 const stats = [
   { value: '1K', label: 'Listings' },
@@ -9,7 +9,7 @@ const stats = [
 ];
 
 const ProfileCard = () => {
-  const user = useStore((state) => state.profile);
+  const { data: user } = useUsersMeRetrieve();
   const theme = useMantineTheme();
   const items = stats.map((stat) => (
     <div key={stat.label}>

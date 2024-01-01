@@ -9,18 +9,127 @@ import {
   Badge,
   ActionIcon,
 } from '@mantine/core';
-import { IconClock, IconDotsVertical, IconHeart } from '@tabler/icons-react';
+import {
+  IconClock,
+  IconDotsVertical,
+  IconHeart,
+  IconTrash,
+  IconX,
+} from '@tabler/icons-react';
 import { Listings } from '../../../../orval/model';
+import { notifications } from '@mantine/notifications';
+import {
+  getBookmarksProfileRetrieveQueryKey,
+  useBookmarksCreate,
+  useBookmarksDestroy,
+} from '../../../../orval/bookmarks/bookmarks';
+import { useQueryClient } from '@tanstack/react-query';
 
 type HorizontalCardProps = {
   listing: Listings;
+  overViewImage?: Blob[];
+  isBookmark?: boolean;
+  bookmarkId?: number;
 };
-const HorizontalCard = ({ listing }: HorizontalCardProps) => {
+const HorizontalCard = ({
+  listing,
+  overViewImage,
+  isBookmark,
+  bookmarkId,
+}: HorizontalCardProps) => {
+  console.log(listing);
   const { classes } = useStyles();
+  const overviewUrl = overViewImage
+    ? URL.createObjectURL(overViewImage?.[0])
+    : null;
+  const bookmarkAddMutation = useBookmarksCreate();
+  const bookmarkDestroyMutation = useBookmarksDestroy();
+  const queryClient = useQueryClient();
+  const addAction = () => {
+    if (!isBookmark) {
+      const data = {
+        listing: listing?.slug as string,
+      };
+      notifications.show({
+        id: 'userBookmark',
+        title: `Adding to your bookmark`,
+        message: `Please wait while we add to your bookmark`,
+        loading: true,
+        autoClose: false,
+        withCloseButton: false,
+      }),
+        bookmarkAddMutation.mutate(
+          { data: data },
+          {
+            onSuccess: () => {
+              notifications.update({
+                id: 'userBookmark',
+                title: `Bookmark successfully added`,
+                color: 'green',
+                message: 'Successfully saved the bookmark!',
+                loading: false,
+                autoClose: true,
+                withCloseButton: true,
+              });
+            },
+            onError: () => {
+              notifications.update({
+                id: 'userBookmark',
+                title: `Bookmark couldnot be added`,
+                color: 'red',
+                message: 'Bookmark already exist',
+                loading: false,
+                autoClose: true,
+                withCloseButton: true,
+              });
+            },
+          },
+        );
+    } else {
+      notifications.show({
+        id: 'userBookmarkdestroy',
+        title: `Deleting your bookmark`,
+        message: `Please wait while we delete your bookmark`,
+        loading: true,
+        autoClose: false,
+        withCloseButton: false,
+      }),
+        bookmarkDestroyMutation.mutate(
+          { id: bookmarkId as number },
+          {
+            onSuccess: () => {
+              notifications.update({
+                id: 'userBookmarkdestroy',
+                title: `Bookmark successfully deleted`,
+                color: 'green',
+                message: 'Successfully deleted your bookmark!',
+                loading: false,
+                autoClose: true,
+                withCloseButton: true,
+              });
+              queryClient.invalidateQueries(
+                getBookmarksProfileRetrieveQueryKey(),
+              );
+            },
+            onError: () => {
+              notifications.update({
+                id: 'userBookmarkdestroy',
+                title: `Bookmark couldnot be deleted`,
+                color: 'red',
+                message: 'Unexpected error occured while deleting bookmark.',
+                loading: false,
+                autoClose: true,
+                withCloseButton: true,
+              });
+            },
+          },
+        );
+    }
+  };
   return (
     <Card
       shadow="sm"
-      padding="sm"
+      padding="md"
       radius={'md'}
       className={classes.horizontalCard}
     >
@@ -28,19 +137,25 @@ const HorizontalCard = ({ listing }: HorizontalCardProps) => {
         className={classes.imageContainer}
         style={{
           backgroundImage: `url(${
-            listing?.images?.[0]?.image || listing?.banner_image
+            listing?.images?.[0]?.image || listing?.banner_image || overviewUrl
           })`,
         }}
       >
         <ActionIcon
+          disabled={overViewImage ? true : false}
           size={30}
           radius="xl"
           color={'green'}
           sx={{ boxShadow: '0 2px 4px 2px rgba(0, 0, 0, 0.5)' }}
           variant="filled"
           className={classes.heartIcon}
+          onClick={() => addAction()}
         >
-          <IconHeart size={24} stroke={1.5} />
+          {!isBookmark ? (
+            <IconHeart size={24} stroke={1.5} />
+          ) : (
+            <IconX size={24} stroke={1.5} />
+          )}
         </ActionIcon>
       </div>
       <div className={classes.textContainer}>
@@ -52,7 +167,14 @@ const HorizontalCard = ({ listing }: HorizontalCardProps) => {
           <IconDotsVertical />
         </Group>
         <Group noWrap spacing={4}>
-          <Text className={classes.smText} truncate mt="xs" fw={500} size="md">
+          <Text
+            className={classes.smText}
+            truncate
+            mt="xs"
+            c={'dimmed'}
+            fw={400}
+            size="md"
+          >
             रू. {listing?.price}
           </Text>
           <Text
@@ -62,7 +184,7 @@ const HorizontalCard = ({ listing }: HorizontalCardProps) => {
             c="dimmed"
             size="xs"
           >
-            | <Badge> Like New</Badge>
+            | <Badge variant="filled"> Like New</Badge>
           </Text>
           <Text
             className={classes.smContainer}
@@ -71,7 +193,7 @@ const HorizontalCard = ({ listing }: HorizontalCardProps) => {
             c="dimmed"
             size="sm"
           >
-            | <Badge>{listing?.category}</Badge>
+            | <Badge>{listing?.category?.name}</Badge>
           </Text>
         </Group>
         <Text className={classes.description} mt="xs" c="dimmed" size="sm">
@@ -97,8 +219,8 @@ const HorizontalCard = ({ listing }: HorizontalCardProps) => {
             </Text>
           </Group>
           <Group className={classes.smContainer} spacing={2}>
-            <IconClock size={15} />
-            <Text size={'xs'}>12-20-2023</Text>
+            <IconClock style={{ color: 'green' }} size={17} />
+            <Text size={'xs'}>{listing?.created_at?.slice(0, 10)}</Text>
           </Group>
         </Group>
       </div>
@@ -114,7 +236,7 @@ const useStyles = createStyles((theme) => ({
     },
   },
   imageContainer: {
-    width: 180,
+    width: 185,
     height: 180,
     position: 'relative',
     overflow: 'hidden',

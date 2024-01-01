@@ -1,11 +1,4 @@
-import {
-  Button,
-  Container,
-  Group,
-  Stack,
-  Text,
-  Title,
-} from '@mantine/core';
+import { Button, Container, Group, Stack, Text, Title } from '@mantine/core';
 
 const ListingAdded = () => {
   return (
