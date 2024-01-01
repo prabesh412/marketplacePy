@@ -2,8 +2,6 @@ import { UseFormReturnType, useForm } from '@mantine/form';
 import { hideNotification, showNotification } from '@mantine/notifications';
 import { useEffect } from 'react';
 
-
-
 const useAddListingForm = () => {
   const form = useForm({
     initialValues: {
@@ -16,6 +14,11 @@ const useAddListingForm = () => {
         sub_category: '',
         main_category: '',
         images: [],
+        listing_features: {
+          object: Array(6).fill({ key: '', value: '' }),
+        },
+        is_negotiable: false,
+        listing_condition: 'NW',
       },
     },
     validate: {

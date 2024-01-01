@@ -68,10 +68,19 @@ def create_link():
     Listings.objects.bulk_create(listings_object, ignore_conflicts=True)
 
 
+def delete_cache():
+    from django.core.cache import cache
+    cache.delete("current_category_to_scrape")
+
+
+   
+
+
 
 def run():
-    fill_category_db()
+     fill_category_db()
     create_link()
+    
 
 if __name__ == '__main__': 
     run()

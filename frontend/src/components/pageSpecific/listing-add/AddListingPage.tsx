@@ -3,12 +3,8 @@ import FirstStep from '../../ui/add-listing/FirstStep';
 import useAddListingForm from '../../ui/add-listing/UseAddListingForm';
 import ListingStepper from '../../ui/add-listing/ListingStepper';
 import SecondStep from '../../ui/add-listing/SecondStep';
-import { Button, Group, Step } from '@mantine/core';
-import {
-  IconArrowLeft,
-  IconArrowRight,
-  IconPhotoCancel,
-} from '@tabler/icons-react';
+import { Button, Group } from '@mantine/core';
+import { IconArrowLeft, IconArrowRight } from '@tabler/icons-react';
 import { useListingsCreate } from '../../../../orval/listings/listings';
 import ListingAdded from '../../ui/add-listing/ListingAdded';
 import { notifications } from '@mantine/notifications';
@@ -57,6 +53,13 @@ const AddListingPage = () => {
   };
   const createAd = async () => {
     const values = form.values.firstStep;
+    const mappedFeatures = values.listing_features.object.reduce(
+      (acc, feature) => {
+        acc[feature.key] = feature.value;
+        return acc;
+      },
+      {},
+    );
 
     const requestData = {
       data: {
@@ -66,6 +69,7 @@ const AddListingPage = () => {
         category: parseInt(values.sub_category, 10),
         location: values.location,
         phone_number: values.phone_number.toString(),
+        listing_features: mappedFeatures,
       },
     };
 

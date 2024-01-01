@@ -27,6 +27,10 @@ app.conf.beat_schedule = {
         "task": "doshro_bazar.listings.tasks.update_views",
         "schedule": 5*60*5, 
     },
+    # "get_all_categories": {
+    #     "task": "doshro_bazar.listings.tasks.get_all_categories",
+    #     "schedule": 60,
+    # },
 
 }
 

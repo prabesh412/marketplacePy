@@ -3,7 +3,6 @@ import {
   Card,
   Group,
   createStyles,
-  Image,
   Avatar,
   Divider,
   Badge,
@@ -13,7 +12,6 @@ import {
   IconClock,
   IconDotsVertical,
   IconHeart,
-  IconTrash,
   IconX,
 } from '@tabler/icons-react';
 import { Listings } from '../../../../orval/model';
@@ -37,7 +35,6 @@ const HorizontalCard = ({
   isBookmark,
   bookmarkId,
 }: HorizontalCardProps) => {
-  console.log(listing);
   const { classes } = useStyles();
   const overviewUrl = overViewImage
     ? URL.createObjectURL(overViewImage?.[0])

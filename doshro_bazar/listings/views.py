@@ -37,7 +37,7 @@ class ListingsViewSet(viewsets.ModelViewSet):
        return super().list(self, request, *args, **kwargs)
 
 
-    @cache_response(60 * 30)
+    # @cache_response(60 * 30)
     def retrieve(self, request, pk=None, *args, **kwargs ):
         instance = get_object_or_404(self.queryset, slug = pk)
         view = cache.get("view", {})
@@ -45,7 +45,6 @@ class ListingsViewSet(viewsets.ModelViewSet):
             view[instance.slug] += 1
         else:
             view[instance.slug] = 1
-        print(view)
 
         cache.set("view", view)
         return super().retrieve(request, *args, **kwargs)

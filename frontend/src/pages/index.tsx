@@ -1,10 +1,6 @@
-import { useStore } from '@/zustand/store';
 import { dehydrate, QueryClient } from '@tanstack/react-query';
 import { NextPageContext } from 'next';
-import {
-  getDefaultHomeStore,
-  getDefaultStore,
-} from '@/components/utils/PageDefaults';
+import { getDefaultHomeStore } from '@/components/utils/PageDefaults';
 import { ReactElement } from 'react';
 import { Page } from '@/components/ui/common';
 import HomeSection from '@/components/pageSpecific/home';
@@ -33,6 +29,7 @@ export async function getServerSideProps(ctx: NextPageContext) {
     () => listingsList({ page: 1 }),
     {},
   );
+
   const zustandStore = await getDefaultHomeStore(ctx, queryClient);
 
   return {

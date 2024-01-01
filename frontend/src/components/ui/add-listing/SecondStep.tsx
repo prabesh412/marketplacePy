@@ -9,8 +9,13 @@ import {
 } from '@mantine/core';
 import React from 'react';
 import ListingOverview from './ListingOverview';
+import useAddListingForm from './UseAddListingForm';
 
-const SecondStep = ({ form }: any) => {
+type SecondStepProps = {
+  form: ReturnType<typeof useAddListingForm>;
+};
+
+const SecondStep = ({ form }: SecondStepProps) => {
   const theme = useMantineTheme();
   return (
     <>

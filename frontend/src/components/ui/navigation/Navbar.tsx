@@ -6,11 +6,9 @@ import {
   createStyles,
   Group,
   rem,
-  Text,
   UnstyledButton,
   Menu,
   Tabs,
-  Divider,
   Flex,
 } from '@mantine/core';
 import cx from 'clsx';
@@ -22,7 +20,6 @@ import {
   IconHome,
   IconLogin,
   IconPlus,
-  IconShoppingBag,
   IconStars,
   IconUser,
   IconLogout,
@@ -222,22 +219,16 @@ const Navbar = ({ isHomepage }: HeaderSearchProps) => {
                       [classes.userActive]: userMenuOpened,
                     })}
                   >
-                    <Group spacing={5}>
-                      <Avatar
-                        src={user?.image}
-                        alt={user?.name}
-                        radius="xl"
-                        size={20}
+                    <Group spacing={4}>
+                      <Avatar radius="xl" color="cyan">
+                        {user.name
+                          ? user.name.substring(0, 2).toUpperCase()
+                          : ''}
+                      </Avatar>
+                      <IconChevronDown
+                        style={{ width: rem(15), height: rem(15) }}
+                        stroke={2}
                       />
-                      <Group spacing={1}>
-                        <Text fw={500} size="sm" mr={3}>
-                          {user.name}
-                        </Text>
-                        <IconChevronDown
-                          style={{ width: rem(15), height: rem(15) }}
-                          stroke={2}
-                        />
-                      </Group>
                     </Group>
                   </UnstyledButton>
                 </Menu.Target>

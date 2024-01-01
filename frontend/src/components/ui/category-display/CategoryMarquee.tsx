@@ -120,7 +120,7 @@ const CategoryMarquee = () => {
         )}
       </Carousel>
       <Divider
-        label={<Badge>Category</Badge>}
+        label={<Badge>Browse Featured Listings</Badge>}
         labelPosition="center"
         c={'dimmed'}
         mb={-5}

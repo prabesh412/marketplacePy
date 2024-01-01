@@ -41,7 +41,6 @@ const BookMarks = () => {
   const { data: bookmarks } = useBookmarksProfileRetrieve();
   const queryClient = useQueryClient();
   const theme = useMantineTheme();
-  console.log(bookmarks?.listing);
   const handleDelete = (slug: string) => {
     notifications.show({
       id: 'userListing',

@@ -180,7 +180,7 @@ const HomepageSearchArea = (props: TextInputProps) => {
               />
 
               <SearchCheckBox />
-              <Group mb={'sm'}>
+              {/* <Group mb={'sm'}>
                 <Button
                   variant="filled"
                   radius={'xl'}
@@ -188,7 +188,7 @@ const HomepageSearchArea = (props: TextInputProps) => {
                 >
                   Browse Categories
                 </Button>
-              </Group>
+              </Group> */}
             </Group>
           </div>
         </div>

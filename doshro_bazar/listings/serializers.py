@@ -23,21 +23,14 @@ class ListingsSerializer(serializers.ModelSerializer):
     user = UserSerializer(read_only=True)
     views = serializers.IntegerField(read_only=True, source="views.views")
     category =  CategorySerializer(read_only=True)
+    listing_features = serializers.JSONField(read_only=True)
 
     class Meta:
         model = Listings
         fields = "__all__"
         read_only_fields = ["slug", "created_at", "updated_at", "views"]
 
-# class ListingsSerializer(serializers.ModelSerializer):
-#     images = ListingViewImageSerializer(read_only=True, many=True)
-#     views = serializers.IntegerField(read_only=True, source="views.views") 
-
-#     class Meta:
-#         model = Listings
-#         fields = "__all__"
-#         read_only_fields = ["slug", "views"] 
-#         exclude_fields = ["user", "created_at", "updated_at"]       
+   
 
 
 class ListingsInputSerializer(serializers.ModelSerializer):

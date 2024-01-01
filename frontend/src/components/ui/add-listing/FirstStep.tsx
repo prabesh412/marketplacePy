@@ -1,6 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react';
 import {
+  ActionIcon,
+  Button,
+  Flex,
   FocusTrap,
+  Grid,
   Group,
   NumberInput,
   Select,
@@ -11,12 +15,16 @@ import {
 } from '@mantine/core';
 import ImageDropper from './ImageDropper';
 import { useCategoryList } from '../../../../orval/category/category';
+import { IconMinus, IconPlus } from '@tabler/icons-react';
+import useAddListingForm from './UseAddListingForm';
 
 type FirstStepProps = {
-  form: any;
+  form: ReturnType<typeof useAddListingForm>;
 };
+
 const FirstStep = ({ form }: FirstStepProps) => {
   const [active, setActive] = useState(false);
+  const [numOfFeatures, setNumOfFeatures] = useState<number[]>([0]);
 
   const [selectedMainCategory, setSelectedMainCategory] = useState<string>(
     form.values.firstStep.main_category || '',
@@ -159,7 +167,6 @@ const FirstStep = ({ form }: FirstStepProps) => {
               disabled={selectedSubcategories.length < 1}
               error={form.errors['firstStep.sub_category']}
               value={form.values.firstStep.sub_category}
-              optionLabel="label"
             />
           </Group>
           <Textarea
@@ -170,7 +177,55 @@ const FirstStep = ({ form }: FirstStepProps) => {
             {...form.getInputProps('firstStep.description')}
             data-autofocus={form.errors?.description !== undefined}
           />
-
+          <Grid>
+            {numOfFeatures.map((_, index) => (
+              <>
+                <Grid.Col span={6}>
+                  <TextInput
+                    key={index}
+                    label={'Feature Name'}
+                    placeholder="Eg: John Doe"
+                    {...form.getInputProps(
+                      `firstStep.listing_features.object.${index}.key`,
+                    )}
+                  />
+                </Grid.Col>
+                <Grid.Col span={6}>
+                  <TextInput
+                    key={index}
+                    label={'Feature Value'}
+                    placeholder="Eg: John Doe"
+                    {...form.getInputProps(
+                      `firstStep.listing_features.object.${index}.value`,
+                    )}
+                  />
+                </Grid.Col>
+              </>
+            ))}
+          </Grid>
+          <Flex justify="flex-end" align="flex-end">
+            <ActionIcon
+              variant="default"
+              onClick={() =>
+                setNumOfFeatures((current) => [
+                  ...current,
+                  current[current.length - 1] + 1,
+                ])
+              }
+            >
+              <IconPlus />
+            </ActionIcon>
+            {numOfFeatures.length !== 1 && (
+              <ActionIcon
+                variant="default"
+                onClick={() =>
+                  setNumOfFeatures((current) => current.slice(0, -1))
+                }
+              >
+                <IconMinus />
+              </ActionIcon>
+            )}
+          </Flex>
           <ImageDropper form={form} />
         </FocusTrap>
       </Stack>
