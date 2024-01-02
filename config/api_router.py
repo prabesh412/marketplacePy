@@ -5,6 +5,7 @@ from doshro_bazar.users.api.views import UserViewSet, RegisterViewSet, OTPViewSe
 from doshro_bazar.listings.views import ListingsViewSet, ListingImageViewSet
 from doshro_bazar.category.views import CategoryViewSet
 from doshro_bazar.bookmarks.views import BookmarkViewSet
+from doshro_bazar.comments.views import CommentsViewset
 
 if settings.DEBUG:
     router = DefaultRouter()
@@ -16,6 +17,7 @@ router.register("listings", ListingsViewSet)
 router.register("category", CategoryViewSet)
 router.register("image-listing", ListingImageViewSet)
 router.register("bookmarks", BookmarkViewSet)
+router.register("comments", CommentsViewset)
 
 
 app_name = "api"

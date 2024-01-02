@@ -2,7 +2,7 @@ from django.db import models
 from doshro_bazar.utils.abstract_models import AbstractClient
 import uuid
 from django.utils.text import slugify
-from django.db.models import F, Sum
+from django.db.models import F
 
 # Create your models here.
 
