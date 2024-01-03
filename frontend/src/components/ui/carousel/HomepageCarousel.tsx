@@ -21,7 +21,7 @@ const HomepageCarousel = () => {
         withControls={false}
       >
         <Image
-          fit="cover"
+          fit="fill"
           w={'100%'}
           height={'20vh'}
           src="https://assets-cdn.kantipurdaily.com/uploads/source/ads/emi520x120-0882023070419.gif"

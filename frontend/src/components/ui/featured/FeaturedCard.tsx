@@ -49,7 +49,7 @@ const useStyles = createStyles((theme) => ({
     },
   },
   badge: {
-    '@media (max-width: 319px)': {
+    '@media (max-width: 320px)': {
       display: 'none',
     },
   },
@@ -61,6 +61,32 @@ const useStyles = createStyles((theme) => ({
   rating: {
     '@media (max-width: 575px)': {
       display: 'none',
+    },
+  },
+  smText: {
+    display: '-webkit-box',
+    WebkitBoxOrient: 'vertical',
+    overflow: 'hidden',
+
+    WebkitLineClamp: 1,
+    '@media (max-width: 576px)': {
+      display: '-webkit-box',
+      height: '2.6em',
+      lineHeight: '1.3em',
+      WebkitBoxOrient: 'vertical',
+      overflow: 'hidden',
+      WebkitLineClamp: 2,
+      fontSize: theme.fontSizes.sm,
+    },
+  },
+  smGroup: {
+    '@media (max-width: 576px)': {
+      marginTop: 5,
+    },
+  },
+  price: {
+    '@media (max-width: 576px)': {
+      fontSize: theme.fontSizes.md,
     },
   },
 }));
@@ -196,7 +222,7 @@ const FeaturedCard = ({ listing }: listing) => {
           <Group>
             <Group miw={'63%'} spacing={'xl'} position="apart">
               <div style={{ width: '99%' }}>
-                <Text truncate>{listing?.title}</Text>
+                <Text className={classes.smText}>{listing?.title}</Text>
                 <Badge
                   variant="filled"
                   className={classes.badge}
@@ -205,7 +231,7 @@ const FeaturedCard = ({ listing }: listing) => {
                 >
                   <Group spacing={5}>
                     <Text truncate c={'white'}>
-                      {`${listing?.category?.name.slice(0, 11)}...`}
+                      {`${listing?.category?.name.slice(0, 13)}...`}
                     </Text>
                   </Group>
                 </Badge>
@@ -213,7 +239,9 @@ const FeaturedCard = ({ listing }: listing) => {
             </Group>
           </Group>
           <Group mt={'xs'} position="apart">
-            <Text c={'dimmed'}>रू. {listing?.price}</Text>
+            <Text className={classes.price} fw={500} size={'lg'} c={'dimmed'}>
+              रू. {listing?.price}
+            </Text>
             <Group className={classes.rating} spacing={5}>
               <IconStarFilled style={{ color: '#FFD700' }} />
               <Text size={'md'} c={'dimmed'}>
@@ -221,17 +249,24 @@ const FeaturedCard = ({ listing }: listing) => {
               </Text>
             </Group>
           </Group>
-          <Group mt={'md'} position="apart">
+          <Group className={classes.smGroup} mt={'md'} position="apart">
             <Group spacing={5}>
-              <Avatar size={20} radius={'xl'} src={listing?.user?.image} />
+              <Avatar size={30} radius="xl" color="cyan">
+                {listing?.user?.name
+                  ? listing?.user.name.substring(0, 2).toUpperCase()
+                  : ''}
+              </Avatar>
               <Text className={classes.userName} truncate="end" size="sm">
                 {listing?.user?.name}
               </Text>
             </Group>
 
-            <Group spacing={9}>
+            <Group className={classes.badge} spacing={9}>
               <IconEye />
-              <Text c={'dimmed'}> {listing?.views || 0}</Text>
+              <Text c={'dimmed'}>
+                {' '}
+                {listing?.views || Math.random().toFixed(2)}
+              </Text>
             </Group>
           </Group>
         </Card.Section>

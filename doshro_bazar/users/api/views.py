@@ -41,7 +41,7 @@ class UserViewSet(UpdateModelMixin, GenericViewSet):
         assert isinstance(self.request.user.id, int)
         return self.queryset.filter(id=self.request.user.id)
     
-    @cache_response(key_func=ProfileKeyConstructor())
+    # @cache_response(key_func=ProfileKeyConstructor())
     @action(detail=False, methods=["GET"])
     def me(self, request):
         print(request)

@@ -40,6 +40,9 @@ const useStyles = createStyles((theme) => ({
     backgroundColor:
       theme.colorScheme === 'dark' ? theme.colors.gray[9] : '#fff',
     height: 80,
+    position: 'sticky',
+    top: 0,
+    zIndex: 1000,
   },
 
   user: {

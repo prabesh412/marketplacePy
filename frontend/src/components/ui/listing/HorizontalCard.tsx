@@ -165,7 +165,7 @@ const HorizontalCard = ({
         </Group>
         <Group noWrap spacing={4}>
           <Text
-            className={classes.smText}
+            className={classes.priceText}
             truncate
             mt="xs"
             c={'dimmed'}
@@ -197,7 +197,7 @@ const HorizontalCard = ({
           {listing?.description}
         </Text>
         <Group spacing={2} noWrap>
-          <Text className={classes.smText} truncate mt="xs" size="sm">
+          <Text className={classes.smText} fw={400} truncate mt="xs" size="sm">
             {listing?.location}
           </Text>
         </Group>
@@ -209,8 +209,12 @@ const HorizontalCard = ({
           spacing="xs"
           noWrap
         >
-          <Group noWrap spacing={2}>
-            <Avatar size={20} src={''} />
+          <Group noWrap spacing={4}>
+            <Avatar size={25} radius="xl" color="cyan">
+              {listing?.user?.name
+                ? listing?.user.name.substring(0, 2).toUpperCase()
+                : ''}
+            </Avatar>
             <Text size="xs" w={'100%'} truncate>
               {listing?.user?.name}
             </Text>
@@ -230,6 +234,7 @@ const useStyles = createStyles((theme) => ({
     alignItems: 'center',
     '@media (max-width: 576px)': {
       padding: theme.spacing.xs,
+      borderRadius: theme.radius.sm,
     },
   },
   imageContainer: {
@@ -242,8 +247,12 @@ const useStyles = createStyles((theme) => ({
     backgroundSize: 'cover',
     backgroundPosition: 'center',
     '@media (max-width: 576px)': {
-      width: 115,
-      height: 130,
+      width: 130,
+      height: 135,
+    },
+    '@media (max-width: 345px)': {
+      width: 110,
+      height: 125,
     },
   },
 
@@ -274,6 +283,7 @@ const useStyles = createStyles((theme) => ({
     WebkitLineClamp: 1,
     '@media (max-width: 576px)': {
       display: '-webkit-box',
+
       WebkitBoxOrient: 'vertical',
       overflow: 'hidden',
       WebkitLineClamp: 2,
@@ -297,7 +307,14 @@ const useStyles = createStyles((theme) => ({
   smText: {
     '@media (max-width: 576px)': {
       marginTop: 0,
+      fontSize: theme.fontSizes.xs,
+    },
+  },
+  priceText: {
+    '@media (max-width: 576px)': {
+      marginTop: 0,
       fontSize: theme.fontSizes.sm,
+      fontWeight: 500,
     },
   },
   divider: {
