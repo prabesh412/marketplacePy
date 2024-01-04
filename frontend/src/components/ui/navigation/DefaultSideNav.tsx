@@ -2,7 +2,6 @@ import { createStyles, Drawer, Group, rem, Text } from '@mantine/core';
 import { IconCategory } from '@tabler/icons-react';
 import { useCategoryList } from '../../../../orval/category/category';
 import React from 'react';
-import { useDisclosure } from '@mantine/hooks';
 import { LinksGroup } from '@/components/ui/common/NavLinks';
 
 const useStyles = createStyles((theme) => ({

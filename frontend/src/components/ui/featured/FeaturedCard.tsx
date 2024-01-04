@@ -124,7 +124,7 @@ const FeaturedCard = ({ listing }: listing) => {
               withCloseButton: true,
             });
           },
-          onError: (error: any) => {
+          onError: () => {
             notifications.update({
               id: 'userBookmark',
               title: `Bookmark couldnot be added`,
@@ -142,11 +142,6 @@ const FeaturedCard = ({ listing }: listing) => {
   return (
     <>
       <Card
-        // onClick={() =>
-        //   listing?.is_scraped
-        //     ? window.open(listing.link_to_original as string)
-        //     : router.push(`/listing/listing-detail/${listing?.slug}`)
-        // }
         className={classes.card}
         radius={'md'}
         shadow="sm"
@@ -207,6 +202,11 @@ const FeaturedCard = ({ listing }: listing) => {
           <Image
             className={classes.image}
             src={listing?.banner_image || listing?.images[0].image}
+            onClick={() =>
+              listing?.is_scraped
+                ? window.open(listing.link_to_original as string)
+                : router.push(`/listing/listing-detail/${listing?.slug}`)
+            }
             height="200px"
             width="100%"
             radius={'md'}
@@ -218,7 +218,18 @@ const FeaturedCard = ({ listing }: listing) => {
             withPlaceholder
           />
         </Card.Section>
-        <Card.Section pl={'md'} pb={'md'} pr={'md'} pt={'xs'}>
+        <Card.Section
+          pl={'md'}
+          pb={'md'}
+          pr={'md'}
+          pt={'xs'}
+          sx={{ cursor: 'pointer' }}
+          onClick={() =>
+            listing?.is_scraped
+              ? window.open(listing.link_to_original as string)
+              : router.push(`/listing/listing-detail/${listing?.slug}`)
+          }
+        >
           <Group>
             <Group miw={'63%'} spacing={'xl'} position="apart">
               <div style={{ width: '99%' }}>
@@ -252,21 +263,20 @@ const FeaturedCard = ({ listing }: listing) => {
           <Group className={classes.smGroup} mt={'md'} position="apart">
             <Group spacing={5}>
               <Avatar size={30} radius="xl" color="cyan">
-                {listing?.user?.name
-                  ? listing?.user.name.substring(0, 2).toUpperCase()
-                  : ''}
+                {listing?.is_scraped
+                  ? listing?.scraped_username?.substring(0, 2).toUpperCase()
+                  : listing?.user?.name?.substring(0, 2).toUpperCase()}
               </Avatar>
               <Text className={classes.userName} truncate="end" size="sm">
-                {listing?.user?.name}
+                {listing?.is_scraped
+                  ? listing?.scraped_username?.substring(0, 18)
+                  : listing?.user?.name}
               </Text>
             </Group>
 
             <Group className={classes.badge} spacing={9}>
               <IconEye />
-              <Text c={'dimmed'}>
-                {' '}
-                {listing?.views || Math.random().toFixed(2)}
-              </Text>
+              <Text c={'dimmed'}> {listing?.views || 123}</Text>
             </Group>
           </Group>
         </Card.Section>

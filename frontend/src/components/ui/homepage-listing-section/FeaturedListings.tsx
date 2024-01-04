@@ -10,22 +10,12 @@ import {
   rem,
   useMantineTheme,
 } from '@mantine/core';
-import {
-  IconAdjustments,
-  IconChevronDown,
-  IconClockFilled,
-  IconStarFilled,
-} from '@tabler/icons-react';
+import { IconAdjustments, IconChevronDown } from '@tabler/icons-react';
 import FeaturedCard from '../featured/FeaturedCard';
 import { useListingsList } from '../../../../orval/listings/listings';
-import {
-  ListingsListOrderItem,
-  PaginatedListingsList,
-} from '../../../../orval/model';
-import HorizontalCard from '../listing/HorizontalCard';
+import { PaginatedListingsList } from '../../../../orval/model';
 
 const FeaturedListings = () => {
-  const theme = useMantineTheme();
   const [page, setPage] = useState(1);
   const {
     data: listing,
@@ -33,11 +23,11 @@ const FeaturedListings = () => {
     error,
     isFetching,
   } = useListingsList({ page: page });
+  const [isLoading, setIsLoading] = useState(false);
   const [featuredListing, setFeaturedListing] = useState(
     listing as PaginatedListingsList,
   );
   useEffect(() => {
-    console.log('on');
     if (listing && status === 'success' && !isFetching && listing.previous) {
       setFeaturedListing((prevFeaturedListing) => ({
         ...listing,
@@ -46,10 +36,12 @@ const FeaturedListings = () => {
           ...(listing.results || []),
         ],
       }));
+      setIsLoading(false);
     }
   }, [page, listing, status, isFetching]);
 
   const fetchMoreData = () => {
+    setIsLoading(true);
     if (status === 'loading' || error || isFetching || isProductAllFetched())
       return;
     else {
@@ -87,10 +79,10 @@ const FeaturedListings = () => {
           >
             <Button
               onClick={() => fetchMoreData()}
-              loading={status === 'loading'}
+              loading={isLoading}
               mb={'md'}
             >
-              {status !== 'loading' ? <IconChevronDown /> : 'Loading...'}
+              {isLoading === false ? <IconChevronDown /> : 'Loading...'}
             </Button>
           </div>
         ) : (

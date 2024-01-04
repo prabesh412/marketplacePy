@@ -21,5 +21,5 @@ export function RouterTransition() {
     };
   }, [router.asPath]);
 
-  return <NavigationProgress size={3} autoReset={true} />;
+  return <NavigationProgress size={4} autoReset={true} />;
 }

@@ -22,6 +22,7 @@ import {
   useBookmarksDestroy,
 } from '../../../../orval/bookmarks/bookmarks';
 import { useQueryClient } from '@tanstack/react-query';
+import { useRouter } from 'next/router';
 
 type HorizontalCardProps = {
   listing: Listings;
@@ -123,6 +124,7 @@ const HorizontalCard = ({
         );
     }
   };
+  const router = useRouter();
   return (
     <Card
       shadow="sm"
@@ -155,7 +157,14 @@ const HorizontalCard = ({
           )}
         </ActionIcon>
       </div>
-      <div className={classes.textContainer}>
+      <div
+        className={classes.textContainer}
+        onClick={() =>
+          listing?.is_scraped
+            ? window.open(listing.link_to_original as string)
+            : router.push(`/listing/listing-detail/${listing?.slug}`)
+        }
+      >
         <Group position="apart" noWrap>
           <Text className={classes.title} fw={500} size="md">
             {listing?.title}
@@ -211,12 +220,14 @@ const HorizontalCard = ({
         >
           <Group noWrap spacing={4}>
             <Avatar size={25} radius="xl" color="cyan">
-              {listing?.user?.name
-                ? listing?.user.name.substring(0, 2).toUpperCase()
-                : ''}
+              {listing?.is_scraped
+                ? listing?.scraped_username?.substring(0, 2).toUpperCase()
+                : listing?.user?.name?.substring(0, 2).toUpperCase()}
             </Avatar>
             <Text size="xs" w={'100%'} truncate>
-              {listing?.user?.name}
+              {listing?.is_scraped
+                ? listing?.scraped_username
+                : listing?.user?.name}
             </Text>
           </Group>
           <Group className={classes.smContainer} spacing={2}>
@@ -270,6 +281,7 @@ const useStyles = createStyles((theme) => ({
     '@media (max-width: 576px)': {
       paddingLeft: 0,
     },
+    cursor: 'pointer',
   },
   smContainer: {
     '@media (max-width: 576px)': {

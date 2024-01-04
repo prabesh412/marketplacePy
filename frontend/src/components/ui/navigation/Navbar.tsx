@@ -35,107 +35,6 @@ import DefaultSideNav from './DefaultSideNav';
 import Logo from '../../../../public/favicon/logo.png';
 import Image from 'next/image';
 
-const useStyles = createStyles((theme) => ({
-  header: {
-    backgroundColor:
-      theme.colorScheme === 'dark' ? theme.colors.gray[9] : '#fff',
-    height: 80,
-    position: 'sticky',
-    top: 0,
-    zIndex: 1000,
-  },
-
-  user: {
-    color:
-      theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.colors.white,
-    padding: `${theme.spacing.xs} ${theme.spacing.sm}`,
-    borderRadius: theme.radius.sm,
-    transition: 'background-color 100ms ease',
-    '&:hover': {
-      backgroundColor:
-        theme.colorScheme === 'dark'
-          ? theme.colors.dark[8]
-          : theme.colors.white,
-    },
-
-    '@media (max-width: 575px)': {
-      display: 'none',
-    },
-  },
-
-  userActive: {
-    backgroundColor:
-      theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.white,
-  },
-  burger: {
-    [theme.fn.largerThan('sm')]: {
-      display: 'none',
-    },
-  },
-  tabsList: {
-    [theme.fn.smallerThan('sm')]: {
-      display: 'none',
-    },
-  },
-
-  tab: {
-    fontWeight: 500,
-    backgroundColor: 'transparent',
-    position: 'relative',
-    bottom: -1,
-    marginBottom: rem(7),
-
-    '&:hover': {
-      backgroundColor:
-        theme.colorScheme === 'dark'
-          ? theme.colors.dark[5]
-          : theme.colors.gray[1],
-    },
-
-    '&[data-active="true"]': {
-      backgroundColor:
-        theme.colorScheme === 'dark'
-          ? theme.colors.dark[5]
-          : theme.colors.primary,
-      borderColor:
-        theme.colorScheme === 'dark'
-          ? theme.colors.dark[7]
-          : theme.colors.gray[2],
-      borderBottomColor: 'transparent',
-    },
-  },
-}));
-
-const userAction = [
-  {
-    title: 'Profile',
-    icon: <IconUser style={{ width: rem(16), height: rem(16) }} stroke={1.5} />,
-    url: '/users/profile',
-  },
-  {
-    title: 'Saved posts',
-    icon: <IconStar style={{ width: rem(16), height: rem(16) }} stroke={1.5} />,
-    url: '/users/profile',
-  },
-  {
-    title: 'Your comments',
-    icon: (
-      <IconMessage style={{ width: rem(16), height: rem(16) }} stroke={1.5} />
-    ),
-    url: '/users/profile',
-  },
-];
-
-const userSetting = [
-  {
-    title: 'Account settings',
-    icon: (
-      <IconSettings style={{ width: rem(16), height: rem(16) }} stroke={1.5} />
-    ),
-    url: '/users/profile',
-  },
-];
-
 interface HeaderSearchProps {
   isHomepage: boolean;
 }
@@ -148,16 +47,80 @@ const Navbar = ({ isHomepage }: HeaderSearchProps) => {
   const router = useRouter();
   const user = useStore((state) => state.profile);
   const logout = useStore((state) => state.logout);
+  const defaultTab = router.pathname === '/' ? 'Home' : '';
+  const [activeTab, setActiveTab] = useState<string | null>(defaultTab);
+
+  const userAction = [
+    {
+      title: 'Profile',
+      icon: (
+        <IconUser style={{ width: rem(16), height: rem(16) }} stroke={1.5} />
+      ),
+      url: '/users/profile',
+    },
+    {
+      title: 'Saved posts',
+      icon: (
+        <IconStar style={{ width: rem(16), height: rem(16) }} stroke={1.5} />
+      ),
+      url: '/users/profile',
+    },
+    {
+      title: 'Your comments',
+      icon: (
+        <IconMessage style={{ width: rem(16), height: rem(16) }} stroke={1.5} />
+      ),
+      url: '/users/profile',
+    },
+  ];
+
+  const userSetting = [
+    {
+      title: 'Account settings',
+      icon: (
+        <IconSettings
+          style={{ width: rem(16), height: rem(16) }}
+          stroke={1.5}
+        />
+      ),
+      url: '/users/profile',
+    },
+  ];
 
   return (
     <>
       <Container className={classes.header} fluid>
         <Flex justify={'space-around'} align={'center'} h={'100%'}>
           <Group pb={'xs'} spacing={4}>
-            <Image src={Logo} alt="as" height={120} width={170} />
+            <Image
+              src={Logo}
+              alt="as"
+              height={120}
+              width={170}
+              onClick={() => router.push('/')}
+            />
           </Group>
-          <Tabs variant="pills" radius="xl" defaultValue="Home" pt={'xs'}>
+          <Tabs
+            variant="pills"
+            radius="xl"
+            value={activeTab}
+            pt={'xs'}
+            onTabChange={setActiveTab}
+          >
             <Tabs.List className={classes.tabsList}>
+              <Tabs.Tab
+                className={classes.tab}
+                value="Home"
+                icon={<IconHome size="0.8rem" />}
+                onClick={() => {
+                  if (router.pathname !== '/') {
+                    router.push('/');
+                  }
+                  setSideNavOpen(false);
+                }}
+              >
+                Home
+              </Tabs.Tab>
               <Tabs.Tab
                 onClick={() => setSideNavOpen(true)}
                 value="messages"
@@ -165,13 +128,6 @@ const Navbar = ({ isHomepage }: HeaderSearchProps) => {
                 icon={<IconCategory size="0.8rem" />}
               >
                 Category
-              </Tabs.Tab>
-              <Tabs.Tab
-                className={classes.tab}
-                value="Home"
-                icon={<IconHome size="0.8rem" />}
-              >
-                Home
               </Tabs.Tab>
 
               <Tabs.Tab
@@ -204,7 +160,12 @@ const Navbar = ({ isHomepage }: HeaderSearchProps) => {
             size="sm"
           />
           <Group spacing={7}>
-            <Button leftIcon={<IconPlus />} variant="light" radius={'xl'}>
+            <Button
+              leftIcon={<IconPlus />}
+              variant="light"
+              radius={'xl'}
+              onClick={() => router.push('/listing/listing-add')}
+            >
               Create
             </Button>
             {user ? (
@@ -280,7 +241,10 @@ const Navbar = ({ isHomepage }: HeaderSearchProps) => {
         </Flex>
       </Container>
       <DefaultSideNav
-        onClose={() => setSideNavOpen(false)}
+        onClose={() => {
+          setSideNavOpen(false);
+          setActiveTab('Home');
+        }}
         isOpen={isSideNavOpen}
       />
     </>
@@ -288,3 +252,74 @@ const Navbar = ({ isHomepage }: HeaderSearchProps) => {
 };
 
 export default React.memo(Navbar);
+
+const useStyles = createStyles((theme) => ({
+  header: {
+    backgroundColor:
+      theme.colorScheme === 'dark' ? theme.colors.gray[9] : '#fff',
+    height: 80,
+    position: 'sticky',
+    top: 0,
+    zIndex: 1000,
+  },
+
+  user: {
+    color:
+      theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.colors.white,
+    padding: `${theme.spacing.xs} ${theme.spacing.sm}`,
+    borderRadius: theme.radius.sm,
+    transition: 'background-color 100ms ease',
+    '&:hover': {
+      backgroundColor:
+        theme.colorScheme === 'dark'
+          ? theme.colors.dark[8]
+          : theme.colors.white,
+    },
+
+    '@media (max-width: 575px)': {
+      display: 'none',
+    },
+  },
+
+  userActive: {
+    backgroundColor:
+      theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.white,
+  },
+  burger: {
+    [theme.fn.largerThan('sm')]: {
+      display: 'none',
+    },
+  },
+  tabsList: {
+    [theme.fn.smallerThan('sm')]: {
+      display: 'none',
+    },
+  },
+
+  tab: {
+    fontWeight: 500,
+    backgroundColor: 'transparent',
+    position: 'relative',
+    bottom: -1,
+    marginBottom: rem(7),
+
+    '&:hover': {
+      backgroundColor:
+        theme.colorScheme === 'dark'
+          ? theme.colors.dark[5]
+          : theme.colors.gray[1],
+    },
+
+    '&[data-active="true"]': {
+      backgroundColor:
+        theme.colorScheme === 'dark'
+          ? theme.colors.dark[5]
+          : theme.colors.primary,
+      borderColor:
+        theme.colorScheme === 'dark'
+          ? theme.colors.dark[7]
+          : theme.colors.gray[2],
+      borderBottomColor: 'transparent',
+    },
+  },
+}));

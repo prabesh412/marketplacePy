@@ -10,8 +10,6 @@ import {
   useMantineTheme,
 } from '@mantine/core';
 import { PlainDivider } from '../common/PlainDivider';
-import { FeaturedCarouselCard } from '../common/FeaturedCarouselCard';
-import FeaturedCard from '../featured/FeaturedCard';
 import HorizontalCard from '../listing/HorizontalCard';
 
 interface ListingDetailProps {

@@ -1,5 +1,4 @@
 import { Paper } from '@mantine/core';
-import { useStore } from '@/zustand/store';
 
 const Background = (props: any) => {
   return (

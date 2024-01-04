@@ -45,7 +45,7 @@ def fill_listings_db():
     user_admin = User.objects.get(username="root")
     listing_objects = []
     for product in products:
-        listing_objects.append(Listings( name=product["name"], description=product["description"], price=product["price"], category_id=product["category"], user=user_admin, slug=slugify(product["name"])))
+        listing_objects.append(Listings( name=product["name"], description=product["description"], price=product["price"], category_id=product["category"], user=user_admin, slug=slugify(product["name"]), scraped_username=product["creatorInfo"]["createdBy"], scraped_views=product["totalViews"]))
 
     Listings.objects.bulk_create(listing_objects, ignore_conflicts=True)
 
@@ -63,7 +63,7 @@ def create_link():
     for product in datas: 
         url = base_url + slugify(product["categoryName"]) + "/" + slugify(product["name"]) + "-in-nepal" + "/" + product["id"].replace("-", "") 
         listing_category = Category.objects.get(slug=slugify(product["categoryName"]))
-        listings_object.append(Listings(slug= slugify(product["name"]), link_to_original=url, is_featured= True,banner_image=product["imageUrl"],category = listing_category, description=product["description"], price=product["price"], user=user_admin, title = product["name"], phone_number=product["creatorInfo"]["createdBy"], location=product["location"]["locationDescription"], is_scraped=True))
+        listings_object.append(Listings(slug= slugify(product["name"]), link_to_original=url, is_featured= True,banner_image=product["imageUrl"],category = listing_category, description=product["description"], price=product["price"], user=user_admin, title = product["name"], phone_number=product["creatorInfo"]["createdBy"], location=product["location"]["locationDescription"], is_scraped=True, scraped_username=product["creatorInfo"]["createdByName"], scraped_views=product["totalViews"]))
     
     Listings.objects.bulk_create(listings_object, ignore_conflicts=True)
 
@@ -78,7 +78,6 @@ def delete_cache():
 
 
 def run():
-     fill_category_db()
     create_link()
     
 

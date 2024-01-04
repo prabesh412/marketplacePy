@@ -37,7 +37,7 @@ class ListingsInputSerializer(serializers.ModelSerializer):
     class Meta:
         model = Listings
         fields = "__all__"
-        read_only_fields = [ "user","slug", "created_at", "updated_at", "views", "status"]
+        read_only_fields = [ "user","slug", "created_at", "updated_at", "views", "status", "scraped_views", "scraped_username", "is_scraped", "is_featured"]
 
  
 
