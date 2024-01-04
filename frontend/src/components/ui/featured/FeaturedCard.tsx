@@ -276,7 +276,10 @@ const FeaturedCard = ({ listing }: listing) => {
 
             <Group className={classes.badge} spacing={9}>
               <IconEye />
-              <Text c={'dimmed'}> {listing?.views || 123}</Text>
+              <Text c={'dimmed'}>
+                {' '}
+                {listing?.views || listing?.scraped_views}
+              </Text>
             </Group>
           </Group>
         </Card.Section>

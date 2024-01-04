@@ -15,6 +15,7 @@ import {
   listingsList,
 } from '../../orval/listings/listings';
 import { ListingsListOrderItem } from '../../orval/model';
+import { useCustomListingsListInfinite } from '@/components/hooks/UseCustomListingInfinte';
 
 export async function getServerSideProps(ctx: NextPageContext) {
   const queryClient = new QueryClient();
@@ -30,22 +31,7 @@ export async function getServerSideProps(ctx: NextPageContext) {
     () => listingsList({ page: 1 }),
     {},
   );
-  await queryClient.prefetchQuery(
-    getListingsListQueryKey({
-      page: 1,
-      order: ListingsListOrderItem[
-        '-created_at'
-      ] as unknown as ListingsListOrderItem[],
-    }),
-    () =>
-      listingsList({
-        page: 1,
-        order: ListingsListOrderItem[
-          '-created_at'
-        ] as unknown as ListingsListOrderItem[],
-      }),
-    {},
-  );
+ 
 
   const zustandStore = await getDefaultHomeStore(ctx, queryClient);
 
