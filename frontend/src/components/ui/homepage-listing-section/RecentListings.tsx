@@ -7,12 +7,10 @@ import {
 } from '../../../../orval/listings/listings';
 import {
   ListingsListOrderItem,
-  PaginatedListingsList,
+  ListingsListParams,
 } from '../../../../orval/model';
 import { useInView } from 'react-intersection-observer';
 import HorizontalCard from '../listing/HorizontalCard';
-import InfiniteScroll from '../common/InfinteScroll';
-import { useInfiniteQuery } from '@tanstack/react-query';
 import { useCustomListingsListInfinite } from '@/components/hooks/UseCustomListingInfinte';
 
 const RecentListings = () => {
@@ -27,12 +25,23 @@ const RecentListings = () => {
     isFetchingNextPage,
     hasNextPage,
     fetchNextPage,
-  } = useCustomListingsListInfinite({
-    page: page,
-    order: ListingsListOrderItem[
-      '-created_at'
-    ] as unknown as ListingsListOrderItem[],
-  });
+  } = useListingsListInfinite(
+    {
+      page: page,
+      order: ListingsListOrderItem[
+        '-created_at'
+      ] as unknown as ListingsListOrderItem[],
+    },
+    {
+      query: {
+        queryKey: getListingsListQueryKey(
+          'infinite-query' as ListingsListParams,
+        ),
+        getNextPageParam: ({ next, results }) =>
+          !!results && next ? next : undefined,
+      },
+    },
+  );
 
   const params = new URLSearchParams(data?.pages?.[0]?.next as string);
   const pageNumber = params.get('page');

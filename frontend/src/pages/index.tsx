@@ -14,8 +14,6 @@ import {
   getListingsListQueryKey,
   listingsList,
 } from '../../orval/listings/listings';
-import { ListingsListOrderItem } from '../../orval/model';
-import { useCustomListingsListInfinite } from '@/components/hooks/UseCustomListingInfinte';
 
 export async function getServerSideProps(ctx: NextPageContext) {
   const queryClient = new QueryClient();
@@ -31,7 +29,6 @@ export async function getServerSideProps(ctx: NextPageContext) {
     () => listingsList({ page: 1 }),
     {},
   );
- 
 
   const zustandStore = await getDefaultHomeStore(ctx, queryClient);
 
