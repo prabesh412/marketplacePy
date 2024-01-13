@@ -10,7 +10,9 @@ const HomeLayout: React.FC<AppLayoutProps> = ({ children }) => {
   return (
     <>
       <Navbar isHomepage={true} />
-      <div style={ResponsiveMargin()}>{children}</div>
+      <ResponsiveMargin>
+        <div>{children}</div>
+      </ResponsiveMargin>
     </>
   );
 };

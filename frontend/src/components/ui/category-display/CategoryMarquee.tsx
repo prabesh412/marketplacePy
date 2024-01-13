@@ -124,6 +124,7 @@ const CategoryMarquee = () => {
         labelPosition="center"
         c={'dimmed'}
         mb={-5}
+        mt={'sm'}
         size={1}
         orientation="horizontal"
       />

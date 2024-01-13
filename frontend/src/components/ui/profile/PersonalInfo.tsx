@@ -17,7 +17,7 @@ import {
 } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { IconUpload } from '@tabler/icons-react';
-import React from 'react';
+import React, { useState } from 'react';
 import {
   getUsersMeRetrieveQueryKey,
   useUsersMeRetrieve,
@@ -27,6 +27,7 @@ import {
 
 import { notifications } from '@mantine/notifications';
 import { useQueryClient } from '@tanstack/react-query';
+import ConfirmationModal from '../common/ConfirmationModal';
 
 const useStyles = createStyles((theme) => ({
   user: {
@@ -46,6 +47,10 @@ const PersonalInfo = () => {
   const { data: user } = useUsersMeRetrieve();
   const userPatch = useUsersUpdate();
   const queryClient = useQueryClient();
+  const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
+
+  const openConfirmModal = () => setIsConfirmModalOpen(true);
+  const closeConfirmModal = () => setIsConfirmModalOpen(false);
 
   const form = useForm({
     initialValues: {
@@ -60,10 +65,10 @@ const PersonalInfo = () => {
       // userName: (value) => (value?.length === 10 ? null : 'invalid number'),
     },
   });
-  const changeUserDetails = (values: { name: string; userName: string }) => {
+  const changeUserDetails = (values?: { name: string; userName: string }) => {
     const data = {
       username: user?.username as string,
-      name: values.name,
+      name: values?.name as string,
     };
     notifications.show({
       id: 'userPatch',
@@ -88,6 +93,7 @@ const PersonalInfo = () => {
             });
             queryClient.invalidateQueries(getUsersMeRetrieveQueryKey());
             form.reset();
+            closeConfirmModal();
           },
           onError: (error: any) => {
             notifications.update({
@@ -107,7 +113,12 @@ const PersonalInfo = () => {
         },
       );
   };
-
+  const handleUpdateConfirmation = (values: {
+    name: string;
+    userName: string;
+  }) => {
+    setIsConfirmModalOpen(true);
+  };
   return (
     <div
       style={{
@@ -116,7 +127,7 @@ const PersonalInfo = () => {
         borderRadius: theme.radius.sm,
       }}
     >
-      <form onSubmit={form.onSubmit((values) => changeUserDetails(values))}>
+      <form onSubmit={form.onSubmit(handleUpdateConfirmation)}>
         <UnstyledButton className={classes.user}>
           <Group>
             <Avatar src={user?.image} radius="xl" size={'lg'} />
@@ -166,8 +177,6 @@ const PersonalInfo = () => {
                 placeholder="English"
                 maxLength={10}
                 min={1}
-                // {...form.getInputProps('firstStep.price')}
-                // data-autofocus={form.errors?.price !== undefined}
               />
               <div>
                 <Text c={'dimmed'}>Passsword</Text>
@@ -221,6 +230,16 @@ const PersonalInfo = () => {
           </FocusTrap>
         </Stack>
       </form>
+      <ConfirmationModal
+        title="Confirm Update"
+        color="lime"
+        text={'Are you sure, you want to update your profile details?'}
+        isModalOpen={isConfirmModalOpen}
+        closeModal={closeConfirmModal}
+        confirmOperation={() => {
+          changeUserDetails(form.values);
+        }}
+      />
     </div>
   );
 };

@@ -53,7 +53,9 @@ const ProfileTab = () => {
         <Tabs.Panel value="Public Listings">
           {Array.isArray(myListings) ? (
             myListings.map((listing: Listings, index: number) => (
-              <MylistingCard listing={listing} />
+              <div style={{ marginBottom: theme.spacing.sm }}>
+                <MylistingCard listing={listing} />
+              </div>
             ))
           ) : (
             <Group spacing={5}>

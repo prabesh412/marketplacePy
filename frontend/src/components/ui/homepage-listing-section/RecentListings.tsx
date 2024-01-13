@@ -1,8 +1,17 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Divider, useMantineTheme, Badge } from '@mantine/core';
+import {
+  Divider,
+  useMantineTheme,
+  Badge,
+  Paper,
+  rem,
+  ThemeIcon,
+  Group,
+  Text,
+  Card,
+} from '@mantine/core';
 import {
   getListingsListQueryKey,
-  useListingsList,
   useListingsListInfinite,
 } from '../../../../orval/listings/listings';
 import {
@@ -11,11 +20,16 @@ import {
 } from '../../../../orval/model';
 import { useInView } from 'react-intersection-observer';
 import HorizontalCard from '../listing/HorizontalCard';
-import { useCustomListingsListInfinite } from '@/components/hooks/UseCustomListingInfinte';
+import HorizontalCardSkeleton from '../listing/HorizontalCardSkeleton';
+import { IconArrowRight, IconCircleCheck } from '@tabler/icons-react';
 
 const RecentListings = () => {
-  const { ref, inView } = useInView();
+  const { ref, inView } = useInView({
+    threshold: 0,
+    rootMargin: ' 30px  30px 30px  30px',
+  });
   const [page, setPage] = useState(1);
+  const theme = useMantineTheme();
 
   const {
     status: latestStatus,
@@ -47,34 +61,104 @@ const RecentListings = () => {
   const pageNumber = params.get('page');
 
   useEffect(() => {
-    if (inView) {
+    if (
+      inView &&
+      !latestFetching &&
+      !latestError &&
+      !isFetchingNextPage &&
+      hasNextPage
+    ) {
       setPage((prev) => prev + 1);
-      fetchNextPage({ pageParam: pageNumber });
+      setTimeout(() => fetchNextPage({ pageParam: pageNumber }), 1000);
     }
-  }, [inView]);
+  }, [inView, hasNextPage]);
 
   return (
     <div style={{ maxWidth: '1200px', margin: 'auto' }}>
       <div>
         <Divider
-          label={<Badge radius={'sm'}>Browse Recent Listings</Badge>}
+          label={<Badge radius={'xl'}>Browse Recent Listings</Badge>}
           labelPosition="center"
           c={'dimmed'}
-          mb={15}
+          mt={'sm'}
           size={3}
           orientation="horizontal"
         />
 
-        {data?.pages?.map((group, i) => (
-          <React.Fragment key={i}>
-            {group?.results?.map((project) => (
-              <HorizontalCard listing={project} />
-            ))}
-          </React.Fragment>
-        ))}
-        {!isFetchingNextPage && !hasNextPage && <p>Caught up</p>}
+        {data?.pages ? (
+          data?.pages?.map((listing, i) => (
+            <React.Fragment key={i}>
+              {listing?.results?.map((listings, index) => (
+                <div key={index} style={{ marginTop: 10 }}>
+                  <HorizontalCard listing={listings} />
+                </div>
+              ))}
+            </React.Fragment>
+          ))
+        ) : (
+          <HorizontalCardSkeleton repeat={12} />
+        )}
+
+        {inView && latestFetching && (
+          <div
+            style={{
+              marginTop: 10,
+            }}
+          >
+            <HorizontalCardSkeleton repeat={1} />
+          </div>
+        )}
+        {hasNextPage && !isFetchingNextPage && !latestError && (
+          <div
+            style={{
+              marginTop: 10,
+            }}
+            ref={ref}
+          >
+            <HorizontalCardSkeleton repeat={1} />
+          </div>
+        )}
+        {!isFetchingNextPage && !hasNextPage && latestStatus !== 'loading' && (
+          <Paper
+            radius="md"
+            withBorder
+            shadow="xl"
+            style={{
+              position: 'relative',
+              overflow: 'visible',
+              padding: theme.spacing.xs,
+              paddingTop: rem(20),
+            }}
+            mt={25}
+          >
+            <Group position="center">
+              <ThemeIcon
+                style={{
+                  position: 'absolute',
+                  top: rem(-20),
+                  left: 50 % -rem(30),
+                }}
+                size={60}
+                radius={60}
+              >
+                <IconCircleCheck
+                  style={{ width: rem(35), height: rem(35) }}
+                  stroke={1.5}
+                />
+              </ThemeIcon>
+            </Group>
+            <Text truncate ta="center" mt={'xl'} c={'dimmed'}>
+              You have seen all the latest listings!
+            </Text>
+            <Group spacing={3} position="center">
+              <Text pb={rem(2)} c="green" ta="center" size={'sm'} fw={600}>
+                Find more
+              </Text>
+              <IconArrowRight size={'1em'} color="green" />
+            </Group>
+          </Paper>
+        )}
       </div>
-      <div ref={ref}>aasd</div>
     </div>
   );
 };

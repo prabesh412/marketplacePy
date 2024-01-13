@@ -11,6 +11,7 @@ import Background from '@/components/global/Background';
 import { NextPage } from 'next';
 import { ReactNode, useState } from 'react';
 import { RouterTransition } from '@/components/global/RouterTransition';
+import AffixButton from '@/components/ui/common/AffixButton';
 
 const customTheme: MantineThemeOverride = {
   colorScheme: 'light',
@@ -40,6 +41,7 @@ export default function App({ Component, pageProps }: Props) {
           >
             <RouterTransition />
             <Notifications />
+            <AffixButton />
             <Background>{getLayout(<Component {...pageProps} />)}</Background>
           </MantineProvider>
         </Hydrate>

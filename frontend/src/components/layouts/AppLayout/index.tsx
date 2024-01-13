@@ -14,7 +14,9 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
   return (
     <>
       <AppShell navbar={<Navbar isHomepage={false} />}>
-        <div style={ResponsiveMargin()}>{children}</div>
+        <ResponsiveMargin>
+          <div>{children}</div>
+        </ResponsiveMargin>
       </AppShell>
     </>
   );

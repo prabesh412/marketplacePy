@@ -9,8 +9,13 @@ import {
   Divider,
   rem,
   useMantineTheme,
+  Card,
 } from '@mantine/core';
-import { IconAdjustments, IconChevronDown } from '@tabler/icons-react';
+import {
+  IconAdjustments,
+  IconArrowRight,
+  IconChevronDown,
+} from '@tabler/icons-react';
 import FeaturedCard from '../featured/FeaturedCard';
 import { useListingsList } from '../../../../orval/listings/listings';
 import { PaginatedListingsList } from '../../../../orval/model';
@@ -62,7 +67,7 @@ const FeaturedListings = () => {
       </Group>
 
       <div>
-        <Grid mb={'sm'} mt={rem(1)}>
+        <Grid mb={rem(2)} mt={rem(1)}>
           {featuredListing?.results?.map((listings, index) => (
             <Col span={6} xs={4} sm={3} md={3} lg={3} key={index}>
               <FeaturedCard listing={listings} />
@@ -70,21 +75,26 @@ const FeaturedListings = () => {
           ))}
         </Grid>
         {!isProductAllFetched() ? (
-          <div
-            style={{
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}
-          >
-            <Button
-              onClick={() => fetchMoreData()}
-              loading={isLoading}
-              mb={'md'}
+          <Card radius={'md'}>
+            <div
+              style={{
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}
             >
-              {isLoading === false ? <IconChevronDown /> : 'Loading...'}
-            </Button>
-          </div>
+              <Button
+                size="sm"
+                radius={'xl'}
+                onClick={() => fetchMoreData()}
+                loading={isLoading}
+                rightIcon={!isLoading && <IconArrowRight />}
+                mb={rem(4)}
+              >
+                {isLoading === false ? 'Load more' : 'Loading...'}
+              </Button>
+            </div>
+          </Card>
         ) : (
           <Text align="center" pb={'md'} c={'dimmed'}>
             You have reached to the end

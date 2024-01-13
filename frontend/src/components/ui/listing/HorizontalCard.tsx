@@ -224,7 +224,7 @@ const HorizontalCard = ({
                 ? listing?.scraped_username?.substring(0, 2).toUpperCase()
                 : listing?.user?.name?.substring(0, 2).toUpperCase()}
             </Avatar>
-            <Text size="xs" w={'100%'} truncate>
+            <Text size="xs" w={'99%'} truncate={'end'}>
               {listing?.is_scraped
                 ? listing?.scraped_username
                 : listing?.user?.name}

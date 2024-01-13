@@ -9,8 +9,13 @@ import {
   ActionIcon,
   Menu,
   rem,
+  Modal,
+  Button,
+  Alert,
 } from '@mantine/core';
 import {
+  IconAlertCircle,
+  IconAlertHexagon,
   IconCheck,
   IconClock,
   IconDotsVertical,
@@ -26,6 +31,8 @@ import {
 import { useRouter } from 'next/router';
 import { notifications } from '@mantine/notifications';
 import { useQueryClient } from '@tanstack/react-query';
+import { useState } from 'react';
+import ConfirmationModal from '../common/ConfirmationModal';
 
 type HorizontalCardProps = {
   listing: Listings;
@@ -34,6 +41,8 @@ const MylistingCard = ({ listing }: HorizontalCardProps) => {
   const { classes } = useStyles();
   const deleteMutation = useListingsDestroy();
   const queryClient = useQueryClient();
+  const [isDeleteModalOpen, setDeleteModalOpen] = useState(false);
+
   const handleDelete = (slug: string) => {
     notifications.show({
       id: 'userListing',
@@ -73,6 +82,12 @@ const MylistingCard = ({ listing }: HorizontalCardProps) => {
       );
   };
   const router = useRouter();
+  const openDeleteModal = () => setDeleteModalOpen(true);
+  const closeDeleteModal = () => setDeleteModalOpen(false);
+  const confirmDelete = () => {
+    handleDelete(listing?.slug);
+    closeDeleteModal();
+  };
   return (
     <Card
       shadow="sm"
@@ -107,7 +122,7 @@ const MylistingCard = ({ listing }: HorizontalCardProps) => {
             </Menu.Target>
             <Menu.Dropdown>
               <Menu.Item
-                onClick={() => handleDelete(listing?.slug)}
+                onClick={() => openDeleteModal()}
                 rightSection={
                   <IconTrash
                     style={{ width: rem(16), height: rem(16) }}
@@ -203,6 +218,16 @@ const MylistingCard = ({ listing }: HorizontalCardProps) => {
           </Group>
         </Group>
       </div>
+      <ConfirmationModal
+        title="Confirm Deletion"
+        color="lime"
+        text={
+          'Are you sure, you want to delete your listing? once deleted it cannot be  restored.'
+        }
+        isModalOpen={isDeleteModalOpen}
+        closeModal={closeDeleteModal}
+        confirmOperation={confirmDelete}
+      />
     </Card>
   );
 };

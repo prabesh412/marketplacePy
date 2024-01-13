@@ -1,4 +1,12 @@
-import { createStyles, Drawer, Group, rem, Text } from '@mantine/core';
+import {
+  Card,
+  createStyles,
+  Drawer,
+  Group,
+  rem,
+  ScrollArea,
+  Text,
+} from '@mantine/core';
 import { IconCategory } from '@tabler/icons-react';
 import { useCategoryList } from '../../../../orval/category/category';
 import React from 'react';
@@ -97,14 +105,17 @@ const DefaultSideNav = ({
 
   return (
     <Drawer
+      overlayProps={{ blur: 4 }}
+      scrollAreaComponent={ScrollArea.Autosize}
       title={
         <Group ml={'lg'} spacing={10}>
-          <IconCategory />
-          <Text weight={'bold'} tt={'uppercase'} size={'md'} align="center">
-            All categories
+          <IconCategory color="gray" />
+          <Text fw={500} c={'dimmed'} size={'md'} align="center">
+            Browse all categories
           </Text>
         </Group>
       }
+      sx={{ overflow: 'auto' }}
       opened={isOpen}
       onClose={onClose}
     >

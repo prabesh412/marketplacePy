@@ -10,7 +10,9 @@ const AddListingLayout: React.FC<AddListingProps> = ({ children }) => {
   return (
     <>
       <Navbar isHomepage={false} />
-      <div style={ResponsiveMargin()}>{children}</div>
+      <ResponsiveMargin>
+        <div>{children}</div>
+      </ResponsiveMargin>
     </>
   );
 };

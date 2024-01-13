@@ -201,7 +201,7 @@ const FeaturedCard = ({ listing }: listing) => {
 
           <Image
             className={classes.image}
-            src={listing?.banner_image || listing?.images[0].image}
+            src={listing?.banner_image || listing?.images[0]?.image}
             onClick={() =>
               listing?.is_scraped
                 ? window.open(listing.link_to_original as string)
@@ -233,18 +233,17 @@ const FeaturedCard = ({ listing }: listing) => {
           <Group>
             <Group miw={'63%'} spacing={'xl'} position="apart">
               <div style={{ width: '99%' }}>
-                <Text className={classes.smText}>{listing?.title}</Text>
+                <Text className={classes.smText} fw={500} size="md">
+                  {listing?.title}
+                </Text>
                 <Badge
                   variant="filled"
                   className={classes.badge}
                   mt={'xs'}
-                  radius={'sm'}
+                  radius={'xl'}
+                  color="lime"
                 >
-                  <Group spacing={5}>
-                    <Text truncate c={'white'}>
-                      {`${listing?.category?.name.slice(0, 13)}...`}
-                    </Text>
-                  </Group>
+                  Like new
                 </Badge>
               </div>
             </Group>

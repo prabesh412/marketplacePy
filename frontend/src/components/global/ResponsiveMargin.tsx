@@ -1,28 +1,28 @@
-import { useMediaQuery } from '@mantine/hooks';
+import React, { ReactNode } from 'react';
+import { createStyles } from '@mantine/core';
 
-const ResponsiveMargin = () => {
-  const isSmallScreen = useMediaQuery('(max-width: 767px)');
-  const isMediumScreen = useMediaQuery(
-    '(min-width: 768px) and (max-width: 1279px)',
-  );
-  const isExtraLargeScreen = useMediaQuery('(min-width: 1920px)');
+const useStyles = createStyles((theme) => ({
+  margin: {
+    margin: '0 6em',
 
-  const marginValues = {
-    small: { margin: '0 1em' },
-    medium: { margin: '0 2em' },
-    large: { margin: '0 6em' },
-    extraLarge: { margin: '0 10em' },
-  };
+    '@media (max-width: 767px)': {
+      margin: '0 0.4em',
+    },
+    '@media (min-width: 768px) and (max-width: 1279px)': {
+      margin: '0 2em',
+    },
+    '@media (min-width: 1920px)': {
+      margin: '0 10em',
+    },
+  },
+}));
+interface ResponsiveMarginProps {
+  children: ReactNode;
+}
 
-  const marginStyle = isSmallScreen
-    ? marginValues.small
-    : isMediumScreen
-    ? marginValues.medium
-    : isExtraLargeScreen
-    ? marginValues.extraLarge
-    : marginValues.large;
-
-  return marginStyle;
+const ResponsiveMargin = ({ children }: ResponsiveMarginProps) => {
+  const { classes } = useStyles();
+  return <div className={classes.margin}>{children}</div>;
 };
 
 export default ResponsiveMargin;

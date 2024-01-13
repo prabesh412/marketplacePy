@@ -260,7 +260,7 @@ const useStyles = createStyles((theme) => ({
     height: 80,
     position: 'sticky',
     top: 0,
-    zIndex: 1000,
+    zIndex: 50,
   },
 
   user: {
