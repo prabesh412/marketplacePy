@@ -45,7 +45,6 @@ const LargeScreenProductDetail = ({
   listing,
 }: LargeScreenProductDetailProps) => {
   const theme = useMantineTheme();
-  console.log(listing);
   return (
     <Container maw={'1300px'} m={'auto'} fluid mt={'lg'}>
       <Group position="apart" style={{ alignItems: 'flex-start' }}>

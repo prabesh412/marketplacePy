@@ -1,13 +1,11 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import {
   Text,
   Avatar,
   Group,
   Paper,
-  createStyles,
   Box,
   Flex,
-  Card,
   TextInput,
   ActionIcon,
   rem,
@@ -17,7 +15,6 @@ import {
   IconDotsCircleHorizontal,
   IconMessage,
   IconMessageShare,
-  IconThumbUp,
 } from '@tabler/icons-react';
 
 type CommentsReply = {
@@ -34,23 +31,36 @@ export type CommentsReplies = CommentsReply[];
 
 type RecursiveRepliesProps = {
   replies?: CommentsReplies;
+  handleReplySubmit: (
+    parentCommentId: number,
+    topParentCommentId: number,
+    replyValue: string,
+  ) => void;
+  topParentCommentId: number;
 };
-type ActiveRepliesType = {
-  [key: number]: boolean;
-};
-const RecursiveReplies = ({ replies }: RecursiveRepliesProps) => {
+
+const RecursiveReplies = ({
+  replies,
+  handleReplySubmit,
+  topParentCommentId,
+}: RecursiveRepliesProps) => {
+  const [replyValue, setReplyValue] = useState<string>('');
+  const [activeReplies, setActiveReplies] = useState<{
+    [key: number]: boolean;
+  }>({});
+
+  const handleReplyClick = useCallback((commentId: number) => {
+    setActiveReplies((prev) => ({ [commentId]: !prev[commentId] }));
+  }, []);
+
   const renderReplies = (replies: CommentsReplies) => {
-    const [activeReplies, setActiveReplies] = useState<ActiveRepliesType>({});
-    const handleReplyClick = (commentId: number) => {
-      setActiveReplies((prev) => ({ ...prev, [commentId]: !prev[commentId] }));
-    };
     return (
       <Group mt={'sm'} pl={25} sx={{ position: 'relative' }}>
         <Flex direction={'column'}>
           {replies &&
             replies?.map((reply) => (
               <div key={reply.id} style={{ position: 'relative' }}>
-                <Paper m={4} key={reply.id}>
+                <Paper m={4}>
                   <Group>
                     <Box
                       sx={{
@@ -72,7 +82,7 @@ const RecursiveReplies = ({ replies }: RecursiveRepliesProps) => {
                       </Text>
                     </div>
                   </Group>
-                  <Text pl={54} size="sm">
+                  <Text pl={54} size="sm" w={'100%'}>
                     {reply?.texts}
                   </Text>
                   <Group mt={'xs'} mb={'xs'} pl={54}>
@@ -91,10 +101,12 @@ const RecursiveReplies = ({ replies }: RecursiveRepliesProps) => {
                   {activeReplies[reply.id] && (
                     <TextInput
                       w={'100%'}
+                      miw={'400px'}
                       pl={50}
-                      // className={classes.textInput}
-                      // value={searchValue}
-                      // onChange={(event) => setSearchValue(event.target.value)}
+                      onChange={(event) =>
+                        setReplyValue(event.currentTarget.value)
+                      }
+                      value={replyValue}
                       size="md"
                       mt={5}
                       radius={'xl'}
@@ -105,15 +117,16 @@ const RecursiveReplies = ({ replies }: RecursiveRepliesProps) => {
                         <ActionIcon
                           size={30}
                           radius="xl"
-                          // className={classes.actionIcon}
                           mr={'sm'}
                           color={'lime'}
                           variant="filled"
-                          // onClick={() => {
-                          //   if (searchValue) {
-                          //     router.push(`/search?title__icontains=${searchValue}`);
-                          //   }
-                          // }}
+                          onClick={() => {
+                            handleReplySubmit(
+                              reply.id,
+                              topParentCommentId,
+                              replyValue,
+                            );
+                          }}
                         >
                           <IconArrowRight
                             style={{ width: rem(18), height: rem(18) }}
@@ -137,4 +150,4 @@ const RecursiveReplies = ({ replies }: RecursiveRepliesProps) => {
   return <Group>{replies && renderReplies(replies)}</Group>;
 };
 
-export default RecursiveReplies;
+export default React.memo(RecursiveReplies);

@@ -2,8 +2,7 @@ from rest_framework import serializers
 from doshro_bazar.comments.models import Comments
 from doshro_bazar.users.models import User
 from doshro_bazar.users.api.serializers import UserSerializer,CommentUserSerializer
-from django.core.serializers import serialize
-import json
+from django.utils.timezone import localtime
 
 class CommentsSerializer(serializers.ModelSerializer):
     user = UserSerializer(read_only=True)
@@ -52,6 +51,8 @@ class CommentsInputSerializer(serializers.ModelSerializer):
             user_data = user_serializer.data
             validated_data["user"] = user_data
             validated_data["id"] = reply_obj.id
+            created_at_str = localtime(reply_obj.created_at).strftime("%Y-%m-%d %H:%M:%S")
+            validated_data["created_at"] = created_at_str
             replies = main_parent_comment.replies
 
             if replies:
