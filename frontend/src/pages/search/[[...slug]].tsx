@@ -3,7 +3,6 @@ import { QueryClient, dehydrate } from '@tanstack/react-query';
 import { NextPageContext } from 'next';
 import { useRouter } from 'next/router';
 import React, { ReactElement, useState } from 'react';
-
 import {
   getListingsListQueryKey,
   listingsList,
@@ -21,20 +20,23 @@ import {
   useMantineTheme,
   ActionIcon,
   Divider,
+  Modal,
 } from '@mantine/core';
 import { Listings } from '../../../orval/model/listings';
 import {
   IconAdjustments,
+  IconArrowBarBoth,
   IconArrowRight,
+  IconCalendar,
   IconChevronDown,
   IconCurrencyRupeeNepalese,
-  IconMapPinFilled,
   IconSearch,
   IconSortAscending2,
-  IconX,
 } from '@tabler/icons-react';
 import { useForm } from '@mantine/form';
 import HorizontalCard from '@/components/ui/listing/HorizontalCard';
+import { ListingOptionMap } from '@/components/utils/ListingOptionMap';
+import { DatePickerInput } from '@mantine/dates';
 
 const useStyles = createStyles((theme) => ({
   parent: {
@@ -83,6 +85,7 @@ const useStyles = createStyles((theme) => ({
       overflow: '-moz-scrollbars-none',
     },
   },
+
   selectInput: {
     minWidth: rem(150),
   },
@@ -90,13 +93,16 @@ const useStyles = createStyles((theme) => ({
 
 //Sort params interface
 interface SortOptions {
-  condition?: string;
-  datePosted?: string;
+  listing_condition?: string;
+  created_at__gt?: Date;
   location?: string;
+  is_negotiable?: string;
   category?: string;
   viewsCount?: string;
-  priceRangeMin?: string;
-  priceRangeMax?: string;
+  price__gt?: string;
+  price__lt?: string;
+  is_sfw?: string;
+  is_featured?: string;
 }
 
 export async function getServerSideProps(ctx: NextPageContext) {
@@ -139,40 +145,67 @@ export default function Search() {
   const { data: listingDetail } = useListingsList(slug);
   const { classes } = useStyles();
   const theme = useMantineTheme();
-  const [searchValue, setSearchValue] = useState('');
+  const [searchValue, setSearchValue] = useState<string>('');
+  const [modalTrigger, setModalTrigger] = useState<boolean>(false);
+
   const form = useForm<SortOptions>({
     initialValues: {
-      condition: '',
-      datePosted: '',
+      listing_condition: '',
+      created_at__gt: undefined,
       location: '',
       category: '',
+      is_negotiable: '',
       viewsCount: '',
-      priceRangeMin: '',
-      priceRangeMax: '',
+      price__gt: '',
+      price__lt: '',
+      is_sfw: '',
+      is_featured: '',
     },
   });
   const handleFilter = () => {
     const queryParams: SortOptions = {
-      condition: form.values.condition,
-      datePosted: form.values.datePosted,
+      listing_condition:
+        ListingOptionMap[
+          (form.values.listing_condition as keyof typeof ListingOptionMap) || ''
+        ],
+      created_at__gt: form.values.created_at__gt
+        ? (new Date(
+            new Date(form?.values?.created_at__gt as Date).setDate(
+              new Date(form?.values?.created_at__gt as Date).getDate() + 1,
+            ),
+          )
+            ?.toISOString()
+            ?.substring(0, 10) as unknown as Date)
+        : undefined,
+
       location: form.values.location,
       category: form.values.category,
       viewsCount: form.values.viewsCount,
-      priceRangeMin: form.values.priceRangeMin,
-      priceRangeMax: form.values.priceRangeMax,
+      is_featured:
+        ListingOptionMap[
+          (form.values?.is_featured as keyof typeof ListingOptionMap) || ''
+        ],
+      price__gt: form.values.price__gt,
+      price__lt: form.values.price__lt,
+      is_negotiable:
+        ListingOptionMap[
+          (form.values?.is_negotiable as keyof typeof ListingOptionMap) || ''
+        ],
+      is_sfw:
+        ListingOptionMap[
+          (form.values?.is_sfw as keyof typeof ListingOptionMap) || ''
+        ],
     };
-    const filteredParams = Object.fromEntries(
-      Object.entries(queryParams).filter(
-        ([key, value]) => value !== '' && value !== null && value !== undefined,
-      ),
+    const filteredParams = Object.entries(queryParams).filter(
+      ([, value]) => value !== '' && value !== null && value !== undefined,
     );
-    const queryString = Object.entries(filteredParams)
-      .map(([key, value]) => `${key}=${encodeURIComponent(value)}`)
-      .join('&');
     form.reset();
-    router.push(
-      `/search?title__icontains=${slug?.title__icontains}&${queryString}`,
-    );
+    const existingParams = new URLSearchParams(window.location.search);
+    filteredParams.forEach(([key, value]) => {
+      existingParams.set(key, value);
+    });
+    const searchUrl = `/search?${existingParams.toString()}`;
+    router.push(searchUrl);
   };
 
   return (
@@ -218,30 +251,130 @@ export default function Search() {
           <Select
             radius={'xl'}
             placeholder="Condition"
-            data={['New', 'Like New', 'Used']}
-            {...form.getInputProps('condition')}
-            rightSection={<IconChevronDown size="1.2rem" />}
+            withinPortal={true}
+            data={['New', 'Used', 'Like New', 'Brand New']}
+            {...form.getInputProps('listing_condition')}
+            rightSection={
+              <IconChevronDown
+                color={form.values.listing_condition ? 'white' : 'black'}
+                size="1.2rem"
+              />
+            }
             rightSectionWidth={30}
             styles={(theme) => ({
+              dropdown: {
+                position: 'fixed',
+              },
               rightSection: { pointerEvents: 'none' },
               input: {
-                backgroundColor: theme.colors.gray[1],
+                backgroundColor: form.values.listing_condition
+                  ? `${theme.colors.lime[8]}`
+                  : `${theme.colors.gray[1]}`,
+                color: form.values.listing_condition ? 'white' : 'black',
+                fontWeight: 600,
+              },
+            })}
+            className={classes.selectInput}
+          />
+          <DatePickerInput
+            radius={'xl'}
+            placeholder="Pick date after"
+            valueFormat="YYYY MMM DD"
+            className={classes.selectInput}
+            dropdownType={'popover'}
+            icon={
+              <IconCalendar
+                color={form.values.created_at__gt ? 'white' : 'black'}
+                size="1.1rem"
+                stroke={1.5}
+              />
+            }
+            {...form.getInputProps('created_at__gt')}
+            w={220}
+            rightSection={
+              <IconChevronDown
+                color={form.values.created_at__gt ? 'white' : 'black'}
+                size="1.2rem"
+              />
+            }
+            rightSectionWidth={30}
+            styles={{
+              calendar: {
+                position: 'fixed',
+                marginTop: -12.5,
+                marginLeft: -20,
+                backgroundColor: 'white',
+                padding: theme.spacing.sm,
+                border: `1px solid ${theme.colors.gray[3]}`,
+              },
+
+              rightSection: { pointerEvents: 'none' },
+              input: {
+                backgroundColor: form.values.created_at__gt
+                  ? `${theme.colors.lime[8]}`
+                  : `${theme.colors.gray[1]}`,
+                color: form.values.created_at__gt
+                  ? 'white'
+                  : `${theme.colors.gray[5]}`,
+                fontWeight: 600,
+              },
+            }}
+          />
+
+          <Select
+            radius={'xl'}
+            placeholder="Negotiable"
+            data={['Negotiable', 'Non Negotiable']}
+            {...form.getInputProps('is_negotiable')}
+            rightSection={
+              <IconChevronDown
+                color={form.values.is_negotiable ? 'white' : 'black'}
+                size="1.2rem"
+              />
+            }
+            rightSectionWidth={30}
+            styles={(theme) => ({
+              dropdown: {
+                position: 'fixed',
+              },
+              rightSection: { pointerEvents: 'none' },
+              input: {
+                backgroundColor: form.values.is_negotiable
+                  ? `${theme.colors.lime[8]}`
+                  : `${theme.colors.gray[1]}`,
+                color: form.values.is_negotiable ? 'white' : 'black',
+                fontWeight: 600,
               },
             })}
             className={classes.selectInput}
           />
           <Select
             radius={'xl'}
-            placeholder="Date posted"
-            data={['Recently', 'ddd']}
-            {...form.getInputProps('datePosted')}
-            rightSection={<IconChevronDown size="1.2rem" />}
+            placeholder="Featured"
+            data={['Featured', 'Non-featured']}
+            {...form.getInputProps('is_featured')}
+            rightSection={
+              <IconChevronDown
+                color={form.values.is_featured ? 'white' : 'black'}
+                size="1.2rem"
+              />
+            }
+            withinPortal={true}
             rightSectionWidth={30}
             styles={(theme) => ({
+              dropdown: {
+                position: 'fixed',
+              },
               rightSection: { pointerEvents: 'none' },
-
               input: {
-                backgroundColor: theme.colors.gray[1],
+                backgroundColor: form.values.is_featured
+                  ? `${theme.colors.lime[8]}`
+                  : `${theme.colors.gray[1]}`,
+                color: form.values.is_featured ? 'white' : 'black',
+                fontWeight: 600,
+                dropdown: {
+                  overflow: 'auto',
+                },
               },
             })}
             className={classes.selectInput}
@@ -249,46 +382,42 @@ export default function Search() {
           <Select
             radius={'xl'}
             placeholder="SFW"
-            data={['NSFW', 'SFW']}
-            {...form.getInputProps('location')}
-            rightSection={<IconChevronDown size="1.2rem" />}
+            data={['SFW', 'NSFW']}
+            {...form.getInputProps('is_sfw')}
+            rightSection={
+              <IconChevronDown
+                color={form.values.is_sfw ? 'white' : 'black'}
+                size="1.2rem"
+              />
+            }
+            withinPortal={true}
             rightSectionWidth={30}
             styles={(theme) => ({
-              rightSection: { pointerEvents: 'none' },
-              input: {
-                backgroundColor: theme.colors.gray[1],
-              },
               dropdown: {
-                borderRadius: theme.radius.sm,
+                position: 'fixed',
               },
-            })}
-            className={classes.selectInput}
-          />
-          <Select
-            radius={'xl'}
-            placeholder="Category"
-            data={['Recently', 'ddd']}
-            {...form.getInputProps('category')}
-            rightSection={<IconChevronDown size="1.2rem" />}
-            rightSectionWidth={30}
-            styles={(theme) => ({
               rightSection: { pointerEvents: 'none' },
-
               input: {
-                backgroundColor: theme.colors.gray[1],
+                backgroundColor: form.values.is_sfw
+                  ? `${theme.colors.lime[8]}`
+                  : `${theme.colors.gray[1]}`,
+                color: form.values.is_sfw ? 'white' : 'black',
+                fontWeight: 600,
               },
             })}
             className={classes.selectInput}
           />
-          <Button radius={'xl'} rightIcon={<IconCurrencyRupeeNepalese />}>
-            Price Range
-          </Button>
           <Button
             radius={'xl'}
-            rightIcon={<IconMapPinFilled />}
-            onClick={handleFilter}
+            onClick={() => setModalTrigger((prev) => !prev)}
+            variant={
+              (form.values?.price__gt || form.values.price__lt) && !modalTrigger
+                ? 'filled'
+                : 'outline'
+            }
+            rightIcon={<IconCurrencyRupeeNepalese />}
           >
-            Near me
+            Price Range
           </Button>
         </Group>
         <Divider size={2} />
@@ -297,27 +426,89 @@ export default function Search() {
             <Text c={'dimmed'}>Sort By</Text>
             <IconSortAscending2 color="gray" size={'1.3em'} />
           </Group>
-          <Group spacing={3}>
-            <Button.Group>
-              <Button
-                rightIcon={<IconX size={'1.3em'} />}
-                radius={'sm'}
-                size="xs"
-                variant="default"
+          <Group>
+            <Group>
+              <Text
+                onClick={() => form.reset()}
+                c={'dimmed'}
+                underline
+                size={'sm'}
+                style={{ cursor: 'pointer' }}
               >
-                Clear
-              </Button>
-              <Button
-                rightIcon={<IconAdjustments size={'1.3em'} />}
-                radius={'sm'}
-                size="xs"
-                variant="default"
-              >
-                Filter
-              </Button>
-            </Button.Group>
+                Clear Filter
+              </Text>
+            </Group>
+            <Button
+              rightIcon={<IconAdjustments size={'1.3em'} />}
+              onClick={() => handleFilter()}
+              radius={'xl'}
+            >
+              Apply Filter
+            </Button>
           </Group>
         </Group>
+        {modalTrigger && (
+          <Modal
+            opened={modalTrigger}
+            onClose={() => setModalTrigger((prev) => !prev)}
+            centered
+            radius={'lg'}
+            transitionProps={{ transition: 'fade', duration: 300 }}
+            overlayProps={{
+              color: theme.colors.gray[7],
+              opacity: 0.55,
+              blur: 3,
+            }}
+          >
+            <Group noWrap>
+              <TextInput
+                placeholder="Min Price"
+                variant="unstyled"
+                sx={{ borderBottom: `1px solid ${theme.colors.gray[4]}` }}
+                icon={<IconCurrencyRupeeNepalese />}
+                type="number"
+                w={'100%'}
+                {...form.getInputProps('price__gt')}
+              />
+
+              <IconArrowBarBoth
+                style={{ paddingTop: 20 }}
+                size={'3.5em'}
+                color="gray"
+              />
+              <TextInput
+                placeholder="Max Price"
+                type="number"
+                variant="unstyled"
+                sx={{ borderBottom: `1px solid ${theme.colors.gray[4]}` }}
+                icon={<IconCurrencyRupeeNepalese />}
+                {...form.getInputProps('price__lt')}
+                w={'100%'}
+              />
+            </Group>
+
+            <Group mt={'sm'} position="right">
+              <Text
+                onClick={() => {
+                  form.setFieldValue('price__lt', '');
+                  form.setFieldValue('price__gt', '');
+                  setModalTrigger((prev) => !prev);
+                }}
+                style={{ cursor: 'pointer' }}
+              >
+                Cancel
+              </Text>
+              <Button
+                radius={'lg'}
+                onClick={() => {
+                  setModalTrigger((prev) => !prev);
+                }}
+              >
+                Confirm
+              </Button>
+            </Group>
+          </Modal>
+        )}
       </div>
 
       {listingDetail?.results && listingDetail.results.length > 0 ? (
