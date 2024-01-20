@@ -3,12 +3,15 @@ from rest_framework import viewsets, status
 from rest_framework.response import Response
 from doshro_bazar.comments.models import Comments
 from doshro_bazar.comments.serializers import CommentsSerializer, CommentsInputSerializer
-
+from doshro_bazar.comments.filters import CommentsFilter
+from django_filters import rest_framework as filters_new
 
 # Create your views here.
 class CommentsViewset(viewsets.ModelViewSet):
     queryset = Comments.objects.all().select_related("user", "listing")
     serializer_class = CommentsSerializer
+    filter_backends = (filters_new.DjangoFilterBackend, )
+    filterset_class = CommentsFilter
 
     def get_serializer_class(self):
         if self.action in ["create", "update", "partial_update"]:

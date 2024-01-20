@@ -2,6 +2,7 @@ import { Listings } from '../../../../orval/model';
 import {
   Avatar,
   Badge,
+  Box,
   Button,
   Card,
   Container,
@@ -35,6 +36,7 @@ import {
   IconWriting,
 } from '@tabler/icons-react';
 import GetInitials from '../common/GetInitials';
+import Comments from '../comments/Comments';
 
 type LargeScreenProductDetailProps = {
   listing?: Listings;
@@ -259,7 +261,11 @@ const LargeScreenProductDetail = ({
                 </Button>
               </Tabs.Panel>
 
-              <Tabs.Panel value="messages">Messages tab content</Tabs.Panel>
+              <Tabs.Panel value="messages">
+                <Box mt={10}>
+                  <Comments listingSlug={listing?.slug} />
+                </Box>
+              </Tabs.Panel>
 
               <Tabs.Panel value="settings">
                 <></>
