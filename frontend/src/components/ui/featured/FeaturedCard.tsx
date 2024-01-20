@@ -9,29 +9,30 @@ import {
   ActionIcon,
   Badge,
   rem,
+  Divider,
 } from '@mantine/core';
 import React from 'react';
 import {
+  IconCategory,
   IconClock,
   IconCurrencyRupeeNepalese,
+  IconDeviceWatch,
   IconEye,
   IconHeart,
   IconStarFilled,
+  IconTool,
 } from '@tabler/icons-react';
 import { Listings } from '../../../../orval/model';
 import { Router, useRouter } from 'next/router';
 import { useBookmarksCreate } from '../../../../orval/bookmarks/bookmarks';
 import { notifications } from '@mantine/notifications';
+import GetInitials from '../common/GetInitials';
 
 const useStyles = createStyles((theme) => ({
   card: {
-    '@media (max-width: 575px)': {
-      borderRadius: 0,
-      padding: theme.spacing.xs,
-    },
     '@media (max-width: 980px)': {
-      borderRadius: theme.radius.sm,
-      padding: theme.spacing.xs,
+      borderRadius: theme.radius.md,
+      padding: theme.radius.md,
     },
   },
   image: {
@@ -87,6 +88,7 @@ const useStyles = createStyles((theme) => ({
   price: {
     '@media (max-width: 576px)': {
       fontSize: theme.fontSizes.md,
+      marginTop: -7,
     },
   },
 }));
@@ -145,7 +147,6 @@ const FeaturedCard = ({ listing }: listing) => {
         className={classes.card}
         radius={'md'}
         shadow="sm"
-        padding="sm"
         sx={{
           maxWidth: '100%',
           height: '100%',
@@ -230,24 +231,39 @@ const FeaturedCard = ({ listing }: listing) => {
               : router.push(`/listing/listing-detail/${listing?.slug}`)
           }
         >
-          <Group>
-            <Group miw={'63%'} spacing={'xl'} position="apart">
-              <div style={{ width: '99%' }}>
-                <Text className={classes.smText} fw={500} size="md">
-                  {listing?.title}
-                </Text>
-                <Badge
-                  variant="filled"
-                  className={classes.badge}
-                  mt={'xs'}
-                  radius={'xl'}
-                  color="lime"
-                >
-                  Like new
-                </Badge>
-              </div>
-            </Group>
+          <Text className={classes.smText} fw={500} size="md">
+            {listing?.title}
+          </Text>
+          <Group noWrap spacing={4} mt={'xs'}>
+            <Badge
+              variant="filled"
+              className={classes.badge}
+              radius={'sm'}
+              size="xs"
+              w={'45%'}
+              color="lime"
+            >
+              <Group noWrap spacing={5}>
+                <IconTool size={'1.5em'} />
+                <Text truncate>Like new</Text>
+              </Group>
+            </Badge>
+            <Divider size={3} orientation="vertical" />
+            <Badge
+              variant="filled"
+              className={classes.badge}
+              radius={'sm'}
+              size="xs"
+              color="cyan"
+              w={'50%'}
+            >
+              <Group noWrap spacing={5}>
+                <IconCategory size={'1.5em'} />
+                <Text truncate>{listing?.category?.name}</Text>
+              </Group>
+            </Badge>
           </Group>
+
           <Group mt={'xs'} position="apart">
             <Text className={classes.price} fw={500} size={'lg'} c={'dimmed'}>
               रू. {listing?.price}
@@ -263,8 +279,12 @@ const FeaturedCard = ({ listing }: listing) => {
             <Group spacing={5}>
               <Avatar size={30} radius="xl" color="cyan">
                 {listing?.is_scraped
-                  ? listing?.scraped_username?.substring(0, 2).toUpperCase()
-                  : listing?.user?.name?.substring(0, 2).toUpperCase()}
+                  ? GetInitials(
+                      listing?.scraped_username
+                        ? listing?.scraped_username
+                        : '',
+                    )
+                  : GetInitials(listing?.user?.name ? listing?.user?.name : '')}
               </Avatar>
               <Text className={classes.userName} truncate="end" size="sm">
                 {listing?.is_scraped

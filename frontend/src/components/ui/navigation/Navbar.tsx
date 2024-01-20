@@ -10,6 +10,13 @@ import {
   Menu,
   Tabs,
   Flex,
+  useMantineTheme,
+  Modal,
+  TextInput,
+  ActionIcon,
+  Divider,
+  Text,
+  Chip,
 } from '@mantine/core';
 import cx from 'clsx';
 import { useDisclosure } from '@mantine/hooks';
@@ -27,6 +34,8 @@ import {
   IconSettings,
   IconChevronDown,
   IconStar,
+  IconSearch,
+  IconArrowRight,
 } from '@tabler/icons-react';
 import { useRouter } from 'next/router';
 import React, { useState } from 'react';
@@ -34,6 +43,8 @@ import { useStore } from '@/zustand/store';
 import DefaultSideNav from './DefaultSideNav';
 import Logo from '../../../../public/favicon/logo.png';
 import Image from 'next/image';
+import GetInitials from '../common/GetInitials';
+import HomepageSearchArea from '../home/search-area/HomepageSearchArea';
 
 interface HeaderSearchProps {
   isHomepage: boolean;
@@ -49,6 +60,10 @@ const Navbar = ({ isHomepage }: HeaderSearchProps) => {
   const logout = useStore((state) => state.logout);
   const defaultTab = router.pathname === '/' ? 'Home' : '';
   const [activeTab, setActiveTab] = useState<string | null>(defaultTab);
+  const [modalTrigger, setModalTrigger] = useState(false);
+  const [searchValue, setSearchValue] = useState('');
+
+  const theme = useMantineTheme();
 
   const userAction = [
     {
@@ -90,16 +105,21 @@ const Navbar = ({ isHomepage }: HeaderSearchProps) => {
   return (
     <>
       <Container className={classes.header} fluid>
-        <Flex justify={'space-around'} align={'center'} h={'100%'}>
-          <Group pb={'xs'} spacing={4}>
-            <Image
-              src={Logo}
-              alt="as"
-              height={120}
-              width={170}
-              onClick={() => router.push('/')}
-            />
-          </Group>
+        <Flex
+          className={classes.mainFlex}
+          justify={'space-evenly'}
+          align={'center'}
+          h={'100%'}
+        >
+          <Image
+            src={Logo}
+            alt="as"
+            height={120}
+            width={170}
+            onClick={() => router.push('/')}
+            style={{ paddingBottom: theme.spacing.xs }}
+          />
+
           <Tabs
             variant="pills"
             radius="xl"
@@ -153,17 +173,19 @@ const Navbar = ({ isHomepage }: HeaderSearchProps) => {
               </Tabs.Tab>
             </Tabs.List>
           </Tabs>
-          <Burger
-            opened={opened}
-            onClick={() => toggle()}
+          <IconSearch
+            onClick={() => setModalTrigger((prev) => !prev)}
             className={classes.burger}
-            size="sm"
+            size="2em"
+            stroke={'2'}
           />
-          <Group spacing={7}>
+
+          <Group classNames={classes.burger} spacing={7}>
             <Button
               leftIcon={<IconPlus />}
               variant="light"
               radius={'xl'}
+              className={classes.tabsList}
               onClick={() => router.push('/listing/listing-add')}
             >
               Create
@@ -185,9 +207,7 @@ const Navbar = ({ isHomepage }: HeaderSearchProps) => {
                   >
                     <Group spacing={4}>
                       <Avatar radius="xl" color="cyan">
-                        {user.name
-                          ? user.name.substring(0, 2).toUpperCase()
-                          : ''}
+                        {user.name ? GetInitials(user?.name) : ''}
                       </Avatar>
                       <IconChevronDown
                         style={{ width: rem(15), height: rem(15) }}
@@ -247,6 +267,50 @@ const Navbar = ({ isHomepage }: HeaderSearchProps) => {
         }}
         isOpen={isSideNavOpen}
       />
+      {modalTrigger && (
+        <Modal
+          opened={modalTrigger}
+          onClose={() => setModalTrigger((prev) => !prev)}
+          centered
+          radius={'lg'}
+          transitionProps={{ transition: 'fade', duration: 300 }}
+          overlayProps={{
+            color: theme.colors.gray[7],
+            opacity: 0.55,
+            blur: 3,
+          }}
+        >
+          <TextInput
+            radius={'xl'}
+            size="lg"
+            placeholder="Search here"
+            value={searchValue}
+            variant="unstyled"
+            sx={{ borderBottom: `1px solid ${theme.colors.gray[4]}` }}
+            onChange={(event) => setSearchValue(event.target.value)}
+            icon={<IconSearch />}
+          />
+
+          <Group mt={'sm'} position="right">
+            <Text
+              onClick={() => setModalTrigger((prev) => !prev)}
+              style={{ cursor: 'pointer' }}
+            >
+              Cancel
+            </Text>
+            <Button
+              radius={'lg'}
+              onClick={() => {
+                if (searchValue) {
+                  router.push(`/search?title__icontains=${searchValue}`);
+                }
+              }}
+            >
+              Confirm
+            </Button>
+          </Group>
+        </Modal>
+      )}
     </>
   );
 };
@@ -262,7 +326,12 @@ const useStyles = createStyles((theme) => ({
     top: 0,
     zIndex: 50,
   },
-
+  mainFlex: {
+    '@media (max-width: 890px)': {
+      justifyContent: 'space-between',
+      paddingRight: theme.spacing.xs,
+    },
+  },
   user: {
     color:
       theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.colors.white,

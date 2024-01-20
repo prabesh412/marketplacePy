@@ -16,22 +16,25 @@ import {
   createStyles,
   rem,
   Text,
-  Popover,
   Button,
   TextInput,
   useMantineTheme,
   ActionIcon,
+  Divider,
 } from '@mantine/core';
 import { Listings } from '../../../orval/model/listings';
 import {
   IconAdjustments,
   IconArrowRight,
-  IconClearAll,
+  IconChevronDown,
+  IconCurrencyRupeeNepalese,
+  IconMapPinFilled,
   IconSearch,
+  IconSortAscending2,
+  IconX,
 } from '@tabler/icons-react';
 import { useForm } from '@mantine/form';
 import HorizontalCard from '@/components/ui/listing/HorizontalCard';
-import HomepageSearchArea from '@/components/ui/home/search-area/HomepageSearchArea';
 
 const useStyles = createStyles((theme) => ({
   parent: {
@@ -39,56 +42,14 @@ const useStyles = createStyles((theme) => ({
     justifyContent: 'space-between',
     marginTop: theme.spacing.md,
   },
-
-  sideNav: {
-    position: 'sticky',
-    top: 0,
-    '@media (max-width: 1200px)': {
-      display: 'none',
-    },
-  },
-
-  mainContent: {
-    marginLeft: theme.spacing.md,
-    flex: 2,
-    marginRight: theme.spacing.md,
-    '@media (max-width: 576px)': {
-      marginRight: 0,
-      marginLeft: 0,
-    },
-  },
-  title: {
-    fontSize: rem(30),
-
-    '@media (max-width: 575px)': {
-      fontSize: theme.fontSizes.xl,
-      marginTop: theme.spacing.xs,
-    },
-  },
-
-  divider: {
-    '@media (max-width: 1200px)': {
-      display: 'none',
-    },
-  },
-
-  bannerContainer: {
-    position: 'sticky',
-    top: 0,
-    maxWidth: '300px',
-    zIndex: 1,
-    '@media (max-width: 1200px)': {
-      display: 'none',
-    },
-  },
   sort: {
-    backgroundColor:
-      theme.colorScheme === 'dark'
-        ? theme.colors.dark[6]
-        : theme.colors.gray[1],
-    padding: theme.spacing.sm,
-    marginTop: theme.spacing.md,
+    backgroundColor: 'white',
+    padding: theme.spacing.lg,
+    marginTop: theme.spacing.sm,
     borderRadius: theme.radius.md,
+    '@media (max-width: 575px)': {
+      padding: theme.spacing.xs,
+    },
   },
   textInput: {
     width: '100%',
@@ -107,6 +68,23 @@ const useStyles = createStyles((theme) => ({
       width: '10px',
       height: '10px',
     },
+  },
+  scrollableGroup: {
+    overflowX: 'auto',
+    whiteSpace: 'nowrap',
+    '&::-webkit-scrollbar': {
+      display: 'none',
+    },
+    '-ms-overflow-style': 'none',
+    'scrollbar-width': 'none',
+    '@media (max-width: 575px)': {
+      scrollbarWidth: 'none',
+      msOverflowStyle: 'none',
+      overflow: '-moz-scrollbars-none',
+    },
+  },
+  selectInput: {
+    minWidth: rem(150),
   },
 }));
 
@@ -231,68 +209,114 @@ export default function Search() {
             </ActionIcon>
           }
         />
-        <Group pb={'md'} grow>
+        <Group
+          className={classes.scrollableGroup}
+          noWrap
+          position="apart"
+          pb={'md'}
+        >
           <Select
+            radius={'xl'}
             placeholder="Condition"
             data={['New', 'Like New', 'Used']}
             {...form.getInputProps('condition')}
+            rightSection={<IconChevronDown size="1.2rem" />}
+            rightSectionWidth={30}
+            styles={(theme) => ({
+              rightSection: { pointerEvents: 'none' },
+              input: {
+                backgroundColor: theme.colors.gray[1],
+              },
+            })}
+            className={classes.selectInput}
           />
           <Select
+            radius={'xl'}
             placeholder="Date posted"
             data={['Recently', 'ddd']}
             {...form.getInputProps('datePosted')}
+            rightSection={<IconChevronDown size="1.2rem" />}
+            rightSectionWidth={30}
+            styles={(theme) => ({
+              rightSection: { pointerEvents: 'none' },
+
+              input: {
+                backgroundColor: theme.colors.gray[1],
+              },
+            })}
+            className={classes.selectInput}
           />
-        </Group>
-        <Group pb={'md'} grow>
           <Select
-            placeholder="location"
-            data={['Near me', 'Anywhere in Nepal', 'Kathmandu', 'Bhaktapur']}
+            radius={'xl'}
+            placeholder="SFW"
+            data={['NSFW', 'SFW']}
             {...form.getInputProps('location')}
+            rightSection={<IconChevronDown size="1.2rem" />}
+            rightSectionWidth={30}
+            styles={(theme) => ({
+              rightSection: { pointerEvents: 'none' },
+              input: {
+                backgroundColor: theme.colors.gray[1],
+              },
+              dropdown: {
+                borderRadius: theme.radius.sm,
+              },
+            })}
+            className={classes.selectInput}
           />
           <Select
+            radius={'xl'}
             placeholder="Category"
             data={['Recently', 'ddd']}
             {...form.getInputProps('category')}
+            rightSection={<IconChevronDown size="1.2rem" />}
+            rightSectionWidth={30}
+            styles={(theme) => ({
+              rightSection: { pointerEvents: 'none' },
+
+              input: {
+                backgroundColor: theme.colors.gray[1],
+              },
+            })}
+            className={classes.selectInput}
           />
-        </Group>
-        <Group w={'100%'} grow>
-          <TextInput
-            placeholder="Views Count"
-            type="number"
-            {...form.getInputProps('viewsCount')}
-          />
-          <Popover width={400} position="bottom" withArrow shadow="md">
-            <Popover.Target>
-              <Button>Select Price Range</Button>
-            </Popover.Target>
-            <Popover.Dropdown>
-              <Group>
-                <Text size={'sm'} fw={'600'}>
-                  Select Price Range
-                </Text>
-              </Group>
-              <Group mb={'xs'} mt={'xs'} grow>
-                <TextInput
-                  placeholder="Min"
-                  type="number"
-                  {...form.getInputProps('priceRangeMin')}
-                />
-                <TextInput
-                  placeholder="Max"
-                  type="number"
-                  {...form.getInputProps('priceRangeMax')}
-                />
-              </Group>
-            </Popover.Dropdown>
-          </Popover>
-        </Group>
-        <Group position="apart" mt={'md'}>
-          <Button rightIcon={<IconAdjustments />} onClick={handleFilter}>
-            Filter now
+          <Button radius={'xl'} rightIcon={<IconCurrencyRupeeNepalese />}>
+            Price Range
           </Button>
-          <Button rightIcon={<IconClearAll />} onClick={() => form.reset()}>
-            Clear all
+          <Button
+            radius={'xl'}
+            rightIcon={<IconMapPinFilled />}
+            onClick={handleFilter}
+          >
+            Near me
           </Button>
+        </Group>
+        <Divider size={2} />
+        <Group spacing={5} position="apart" mt={'xs'}>
+          <Group spacing={3}>
+            <Text c={'dimmed'}>Sort By</Text>
+            <IconSortAscending2 color="gray" size={'1.3em'} />
+          </Group>
+          <Group spacing={3}>
+            <Button.Group>
+              <Button
+                rightIcon={<IconX size={'1.3em'} />}
+                radius={'sm'}
+                size="xs"
+                variant="default"
+              >
+                Clear
+              </Button>
+              <Button
+                rightIcon={<IconAdjustments size={'1.3em'} />}
+                radius={'sm'}
+                size="xs"
+                variant="default"
+              >
+                Filter
+              </Button>
+            </Button.Group>
+          </Group>
         </Group>
       </div>
 

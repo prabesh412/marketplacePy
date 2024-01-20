@@ -14,6 +14,7 @@ import {
   getListingsListQueryKey,
   listingsList,
 } from '../../orval/listings/listings';
+import BottomAppBar from '@/components/ui/navigation/MobileBottomAppBar';
 
 export async function getServerSideProps(ctx: NextPageContext) {
   const queryClient = new QueryClient();

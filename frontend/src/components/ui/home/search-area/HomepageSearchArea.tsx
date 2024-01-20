@@ -106,9 +106,7 @@ const useStyles = createStyles((theme) => ({
     display: 'flex',
     justifyContent: 'space-between',
     flexDirection: 'row',
-    '@media (max-width: 1200px)': {
-      width: '80%',
-    },
+
     '@media (max-width: 576px)': {
       width: '100%',
     },
@@ -127,6 +125,7 @@ const HomepageSearchArea = (props: TextInputProps) => {
       <Card
         maw={'1200px'}
         m={'auto'}
+        p={7}
         className={classes.card}
         mt={'sm'}
         radius={'md'}
@@ -138,15 +137,6 @@ const HomepageSearchArea = (props: TextInputProps) => {
             }}
           >
             <Group position="center">
-              {/* <div className={classes.title}>
-                <Title align="center" className={classes.title}>
-                  Welcome to DoshroDeal.
-                </Title>
-                <Title c={'dimmed'} fw={'lighter'} order={4} align="center">
-                  Start your journey of finding second deals.
-                </Title>
-              </div> */}
-
               <TextInput
                 className={classes.textInput}
                 value={searchValue}
@@ -154,11 +144,11 @@ const HomepageSearchArea = (props: TextInputProps) => {
                 size="lg"
                 radius={'xl'}
                 icon={<IconSearch />}
-                placeholder="Search for what you are looking for and we will handle the rest."
-                rightSectionWidth={50}
+                placeholder="Search what you are lookng for"
+                rightSectionWidth={40}
                 rightSection={
                   <ActionIcon
-                    size={40}
+                    size={35}
                     radius="xl"
                     className={classes.actionIcon}
                     mr={'sm'}

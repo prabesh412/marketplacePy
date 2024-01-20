@@ -12,16 +12,24 @@ import {
   Tabs,
   Text,
   Title,
+  rem,
   useMantineTheme,
 } from '@mantine/core';
 import {
   IconArrowLeft,
+  IconCalendar,
+  IconCash,
+  IconCheck,
   IconDownload,
   IconEye,
   IconHeart,
   IconMessage,
+  IconPackage,
   IconPhoto,
   IconShare,
+  IconTag,
+  IconThumbUp,
+  IconTool,
   IconWriting,
 } from '@tabler/icons-react';
 
@@ -45,41 +53,17 @@ const SmallScreenProductDetail = ({
         mih={250}
         height={250}
       >
-        <Carousel.Slide>
-          <Image
-            src={
-              'https://hamrobazaar.blr1.cdn.digitaloceanspaces.com/User/Posts/2024/01/03/3a23bef7-a17d-910a-d339-40223156683a.jpeg?x-image-process=image/resize,m_lfit,h_500,w_500'
-            }
-            withPlaceholder
-            radius={'sm'}
-            fit="fill"
-            height={250}
-          />
-        </Carousel.Slide>
-        <Carousel.Slide>
-          {' '}
-          <Image
-            src={
-              'https://hamrobazaar.blr1.cdn.digitaloceanspaces.com/User/Posts/2024/01/03/3a23bef7-a17d-910a-d339-40223156683a.jpeg?x-image-process=image/resize,m_lfit,h_500,w_500'
-            }
-            withPlaceholder
-            radius={'sm'}
-            fit="fill"
-            height={250}
-          />
-        </Carousel.Slide>
-        <Carousel.Slide>
-          {' '}
-          <Image
-            src={
-              'https://hamrobazaar.blr1.cdn.digitaloceanspaces.com/User/Posts/2024/01/03/3a23bef7-a17d-910a-d339-40223156683a.jpeg?x-image-process=image/resize,m_lfit,h_500,w_500'
-            }
-            withPlaceholder
-            radius={'sm'}
-            fit="fill"
-            height={250}
-          />
-        </Carousel.Slide>
+        {listing?.images?.map((listingImage, index) => (
+          <Carousel.Slide>
+            <Image
+              src={listingImage?.image}
+              withPlaceholder
+              radius={'sm'}
+              fit="fill"
+              height={250}
+            />
+          </Carousel.Slide>
+        ))}
       </Carousel>
       <Card p={'md'} radius={'sm'} mt={'xs'} mb={'md'}>
         <div>
@@ -98,13 +82,15 @@ const SmallScreenProductDetail = ({
           <Text mt={'sm'} c="dimmed" fw={600} size={'xl'}>
             रू. {listing?.price}
           </Text>
-          <Badge mt={'sm'}>{listing?.category?.name}</Badge>
+          <Badge size="md" mt={'sm'}>
+            {listing?.category?.name}
+          </Badge>
 
           <Group mt={'sm'} mb={'md'} position="apart">
             <Group spacing={2}>
               <IconEye size={'1.5em'} color="grey" />
               <Text c="dimmed" size={'sm'}>
-                1.2k views
+                {listing?.views} views
               </Text>
             </Group>
 
@@ -144,54 +130,111 @@ const SmallScreenProductDetail = ({
               <Text fw={500} c={'dimmed'} mt={'sm'}>
                 Specifications
               </Text>
-              <Card mt={'sm'} bg={theme.colors.gray[1]} radius={'md'}>
+              <Card mt={'sm'} bg={theme.colors.gray[1]} radius={'lg'}>
                 <div>
-                  <SimpleGrid cols={2} spacing="sm" p="xs">
-                    <Text size={'sm'}>AD ID</Text>
-                    <Text size={'sm'}>{listing?.status}</Text>
+                  <SimpleGrid cols={2} spacing="sm" p={rem(2)}>
+                    <Group spacing={10}>
+                      <IconCash size={'1.3em'} />
+                      <Text fw={400} size={'sm'}>
+                        Negotiable
+                      </Text>
+                    </Group>
+                    <Text fw={300} size={'sm'}>
+                      {listing?.is_negotiable ? 'Negotiable' : 'Not Negotiable'}
+                    </Text>
                   </SimpleGrid>
-                  <Divider />
-                  <SimpleGrid cols={2} spacing="sm" p="xs">
-                    <Text size={'sm'}>Delivery</Text>
-                    <Text size={'sm'}>{listing?.status}</Text>
+                  <Divider p={rem(1)} />
+                  <SimpleGrid cols={2} spacing="sm" p={rem(4)}>
+                    <Group spacing={10}>
+                      <IconTool size={'1.3em'} />
+                      <Text fw={400} size={'sm'}>
+                        Condition
+                      </Text>
+                    </Group>
+                    <Text fw={300} size={'sm'}>
+                      {listing?.listing_condition}
+                    </Text>
                   </SimpleGrid>
+                  <Divider p={rem(1)} />
+                  <SimpleGrid cols={2} spacing="sm" p={rem(4)}>
+                    <Group spacing={10}>
+                      <IconPackage size={'1.3em'} />
+                      <Text fw={400} size={'sm'}>
+                        Delivery
+                      </Text>
+                    </Group>
+                    <Text fw={300} size={'sm'}>
+                      {listing?.status}
+                    </Text>
+                  </SimpleGrid>
+                  <Divider p={rem(1)} />
+                  <SimpleGrid cols={2} spacing="sm" p={rem(4)}>
+                    <Group spacing={10}>
+                      <IconTag size={'1.3em'} />
+                      <Text fw={400} size={'sm'}>
+                        Sale Status
+                      </Text>
+                    </Group>
+                    <Text fw={300} size={'sm'}>
+                      {listing?.sale_status}
+                    </Text>
+                  </SimpleGrid>
+                  <Divider p={rem(1)} />
 
-                  <Divider />
-                  <SimpleGrid cols={2} spacing="sm" p="xs">
-                    <Text size={'sm'}>Ad posted</Text>
-
-                    <Text size={'sm'}>{listing?.created_at.slice(0, 10)}</Text>
+                  <SimpleGrid cols={2} spacing="sm" p={rem(4)}>
+                    <Group spacing={10}>
+                      <IconThumbUp size={'1.3em'} />
+                      <Text fw={400} size={'sm'}>
+                        SFW
+                      </Text>
+                    </Group>
+                    <Text fw={300} size={'sm'}>
+                      {listing?.is_sfw ? 'Yes' : 'No'}
+                    </Text>
+                  </SimpleGrid>
+                  <Divider p={rem(1)} />
+                  <SimpleGrid cols={2} spacing="sm" p={rem(4)}>
+                    <Group spacing={10}>
+                      <IconCalendar size={'1.3em'} />
+                      <Text fw={400} size={'sm'}>
+                        Ad Posted
+                      </Text>
+                    </Group>
+                    <Text fw={300} size={'sm'}>
+                      {listing?.created_at.slice(0, 10)}
+                    </Text>
                   </SimpleGrid>
                 </div>
               </Card>
               <Text fw={500} c={'dimmed'} mt={'sm'}>
                 Features
               </Text>
-              <Card mt={'sm'} bg={theme.colors.gray[1]} radius={'md'}>
+              <Card mt={'sm'} bg={'gray.1'} radius={'lg'}>
                 <div>
-                  <SimpleGrid cols={2} spacing="sm" p="xs">
-                    <Text size={'sm'}>AD ID</Text>
-
-                    <Text size={'sm'}>{listing?.status}</Text>
-                  </SimpleGrid>
-                  <Divider />
-                  <SimpleGrid cols={2} spacing="sm" p="xs">
-                    <Text size={'sm'}>Delivery</Text>
-
-                    <Text size={'sm'}>{listing?.status}</Text>
-                  </SimpleGrid>
-
-                  <Divider />
-                  <SimpleGrid cols={2} spacing="sm" p="xs">
-                    <Text size={'sm'}>Ad posted</Text>
-                    <Text size={'sm'}>{listing?.created_at.slice(0, 10)}</Text>
-                  </SimpleGrid>
-                  <Divider size={1} />
-
-                  <SimpleGrid cols={2} spacing="sm" p="xs">
-                    <Text size={'sm'}>Ad posted</Text>
-                    <Text size={'sm'}>{listing?.created_at.slice(0, 10)}</Text>
-                  </SimpleGrid>
+                  {Object.keys(listing?.listing_features || {}).length > 0 ? (
+                    Object.entries(listing?.listing_features || {})
+                      .filter(([key, value]) => key !== '' && value !== '')
+                      .map(([key, value], index, array) => (
+                        <div key={index}>
+                          <SimpleGrid cols={2} spacing="sm" p={rem(4)}>
+                            <Group spacing={10}>
+                              <IconCheck size={'1.3em'} />
+                              <Text truncate w={'60%'} fw={400} size={'sm'}>
+                                {key as string}
+                              </Text>
+                            </Group>
+                            <Text truncate fw={300} size={'sm'}>
+                              {value as string}
+                            </Text>
+                          </SimpleGrid>
+                          {index < array.length - 1 && <Divider p={rem(1)} />}
+                        </div>
+                      ))
+                  ) : (
+                    <Text align="center" color={'dimmed'}>
+                      Listing features not available
+                    </Text>
+                  )}
                 </div>
               </Card>
               <Divider mt={'md'} />

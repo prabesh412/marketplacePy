@@ -14,8 +14,8 @@ const AffixButton = () => {
 
   return (
     <>
-      <Affix position={{ bottom: rem(20), right: rem(20) }}>
-        <Transition transition="slide-up" mounted={scroll.y > 0}>
+      <Affix position={{ bottom: rem(80), right: rem(20) }}>
+        <Transition transition="slide-up" mounted={scroll.y > 900}>
           {(transitionStyles) => (
             <ActionIcon
               size={35}

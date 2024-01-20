@@ -1,4 +1,3 @@
-import { Carousel } from '@mantine/carousel';
 import { Listings } from '../../../../orval/model';
 import {
   Avatar,
@@ -14,19 +13,28 @@ import {
   Tabs,
   Text,
   Title,
+  rem,
   useMantineTheme,
 } from '@mantine/core';
 import {
   IconArrowLeft,
+  IconCalendar,
+  IconCash,
+  IconCheck,
   IconDownload,
   IconEye,
   IconHeart,
   IconMapPinFilled,
   IconMessage,
+  IconPackage,
   IconPhoto,
   IconShare,
+  IconTag,
+  IconThumbUp,
+  IconTool,
   IconWriting,
 } from '@tabler/icons-react';
+import GetInitials from '../common/GetInitials';
 
 type LargeScreenProductDetailProps = {
   listing?: Listings;
@@ -35,17 +43,16 @@ const LargeScreenProductDetail = ({
   listing,
 }: LargeScreenProductDetailProps) => {
   const theme = useMantineTheme();
+  console.log(listing);
   return (
     <Container maw={'1300px'} m={'auto'} fluid mt={'lg'}>
       <Group position="apart" style={{ alignItems: 'flex-start' }}>
         <ScrollArea style={{ flex: 5, flexDirection: 'row' }}>
-          {[0, 1].map((url, index) => (
+          {listing?.images?.map((listingImage, index) => (
             <Card key={index} mb={'md'} radius={'md'} shadow="sm">
               <Image
                 radius={'md'}
-                src={
-                  'https://hamrobazaar.blr1.cdn.digitaloceanspaces.com/User/Posts/2024/01/03/3a23bef7-a17d-910a-d339-40223156683a.jpeg?x-image-process=image/resize,m_lfit,h_500,w_500'
-                }
+                src={listingImage?.image}
                 withPlaceholder
                 fit="cover"
                 height={'500px'}
@@ -118,33 +125,84 @@ const LargeScreenProductDetail = ({
 
               <Tabs.Panel value="Description">
                 <Text c={'dimmed'} mt={'sm'}>
-                  Its less used laptop brought from Korea without any
-                  scratches.. FEEL FREE TO VISIT MY HOUSE, CHECK THE LAPTOP AND
-                  BUY🙂 (No exchange!!!) Direct Call: 9843297470 Location:
-                  Sorokhutte Chowk Brand: MacBook Model: Pro 2018(TouchBar
-                  Series) Processor: Intel i5 processor Ram: 16GB SSD: 256GB
-                  Screen size: 13" Battery Backup: 4-5Hrs Price: NRs 80,000/-
+                  {listing?.description}
                 </Text>
                 <Text fw={500} c={'dimmed'} mt={'sm'}>
                   Specifications
                 </Text>
-                <Card mt={'sm'} bg={theme.colors.gray[1]} radius={'md'}>
+                <Card mt={'sm'} bg={theme.colors.gray[1]} radius={'lg'}>
                   <div>
-                    <SimpleGrid cols={4} spacing="sm" p="xs">
-                      <Text size={'sm'}>AD ID</Text>
-                      <Text size={'sm'}>{listing?.status}</Text>
+                    <SimpleGrid cols={3} spacing="sm" p={rem(2)}>
+                      <Group spacing={10}>
+                        <IconCash size={'1.3em'} />
+                        <Text fw={400} size={'sm'}>
+                          Negotiable
+                        </Text>
+                      </Group>
+                      <Text fw={300} size={'sm'}>
+                        {listing?.is_negotiable
+                          ? 'Negotiable'
+                          : 'Not Negotiable'}
+                      </Text>
                     </SimpleGrid>
-                    <Divider />
-                    <SimpleGrid cols={4} spacing="sm" p="xs">
-                      <Text size={'sm'}>Delivery</Text>
-                      <Text size={'sm'}>{listing?.status}</Text>
+                    <Divider p={rem(1)} />
+                    <SimpleGrid cols={3} spacing="sm" p={rem(4)}>
+                      <Group spacing={10}>
+                        <IconTool size={'1.3em'} />
+                        <Text fw={400} size={'sm'}>
+                          Condition
+                        </Text>
+                      </Group>
+                      <Text fw={300} size={'sm'}>
+                        {listing?.listing_condition}
+                      </Text>
                     </SimpleGrid>
+                    <Divider p={rem(1)} />
+                    <SimpleGrid cols={3} spacing="sm" p={rem(4)}>
+                      <Group spacing={10}>
+                        <IconPackage size={'1.3em'} />
+                        <Text fw={400} size={'sm'}>
+                          Delivery
+                        </Text>
+                      </Group>
+                      <Text fw={300} size={'sm'}>
+                        {listing?.status}
+                      </Text>
+                    </SimpleGrid>
+                    <Divider p={rem(1)} />
+                    <SimpleGrid cols={3} spacing="sm" p={rem(4)}>
+                      <Group spacing={10}>
+                        <IconTag size={'1.3em'} />
+                        <Text fw={400} size={'sm'}>
+                          Sale Status
+                        </Text>
+                      </Group>
+                      <Text fw={300} size={'sm'}>
+                        {listing?.sale_status}
+                      </Text>
+                    </SimpleGrid>
+                    <Divider p={rem(1)} />
 
-                    <Divider />
-                    <SimpleGrid cols={4} spacing="sm" p="xs">
-                      <Text size={'sm'}>Ad posted</Text>
-
-                      <Text size={'sm'}>
+                    <SimpleGrid cols={3} spacing="sm" p={rem(4)}>
+                      <Group spacing={10}>
+                        <IconThumbUp size={'1.3em'} />
+                        <Text fw={400} size={'sm'}>
+                          SFW
+                        </Text>
+                      </Group>
+                      <Text fw={300} size={'sm'}>
+                        {listing?.is_sfw ? 'Yes' : 'No'}
+                      </Text>
+                    </SimpleGrid>
+                    <Divider p={rem(1)} />
+                    <SimpleGrid cols={3} spacing="sm" p={rem(4)}>
+                      <Group spacing={10}>
+                        <IconCalendar size={'1.3em'} />
+                        <Text fw={400} size={'sm'}>
+                          Ad Posted
+                        </Text>
+                      </Group>
+                      <Text fw={300} size={'sm'}>
                         {listing?.created_at.slice(0, 10)}
                       </Text>
                     </SimpleGrid>
@@ -153,40 +211,39 @@ const LargeScreenProductDetail = ({
                 <Text fw={500} c={'dimmed'} mt={'sm'}>
                   Features
                 </Text>
-                <Card mt={'sm'} bg={theme.colors.gray[1]} radius={'md'}>
+                <Card mt={'sm'} bg={'gray.1'} radius={'lg'}>
                   <div>
-                    <SimpleGrid cols={4} spacing="sm" p="xs">
-                      <Text size={'sm'}>AD ID</Text>
-
-                      <Text size={'sm'}>{listing?.status}</Text>
-                    </SimpleGrid>
-                    <Divider />
-                    <SimpleGrid cols={4} spacing="sm" p="xs">
-                      <Text size={'sm'}>Delivery</Text>
-
-                      <Text size={'sm'}>{listing?.status}</Text>
-                    </SimpleGrid>
-
-                    <Divider />
-                    <SimpleGrid cols={4} spacing="sm" p="xs">
-                      <Text size={'sm'}>Ad posted</Text>
-                      <Text size={'sm'}>
-                        {listing?.created_at.slice(0, 10)}
+                    {Object.keys(listing?.listing_features || {}).length > 0 ? (
+                      Object.entries(listing?.listing_features || {})
+                        .filter(([key, value]) => key !== '' && value !== '')
+                        .map(([key, value], index, array) => (
+                          <div key={index}>
+                            <SimpleGrid cols={3} spacing="sm" p={rem(4)}>
+                              <Group spacing={10}>
+                                <IconCheck size={'1.3em'} />
+                                <Text fw={400} size={'sm'}>
+                                  {key as string}
+                                </Text>
+                              </Group>
+                              <Text fw={300} size={'sm'}>
+                                {value as string}
+                              </Text>
+                            </SimpleGrid>
+                            {index < array.length - 1 && <Divider p={rem(1)} />}
+                          </div>
+                        ))
+                    ) : (
+                      <Text align="center" color={'dimmed'}>
+                        Listing features not available
                       </Text>
-                    </SimpleGrid>
-                    <Divider size={1} />
-
-                    <SimpleGrid cols={4} spacing="sm" p="xs">
-                      <Text size={'sm'}>Ad posted</Text>
-                      <Text size={'sm'}>
-                        {listing?.created_at.slice(0, 10)}
-                      </Text>
-                    </SimpleGrid>
+                    )}
                   </div>
                 </Card>
                 <Divider mt={'md'} />
                 <Group mt={'md'} spacing={5}>
-                  <Avatar size={'md'} radius={'xl'} src={listing?.user.image} />
+                  <Avatar radius="xl" color="cyan">
+                    {listing?.user?.name ? GetInitials(listing.user.name) : ''}
+                  </Avatar>
                   <div>
                     <Text c={'dimmed'} size={'md'}>
                       {listing?.user?.name}
