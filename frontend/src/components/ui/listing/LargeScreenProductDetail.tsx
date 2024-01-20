@@ -147,7 +147,7 @@ const LargeScreenProductDetail = ({
                           : 'Not Negotiable'}
                       </Text>
                     </SimpleGrid>
-                    <Divider p={rem(1)} />
+                    <Divider p={rem(1)} color="gray.3" />
                     <SimpleGrid cols={3} spacing="sm" p={rem(4)}>
                       <Group spacing={10}>
                         <IconTool size={'1.3em'} />
@@ -159,7 +159,7 @@ const LargeScreenProductDetail = ({
                         {listing?.listing_condition}
                       </Text>
                     </SimpleGrid>
-                    <Divider p={rem(1)} />
+                    <Divider p={rem(1)} color="gray.3" />
                     <SimpleGrid cols={3} spacing="sm" p={rem(4)}>
                       <Group spacing={10}>
                         <IconPackage size={'1.3em'} />
@@ -171,7 +171,7 @@ const LargeScreenProductDetail = ({
                         {listing?.status}
                       </Text>
                     </SimpleGrid>
-                    <Divider p={rem(1)} />
+                    <Divider p={rem(1)} color="gray.3" />
                     <SimpleGrid cols={3} spacing="sm" p={rem(4)}>
                       <Group spacing={10}>
                         <IconTag size={'1.3em'} />
@@ -183,7 +183,7 @@ const LargeScreenProductDetail = ({
                         {listing?.sale_status}
                       </Text>
                     </SimpleGrid>
-                    <Divider p={rem(1)} />
+                    <Divider p={rem(1)} color="gray.3" />
 
                     <SimpleGrid cols={3} spacing="sm" p={rem(4)}>
                       <Group spacing={10}>
@@ -196,7 +196,7 @@ const LargeScreenProductDetail = ({
                         {listing?.is_sfw ? 'Yes' : 'No'}
                       </Text>
                     </SimpleGrid>
-                    <Divider p={rem(1)} />
+                    <Divider p={rem(1)} color="gray.3" />
                     <SimpleGrid cols={3} spacing="sm" p={rem(4)}>
                       <Group spacing={10}>
                         <IconCalendar size={'1.3em'} />
@@ -231,7 +231,9 @@ const LargeScreenProductDetail = ({
                                 {value as string}
                               </Text>
                             </SimpleGrid>
-                            {index < array.length - 1 && <Divider p={rem(1)} />}
+                            {index < array.length - 1 && (
+                              <Divider p={rem(1)} color="gray.3" />
+                            )}
                           </div>
                         ))
                     ) : (
