@@ -73,7 +73,6 @@ const CategoryMarquee = () => {
         maxWidth: '1200px',
         width: '100%',
         margin: 'auto',
-        animation: 'scrollX 30s linear infinite',
         whiteSpace: 'nowrap',
       }}
     >

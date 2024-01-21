@@ -21,15 +21,7 @@ const useStyles = createStyles((theme) => ({
       height: 135,
     },
   },
-  actionIconSkeleton: {
-    width: 30,
-    height: 30,
-    borderRadius: '50%',
-    position: 'absolute',
-    top: theme.spacing.xs,
-    left: theme.spacing.xs,
-    zIndex: 1,
-  },
+
   textSkeleton: {
     flex: 1,
   },

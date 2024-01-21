@@ -10,13 +10,12 @@ import {
   Badge,
   rem,
   Divider,
+  Flex,
 } from '@mantine/core';
 import React from 'react';
 import {
+  IconBookmark,
   IconCategory,
-  IconClock,
-  IconCurrencyRupeeNepalese,
-  IconDeviceWatch,
   IconEye,
   IconHeart,
   IconStarFilled,
@@ -44,11 +43,6 @@ const useStyles = createStyles((theme) => ({
     },
   },
 
-  userName: {
-    '@media (max-width: 1026px)': {
-      display: 'none',
-    },
-  },
   badge: {
     '@media (max-width: 320px)': {
       display: 'none',
@@ -237,7 +231,6 @@ const FeaturedCard = ({ listing }: listing) => {
           <Group noWrap spacing={4} mt={'xs'}>
             <Badge
               variant="filled"
-              className={classes.badge}
               radius={'sm'}
               size="xs"
               w={'45%'}
@@ -251,7 +244,6 @@ const FeaturedCard = ({ listing }: listing) => {
             <Divider size={3} orientation="vertical" />
             <Badge
               variant="filled"
-              className={classes.badge}
               radius={'sm'}
               size="xs"
               color="cyan"
@@ -264,75 +256,60 @@ const FeaturedCard = ({ listing }: listing) => {
             </Badge>
           </Group>
 
-          <Group mt={'xs'} position="apart">
-            <Text className={classes.price} fw={500} size={'lg'} c={'dimmed'}>
+          <Group mt={'sm'} noWrap position="apart">
+            <Text
+              className={classes.price}
+              truncate
+              fw={500}
+              size={'lg'}
+              c={'dimmed'}
+            >
               रू. {listing?.price}
             </Text>
-            <Group className={classes.rating} spacing={5}>
-              <IconStarFilled style={{ color: '#FFD700' }} />
+            <Group noWrap spacing={4}>
+              <IconBookmark style={{ color: '#FFD700' }} />
               <Text size={'md'} c={'dimmed'}>
-                4.0
+                3
               </Text>
             </Group>
           </Group>
-          <Group className={classes.smGroup} mt={'md'} position="apart">
-            <Group spacing={5}>
-              <Avatar size={30} radius="xl" color="cyan">
-                {listing?.is_scraped
-                  ? GetInitials(
-                      listing?.scraped_username
-                        ? listing?.scraped_username
-                        : '',
-                    )
-                  : GetInitials(listing?.user?.name ? listing?.user?.name : '')}
-              </Avatar>
-              <Text className={classes.userName} truncate="end" size="sm">
-                {listing?.is_scraped
-                  ? listing?.scraped_username?.substring(0, 18)
-                  : listing?.user?.name}
-              </Text>
-            </Group>
+          <Group
+            noWrap
+            className={classes.smGroup}
+            mt={'xs'}
+            position="apart"
+            spacing={5}
+          >
+            <Text truncate={'end'} size="sm">
+              <Group noWrap spacing={5}>
+                <Avatar size={30} radius="xl" color="cyan">
+                  {listing?.is_scraped
+                    ? GetInitials(
+                        listing?.scraped_username
+                          ? listing?.scraped_username
+                          : '',
+                      )
+                    : GetInitials(
+                        listing?.user?.name ? listing?.user?.name : '',
+                      )}
+                </Avatar>
+                <Text truncate>
+                  {listing?.is_scraped
+                    ? listing?.scraped_username
+                    : listing?.user?.name}
+                </Text>
+              </Group>
+            </Text>
 
-            <Group className={classes.badge} spacing={9}>
+            <Group noWrap spacing={4}>
               <IconEye />
               <Text c={'dimmed'}>
-                {' '}
                 {listing?.views || listing?.scraped_views}
               </Text>
             </Group>
           </Group>
         </Card.Section>
       </Card>
-      {/* ) : ( */}
-      {/* <Card
-          shadow="sm"
-          padding="md"
-          sx={{
-            width: '100%',
-            height: '100%',
-            marginBottom: '1em',
-          }}
-        >
-          <Card.Section>
-            <Image
-              height="200px"
-              width="100%"
-              sx={{
-                objectFit: 'cover',
-              }}
-              withPlaceholder
-            />
-          </Card.Section>
-          <Skeleton variant="rectangle" />
-
-          <Skeleton variant="text" width={50}></Skeleton>
-
-          <Skeleton width={50}>
-            <Button color="blue" fullWidth>
-              Read Now
-            </Button>
-          </Skeleton>
-        </Card> */}
     </>
   );
 };

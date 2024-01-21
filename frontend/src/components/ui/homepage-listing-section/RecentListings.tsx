@@ -96,7 +96,9 @@ const RecentListings = () => {
             </React.Fragment>
           ))
         ) : (
-          <HorizontalCardSkeleton repeat={12} />
+          <div style={{ marginTop: 10 }}>
+            <HorizontalCardSkeleton repeat={12} />
+          </div>
         )}
 
         {inView && latestFetching && (

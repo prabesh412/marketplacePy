@@ -4,8 +4,11 @@ import { NextPageContext } from 'next';
 import { useRouter } from 'next/router';
 import React, { ReactElement } from 'react';
 import {
+  getListingsListQueryKey,
   getListingsRetrieveQueryKey,
+  listingsList,
   listingsRetrieve,
+  useListingsList,
   useListingsRetrieve,
 } from '../../../../orval/listings/listings';
 
@@ -14,9 +17,9 @@ import {
   categoryList,
   getCategoryListQueryKey,
 } from '../../../../orval/category/category';
-import SmallScreenProductDetail from '@/components/ui/listing/SmallScreenProductDetail';
-import LargeScreenProductDetail from '@/components/ui/listing/LargeScreenProductDetail';
-import { createStyles } from '@mantine/core';
+
+import ListingDetailWrapper from '@/components/pageSpecific/Listing-detail';
+import { Listings } from '../../../../orval/model';
 
 export async function getServerSideProps(ctx: NextPageContext) {
   const { slug } = ctx.query;
@@ -26,6 +29,34 @@ export async function getServerSideProps(ctx: NextPageContext) {
   await queryClient.prefetchQuery(
     getListingsRetrieveQueryKey(slug as string),
     () => listingsRetrieve(slug as string),
+    {
+      staleTime: Infinity,
+    },
+  );
+  const listingDetail: Listings | undefined = await queryClient.getQueryData(
+    getListingsRetrieveQueryKey(slug as string),
+  );
+  if (!listingDetail) {
+    return { notFound: true };
+  }
+  await queryClient.prefetchQuery(
+    getListingsListQueryKey({
+      user__username: listingDetail?.user?.username as string,
+    }),
+    () =>
+      listingsList({ user__username: listingDetail?.user?.username as string }),
+    {
+      staleTime: Infinity,
+    },
+  );
+  await queryClient.prefetchQuery(
+    getListingsListQueryKey({
+      category: listingDetail?.category?.id as number,
+    }),
+    () =>
+      listingsList({
+        category: listingDetail?.category?.id as number,
+      }),
     {
       staleTime: Infinity,
     },
@@ -50,31 +81,6 @@ export default function ListingDetail() {
   const router = useRouter();
   const { slug } = router.query;
   const { data: listingDetail } = useListingsRetrieve(slug as string);
-  const { classes } = useStyles();
 
-  return (
-    <>
-      <div className={classes.smallScreen}>
-        <SmallScreenProductDetail listing={listingDetail} />
-      </div>
-      <div className={classes.largeScreen}>
-        <LargeScreenProductDetail listing={listingDetail} />
-      </div>
-    </>
-  );
+  return <ListingDetailWrapper listingDetail={listingDetail} />;
 }
-const useStyles = createStyles((theme) => ({
-  smallScreen: {
-    display: 'block',
-    [`@media (min-width: 950px)`]: {
-      display: 'none',
-    },
-  },
-  largeScreen: {
-    display: 'none',
-
-    [`@media (min-width: 950px)`]: {
-      display: 'block',
-    },
-  },
-}));
