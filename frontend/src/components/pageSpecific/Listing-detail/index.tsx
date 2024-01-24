@@ -66,7 +66,7 @@ const ListingDetailWrapper = ({ listingDetail }: ProductDetailProps) => {
                 </Col>
               ))}
         </Grid>
-        {userListings?.next && userListings?.next && (
+        {userListings?.next && (
           <Group mt={'sm'} pb={'sm'} position="center">
             <Button rightIcon={<IconArrowRight />}>View more</Button>
           </Group>
@@ -95,6 +95,11 @@ const ListingDetailWrapper = ({ listingDetail }: ProductDetailProps) => {
                 </Col>
               ))}
         </Grid>
+        {similarListings?.next && (
+          <Group mt={'sm'} pb={'sm'} position="center">
+            <Button rightIcon={<IconArrowRight />}>View more</Button>
+          </Group>
+        )}
       </div>
     </>
   );

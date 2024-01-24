@@ -19,7 +19,7 @@ class ListingsFilter(filters_new.FilterSet):
             'status': ['exact'],
             'sale_status': ['exact'],
             'category': ['exact'],
-            'user': ['exact'],
+            'user__username': ['exact'],
             'created_at': ['exact', 'lt', 'gt'],
             'updated_at': ['exact', 'lt', 'gt'],
             'category__parent': ['exact'],
@@ -27,6 +27,8 @@ class ListingsFilter(filters_new.FilterSet):
             'is_sfw': ['exact'],
             'is_scraped': ['exact'],
             'is_featured': ['exact'],
+            'is_negotiable': ['exact']     
+
         }
 
  

@@ -128,21 +128,23 @@ const PersonalInfo = () => {
       }}
     >
       <form onSubmit={form.onSubmit(handleUpdateConfirmation)}>
-        <UnstyledButton className={classes.user}>
-          <Group>
-            <Avatar src={user?.image} radius="xl" size={'lg'} />
+        <div>
+          <UnstyledButton className={classes.user}>
+            <Group>
+              <Avatar src={user?.image} radius="xl" size={'lg'} />
 
-            <div style={{ flex: 1 }}>
-              <Text size="sm" fw={500}>
-                {user?.name}
-              </Text>
-            </div>
+              <div style={{ flex: 1 }}>
+                <Text size="sm" fw={500}>
+                  {user?.name}
+                </Text>
+              </div>
 
-            <Button leftIcon={<IconUpload />} radius={'md'}>
-              Upload New Photo
-            </Button>
-          </Group>
-        </UnstyledButton>
+              <Button leftIcon={<IconUpload />} radius={'md'}>
+                Upload New Photo
+              </Button>
+            </Group>
+          </UnstyledButton>
+        </div>
 
         <Stack mt={'xl'}>
           <FocusTrap>
@@ -169,6 +171,7 @@ const PersonalInfo = () => {
             </Group>
             <Group grow>
               <Select
+                disabled
                 label={<Text c={'dimmed'}>Language</Text>}
                 type="number"
                 size="lg"

@@ -101,7 +101,6 @@ const RecursiveReplies = ({
                   {activeReplies[reply.id] && (
                     <TextInput
                       w={'100%'}
-                      miw={'400px'}
                       pl={50}
                       onChange={(event) =>
                         setReplyValue(event.currentTarget.value)
@@ -110,6 +109,7 @@ const RecursiveReplies = ({
                       size="md"
                       mt={5}
                       radius={'xl'}
+                      sx={{ width: '100%' }}
                       icon={<IconMessageShare />}
                       placeholder={'Leave a Reply'}
                       rightSectionWidth={40}
@@ -126,6 +126,11 @@ const RecursiveReplies = ({
                               topParentCommentId,
                               replyValue,
                             );
+                            setReplyValue('');
+                            setActiveReplies((prev) => ({
+                              ...prev,
+                              [reply.id]: false,
+                            }));
                           }}
                         >
                           <IconArrowRight

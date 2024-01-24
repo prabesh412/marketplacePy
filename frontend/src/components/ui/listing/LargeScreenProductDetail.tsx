@@ -48,7 +48,9 @@ const LargeScreenProductDetail = ({
   return (
     <Container maw={'1300px'} m={'auto'} fluid mt={'lg'}>
       <Group position="apart" style={{ alignItems: 'flex-start' }}>
-        <ScrollArea style={{ flex: 5, flexDirection: 'row' }}>
+        <ScrollArea
+          style={{ flex: 5, flexDirection: 'row', minHeight: '100vh' }}
+        >
           {listing?.images?.map((listingImage, index) => (
             <Card key={index} mb={'md'} radius={'md'} shadow="sm">
               <Image
@@ -72,6 +74,7 @@ const LargeScreenProductDetail = ({
             flex: 5,
             top: 0,
             backgroundColor: 'white',
+            minHeight: '100vh',
           }}
         >
           <div>
@@ -263,9 +266,11 @@ const LargeScreenProductDetail = ({
               </Tabs.Panel>
 
               <Tabs.Panel value="messages">
-                <Box mt={10}>
-                  <Comments listingSlug={listing?.slug} />
-                </Box>
+                <ScrollArea h={'70vh'}>
+                  <Box mt={10}>
+                    <Comments listingSlug={listing?.slug} />
+                  </Box>
+                </ScrollArea>
               </Tabs.Panel>
 
               <Tabs.Panel value="settings">

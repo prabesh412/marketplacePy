@@ -8,21 +8,20 @@ import {
   createStyles,
   ActionIcon,
   Badge,
-  rem,
   Divider,
-  Flex,
+  rem,
 } from '@mantine/core';
 import React from 'react';
 import {
-  IconBookmark,
   IconCategory,
   IconEye,
   IconHeart,
+  IconHeartFilled,
   IconStarFilled,
   IconTool,
 } from '@tabler/icons-react';
 import { Listings } from '../../../../orval/model';
-import { Router, useRouter } from 'next/router';
+import { useRouter } from 'next/router';
 import { useBookmarksCreate } from '../../../../orval/bookmarks/bookmarks';
 import { notifications } from '@mantine/notifications';
 import GetInitials from '../common/GetInitials';
@@ -266,8 +265,9 @@ const FeaturedCard = ({ listing }: listing) => {
             >
               रू. {listing?.price}
             </Text>
+
             <Group noWrap spacing={4}>
-              <IconBookmark style={{ color: '#FFD700' }} />
+              <IconHeart stroke={2.1} style={{ color: theme.colors.lime[8] }} />
               <Text size={'md'} c={'dimmed'}>
                 3
               </Text>
@@ -302,7 +302,7 @@ const FeaturedCard = ({ listing }: listing) => {
             </Text>
 
             <Group noWrap spacing={4}>
-              <IconEye />
+              <IconEye stroke={1.7} />
               <Text c={'dimmed'}>
                 {listing?.views || listing?.scraped_views}
               </Text>

@@ -21,6 +21,9 @@ import {
   ActionIcon,
   Divider,
   Modal,
+  Pagination,
+  Center,
+  Card,
 } from '@mantine/core';
 import { Listings } from '../../../orval/model/listings';
 import {
@@ -28,10 +31,14 @@ import {
   IconArrowBarBoth,
   IconArrowRight,
   IconCalendar,
+  IconCash,
   IconChevronDown,
   IconCurrencyRupeeNepalese,
   IconSearch,
   IconSortAscending2,
+  IconStar,
+  IconThumbUp,
+  IconTool,
 } from '@tabler/icons-react';
 import { useForm } from '@mantine/form';
 import HorizontalCard from '@/components/ui/listing/HorizontalCard';
@@ -141,8 +148,9 @@ Search.getLayout = (page: ReactElement) => <SearchLayout>{page}</SearchLayout>;
 
 export default function Search() {
   const router = useRouter();
-  const slug = router.query;
-  const { data: listingDetail } = useListingsList(slug);
+  const queryParams = router.query;
+  const page = parseInt(router.query.page as string);
+  const { data: listingDetail } = useListingsList(queryParams);
   const { classes } = useStyles();
   const theme = useMantineTheme();
   const [searchValue, setSearchValue] = useState<string>('');
@@ -170,42 +178,72 @@ export default function Search() {
         ],
       created_at__gt: form.values.created_at__gt
         ? (new Date(
-            new Date(form?.values?.created_at__gt as Date).setDate(
-              new Date(form?.values?.created_at__gt as Date).getDate() + 1,
+            new Date(form.values.created_at__gt as Date).setDate(
+              new Date(form.values.created_at__gt as Date).getDate() + 1,
             ),
           )
-            ?.toISOString()
-            ?.substring(0, 10) as unknown as Date)
+            .toISOString()
+            .substring(0, 10) as unknown as Date)
         : undefined,
-
       location: form.values.location,
       category: form.values.category,
       viewsCount: form.values.viewsCount,
       is_featured:
         ListingOptionMap[
-          (form.values?.is_featured as keyof typeof ListingOptionMap) || ''
+          (form.values.is_featured as keyof typeof ListingOptionMap) || ''
         ],
       price__gt: form.values.price__gt,
       price__lt: form.values.price__lt,
       is_negotiable:
         ListingOptionMap[
-          (form.values?.is_negotiable as keyof typeof ListingOptionMap) || ''
+          (form.values.is_negotiable as keyof typeof ListingOptionMap) || ''
         ],
       is_sfw:
         ListingOptionMap[
-          (form.values?.is_sfw as keyof typeof ListingOptionMap) || ''
+          (form.values.is_sfw as keyof typeof ListingOptionMap) || ''
         ],
     };
+
     const filteredParams = Object.entries(queryParams).filter(
       ([, value]) => value !== '' && value !== null && value !== undefined,
     );
-    form.reset();
+
     const existingParams = new URLSearchParams(window.location.search);
     filteredParams.forEach(([key, value]) => {
       existingParams.set(key, value);
     });
+    existingParams.set('page', '1');
     const searchUrl = `/search?${existingParams.toString()}`;
     router.push(searchUrl);
+  };
+  const handleClearFilters = () => {
+    form.reset();
+    const currentUrl = router.asPath;
+    const [basePath, queryString] = currentUrl.split('?');
+    if (queryString) {
+      const firstAmpersandIndex = queryString.indexOf('&');
+      let baseQuery = queryString;
+      let additionalParams = '';
+      if (firstAmpersandIndex !== -1) {
+        baseQuery = queryString.substring(0, firstAmpersandIndex);
+        additionalParams = queryString.substring(firstAmpersandIndex + 1);
+      }
+      const params = new URLSearchParams(additionalParams);
+      params.set('page', '1');
+      const pageParam = params.get('page');
+      let newQueryString = baseQuery;
+      if (pageParam) {
+        newQueryString += (baseQuery ? '&' : '') + `page=${pageParam}`;
+      }
+      const newUrl = `${basePath}?${newQueryString}`;
+      router.replace(newUrl);
+    }
+  };
+
+  const handlePaginationChange = (newPage: number) => {
+    const existingParams = new URLSearchParams(window.location.search);
+    existingParams.set('page', newPage.toString());
+    router.push(`/search?${existingParams}`);
   };
 
   return (
@@ -219,7 +257,7 @@ export default function Search() {
           size="md"
           radius={'xl'}
           icon={<IconSearch />}
-          placeholder={slug?.title__icontains as string}
+          placeholder={queryParams?.title__icontains as string}
           rightSectionWidth={40}
           rightSection={
             <ActionIcon
@@ -251,6 +289,13 @@ export default function Search() {
           <Select
             radius={'xl'}
             placeholder="Condition"
+            icon={
+              <IconTool
+                size="1.3rem"
+                stroke={1.5}
+                color={form.values.listing_condition ? 'white' : 'gray'}
+              />
+            }
             withinPortal={true}
             data={['New', 'Used', 'Like New', 'Brand New']}
             {...form.getInputProps('listing_condition')}
@@ -284,8 +329,8 @@ export default function Search() {
             dropdownType={'popover'}
             icon={
               <IconCalendar
-                color={form.values.created_at__gt ? 'white' : 'black'}
-                size="1.1rem"
+                color={form.values.created_at__gt ? 'white' : 'gray'}
+                size="1.2rem"
                 stroke={1.5}
               />
             }
@@ -326,6 +371,13 @@ export default function Search() {
             placeholder="Negotiable"
             data={['Negotiable', 'Non Negotiable']}
             {...form.getInputProps('is_negotiable')}
+            icon={
+              <IconCash
+                color={form.values.is_negotiable ? 'white' : 'gray'}
+                size="1.2rem"
+                stroke={1.5}
+              />
+            }
             rightSection={
               <IconChevronDown
                 color={form.values.is_negotiable ? 'white' : 'black'}
@@ -353,6 +405,13 @@ export default function Search() {
             placeholder="Featured"
             data={['Featured', 'Non-featured']}
             {...form.getInputProps('is_featured')}
+            icon={
+              <IconStar
+                color={form.values.is_featured ? 'white' : 'gray'}
+                size="1.11rem"
+                stroke={1.5}
+              />
+            }
             rightSection={
               <IconChevronDown
                 color={form.values.is_featured ? 'white' : 'black'}
@@ -384,6 +443,13 @@ export default function Search() {
             placeholder="SFW"
             data={['SFW', 'NSFW']}
             {...form.getInputProps('is_sfw')}
+            icon={
+              <IconThumbUp
+                color={form.values.is_sfw ? 'white' : 'gray'}
+                size="1.11rem"
+                stroke={1.5}
+              />
+            }
             rightSection={
               <IconChevronDown
                 color={form.values.is_sfw ? 'white' : 'black'}
@@ -415,7 +481,7 @@ export default function Search() {
                 ? 'filled'
                 : 'outline'
             }
-            rightIcon={<IconCurrencyRupeeNepalese />}
+            leftIcon={<IconCurrencyRupeeNepalese />}
           >
             Price Range
           </Button>
@@ -429,7 +495,7 @@ export default function Search() {
           <Group>
             <Group>
               <Text
-                onClick={() => form.reset()}
+                onClick={() => handleClearFilters()}
                 c={'dimmed'}
                 underline
                 size={'sm'}
@@ -441,6 +507,7 @@ export default function Search() {
             <Button
               rightIcon={<IconAdjustments size={'1.3em'} />}
               onClick={() => handleFilter()}
+              size="xs"
               radius={'xl'}
             >
               Apply Filter
@@ -529,6 +596,22 @@ export default function Search() {
         <Text mt={'xs'} align="center" c={'dimmed'}>
           No results found
         </Text>
+      )}
+
+      {listingDetail?.count !== 0 && (
+        <Card w={'100%'} radius={'md'}>
+          <Center>
+            <Pagination
+              total={
+                listingDetail?.count ? Math.ceil(listingDetail.count / 12) : 0
+              }
+              value={page || 1}
+              onChange={handlePaginationChange}
+              size="md"
+              radius="md"
+            />
+          </Center>
+        </Card>
       )}
     </div>
   );

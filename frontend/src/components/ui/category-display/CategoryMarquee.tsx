@@ -122,8 +122,8 @@ const CategoryMarquee = () => {
         label={<Badge>Browse Featured Listings</Badge>}
         labelPosition="center"
         c={'dimmed'}
+        mt={1}
         mb={-5}
-        mt={'sm'}
         size={1}
         orientation="horizontal"
       />

@@ -9,6 +9,7 @@ import {
   TextInput,
   ActionIcon,
   rem,
+  Card,
 } from '@mantine/core';
 import {
   useCommentsCreate,
@@ -23,6 +24,8 @@ import {
   IconMessageShare,
   IconThumbUp,
 } from '@tabler/icons-react';
+import { useStore } from '@/zustand/store';
+import GetInitials from '../common/GetInitials';
 
 type CommentsProps = {
   listingSlug?: string;
@@ -32,10 +35,11 @@ type ActiveRepliesType = {
 };
 const Comments = ({ listingSlug }: CommentsProps) => {
   const { data: comments, refetch } = useCommentsList({ listing: listingSlug });
-  const { mutate: commentMutation } = useCommentsCreate({});
+  const { mutate: commentMutation, isLoading } = useCommentsCreate({});
   const [activeReplies, setActiveReplies] = useState<ActiveRepliesType>({});
   const [commentValue, setCommentValue] = useState<string>('');
   const [replyValue, setReplyValue] = useState<string>('');
+  const user = useStore((state) => state.profile);
 
   const handleReplyClick = useCallback((commentId: number) => {
     setActiveReplies((prev) => ({ [commentId]: !prev[commentId] }));
@@ -135,32 +139,40 @@ const Comments = ({ listingSlug }: CommentsProps) => {
 
   return (
     <Group sx={{ position: 'relative' }}>
-      <TextInput
-        w={'100%'}
-        size="md"
-        mt={5}
-        radius={'xl'}
-        value={commentValue}
-        onChange={(event) => setCommentValue(event.currentTarget.value)}
-        icon={<IconMessage />}
-        placeholder={'Add a comment'}
-        rightSectionWidth={40}
-        rightSection={
-          <ActionIcon
-            size={30}
-            radius="xl"
-            mr={'sm'}
-            color={'lime'}
-            variant="filled"
-            onClick={handleCommentSubmit}
-          >
-            <IconArrowRight
-              style={{ width: rem(18), height: rem(18) }}
-              stroke={1.5}
-            />
-          </ActionIcon>
-        }
-      />{' '}
+      <Card w={'100%'} bg={'gray.0.5'} radius={'md'}>
+        <Group noWrap>
+          <Avatar radius="xl" color="cyan">
+            {user?.name ? GetInitials(user?.name) : ''}
+          </Avatar>
+          <TextInput
+            w={'100%'}
+            size="md"
+            mt={5}
+            radius={'xl'}
+            value={commentValue}
+            onChange={(event) => setCommentValue(event.currentTarget.value)}
+            // icon={<IconMessage />}
+            placeholder={'Add a comment'}
+            rightSectionWidth={40}
+            rightSection={
+              <ActionIcon
+                size={30}
+                radius="xl"
+                mr={'sm'}
+                color={'lime'}
+                variant="filled"
+                onClick={handleCommentSubmit}
+                disabled={isLoading}
+              >
+                <IconArrowRight
+                  style={{ width: rem(18), height: rem(18) }}
+                  stroke={1.5}
+                />
+              </ActionIcon>
+            }
+          />
+        </Group>
+      </Card>
       <Flex mt={-13} direction={'column'}>
         {comments?.results &&
           comments?.results.map((comment, index) => (
@@ -206,12 +218,6 @@ const Comments = ({ listingSlug }: CommentsProps) => {
                 </Text>
 
                 <Group mt={'xs'} mb={'xs'} pl={54}>
-                  <Group spacing={3}>
-                    <IconThumbUp color="gray" size={'1em'} />
-                    <Text size={'xs'} c={'dimmed'}>
-                      Like
-                    </Text>
-                  </Group>
                   <Group
                     spacing={3}
                     onClick={() => handleReplyClick(comment.id)}
@@ -245,6 +251,7 @@ const Comments = ({ listingSlug }: CommentsProps) => {
                         mr={'sm'}
                         color={'lime'}
                         variant="filled"
+                        disabled={isLoading}
                         onClick={(e) =>
                           handleReplySubmit(comment.id, undefined, replyValue)
                         }

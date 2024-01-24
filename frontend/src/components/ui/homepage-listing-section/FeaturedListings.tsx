@@ -10,18 +10,23 @@ import {
   rem,
   useMantineTheme,
   Card,
+  Paper,
+  ThemeIcon,
 } from '@mantine/core';
 import {
   IconAdjustments,
   IconArrowRight,
   IconChevronDown,
+  IconCircleCheck,
 } from '@tabler/icons-react';
 import FeaturedCard from '../featured/FeaturedCard';
 import { useListingsList } from '../../../../orval/listings/listings';
 import { PaginatedListingsList } from '../../../../orval/model';
 
 const FeaturedListings = () => {
+  const theme = useMantineTheme();
   const [page, setPage] = useState(1);
+
   const {
     data: listing,
     status,
@@ -61,12 +66,7 @@ const FeaturedListings = () => {
 
   return (
     <div style={{ maxWidth: '1200px', margin: 'auto' }}>
-      <Group position="right" spacing={3}>
-        <Text c={'dimmed'}>Sort By</Text>
-        <IconAdjustments color="gray" size={'1.2em'} />
-      </Group>
-
-      <div>
+      <div style={{ marginTop: 10 }}>
         <Grid mb={rem(2)} mt={rem(1)}>
           {featuredListing?.results?.map((listings, index) => (
             <Col span={6} xs={4} sm={3} md={3} lg={3} key={index}>
@@ -74,7 +74,7 @@ const FeaturedListings = () => {
             </Col>
           ))}
         </Grid>
-        {!isProductAllFetched() ? (
+        {!isProductAllFetched() && (
           <Card radius={'md'}>
             <div
               style={{
@@ -95,10 +95,6 @@ const FeaturedListings = () => {
               </Button>
             </div>
           </Card>
-        ) : (
-          <Text align="center" pb={'md'} c={'dimmed'}>
-            You have reached to the end
-          </Text>
         )}
       </div>
     </div>

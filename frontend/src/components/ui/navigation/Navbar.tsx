@@ -17,9 +17,10 @@ import {
   Divider,
   Text,
   Chip,
+  Transition,
 } from '@mantine/core';
 import cx from 'clsx';
-import { useDisclosure } from '@mantine/hooks';
+import { useDisclosure, useWindowScroll } from '@mantine/hooks';
 import {
   IconCategory,
   IconClock,
@@ -36,6 +37,9 @@ import {
   IconStar,
   IconSearch,
   IconArrowRight,
+  IconBellPlusFilled,
+  IconCirclePlus,
+  IconCubePlus,
 } from '@tabler/icons-react';
 import { useRouter } from 'next/router';
 import React, { useState } from 'react';
@@ -52,6 +56,8 @@ interface HeaderSearchProps {
 
 const Navbar = ({ isHomepage }: HeaderSearchProps) => {
   const [opened, { toggle }] = useDisclosure(false);
+  const [scroll, scrollTo] = useWindowScroll();
+
   const { classes } = useStyles();
   const [userMenuOpened, setUserMenuOpened] = useState(false);
   const [isSideNavOpen, setSideNavOpen] = useState(false);
@@ -182,14 +188,16 @@ const Navbar = ({ isHomepage }: HeaderSearchProps) => {
 
           <Group classNames={classes.burger} spacing={7}>
             <Button
-              leftIcon={<IconPlus />}
-              variant="light"
+              leftIcon={<IconCirclePlus />}
+              variant="gradient"
+              gradient={{ from: 'lime', to: 'cyan', deg: 30 }}
               radius={'xl'}
               className={classes.tabsList}
               onClick={() => router.push('/listing/listing-add')}
             >
               Create
             </Button>
+
             {user ? (
               <Menu
                 width={260}
