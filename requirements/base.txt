@@ -28,7 +28,9 @@ django-filter
 
 # File storage 
 # ------------------------------------------------------------------------------
+drf-extensions
 django-cloudinary-storage
 cloudinary
 pillow
+twilio
 

@@ -10,6 +10,9 @@ export const PATH_APP = {
   root: '/',
   contact: '/contact',
 };
+export const SEARCH_PATH = {
+root: '/search?'
+}
 
 export const PATH_AUTH = {
   root: ROOTS_AUTH,

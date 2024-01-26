@@ -12,7 +12,7 @@ module.exports = {
 
       override: {
         mutator: {
-          path: 'orval/api/custom-instance.ts',
+          path: 'custom-instance.ts',
           name: 'customInstance',
         },
         query: {

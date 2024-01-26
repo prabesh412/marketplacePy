@@ -9,35 +9,44 @@ from doshro_bazar.listings.serializers import ListingsSerializer, ListingsInputS
 from doshro_bazar.listings.filters import ListingsFilter
 from django.shortcuts import get_object_or_404
 from django.core.cache import cache
-from rest_framework.parsers import MultiPartParser, FormParser
-
+from rest_framework.parsers import MultiPartParser
+from rest_framework import pagination
+from rest_framework.decorators import action
+from django.utils.decorators import method_decorator
+from rest_framework_extensions.cache.decorators import (
+    cache_response
+)
 
 @extend_schema_view(
     retrieve=extend_schema(description="Returns the given Listing."),
     list=extend_schema(description="Return a list of all the existing listings."),
 )
 class ListingsViewSet(viewsets.ModelViewSet):
-    queryset = Listings.objects.all()
+    queryset = Listings.objects.all().select_related( "user", "views", "category").prefetch_related("images")
     serializer_class = ListingsSerializer
     filter_backends = (filters_new.DjangoFilterBackend, )
     filterset_class = ListingsFilter
-
+    pagination_class = pagination.PageNumberPagination
 
     def get_serializer_class(self):
         if self.action in ["create", "update", "partial_update"]:
             return ListingsInputSerializer
         return super().get_serializer_class()
+    
+    def list(self, request, *args, **kwargs):
+       return super().list(self, request, *args, **kwargs)
 
 
+    # @cache_response(60 * 30)
     def retrieve(self, request, pk=None, *args, **kwargs ):
-        instance = self.get_object() 
+        instance = get_object_or_404(self.queryset, slug = pk)
         view = cache.get("view", {})
         if instance.slug in view:
             view[instance.slug] += 1
         else:
             view[instance.slug] = 1
+
         cache.set("view", view)
-        print(view)
         return super().retrieve(request, *args, **kwargs)
     
 
@@ -49,15 +58,25 @@ class ListingsViewSet(viewsets.ModelViewSet):
         serializer.is_valid(raise_exception=True)
         serializer.save(user=request.user)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
+    
+
+    @action(detail=False)
+    def me(self, request):
+        if not request.user.is_authenticated:
+            return Response({"message": "You are not authorized."}, status=status.HTTP_401_UNAUTHORIZED)
+        queryset = self.queryset.filter(user=request.user)
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data)
    
 
 class ListingImageViewSet(CreateModelMixin, GenericViewSet):
     queryset = ListingImage.objects.all()
     serializer_class = ListingImageSerializer
     filter_backends = (filters_new.DjangoFilterBackend, )
-    parser_classes = (FormParser, MultiPartParser,)
+    parser_classes = ( MultiPartParser,)
 
     def create(self, request, *args, **kwargs):
+
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         listing = Listings.objects.get(slug=request.data["listing"])

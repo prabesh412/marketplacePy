@@ -7,6 +7,7 @@ User = get_user_model()
 
 
 class UserSerializer(serializers.ModelSerializer[UserType]):
+    image = serializers.ImageField(required=False)
     class Meta:
         model = User
         fields = ["username", "name", "image"]
@@ -15,6 +16,10 @@ class UserSerializer(serializers.ModelSerializer[UserType]):
             "url": {"view_name": "api:user-detail", "lookup_field": "username"},
         }
 
+class CommentUserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ["username", "name", "image"]
 
 class UserRegisterSerializer(serializers.ModelSerializer):
     class Meta:

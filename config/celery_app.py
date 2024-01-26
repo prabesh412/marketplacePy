@@ -22,6 +22,16 @@ app.conf.beat_schedule = {
 
         "schedule": crontab(minute=0, hour=0, day_of_month=1), 
     },
+
+    "update_views": {
+        "task": "doshro_bazar.listings.tasks.update_views",
+        "schedule": 5*60*5, 
+    },
+    # "get_all_categories": {
+    #     "task": "doshro_bazar.listings.tasks.get_all_categories",
+    #     "schedule": 60,
+    # },
+
 }
 
 

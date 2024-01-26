@@ -1,24 +1,23 @@
-import { useStore } from '@/zustand/store';
 import { dehydrate, QueryClient } from '@tanstack/react-query';
 import { NextPageContext } from 'next';
-import { getDefaultStore } from '@/components/utils/PageDefaults';
+import { getDefaultHomeStore } from '@/components/utils/PageDefaults';
 import { ReactElement } from 'react';
-import { Page } from '@/components/ui';
-import HomeSection from '@/components/sections/Home';
+import { Page } from '@/components/ui/common';
+import HomeSection from '@/components/pageSpecific/home';
 import HomeLayout from '@/components/layouts/HomeLayout';
 import {
   categoryList,
   getCategoryListQueryKey,
 } from '../../orval/category/category';
-import AddListingFloatButton from '@/components/add-listing/AddListingFloatButton';
+import AddListingFloatButton from '@/components/ui/add-listing/AddListingFloatButton';
 import {
   getListingsListQueryKey,
   listingsList,
 } from '../../orval/listings/listings';
+import BottomAppBar from '@/components/ui/navigation/MobileBottomAppBar';
 
 export async function getServerSideProps(ctx: NextPageContext) {
   const queryClient = new QueryClient();
-  const zustandStore = await getDefaultStore(ctx);
 
   await queryClient.prefetchQuery(
     getCategoryListQueryKey(),
@@ -27,10 +26,12 @@ export async function getServerSideProps(ctx: NextPageContext) {
   );
 
   await queryClient.prefetchQuery(
-    getListingsListQueryKey(),
-    () => listingsList(),
+    getListingsListQueryKey({ page: 1 }),
+    () => listingsList({ page: 1 }),
     {},
   );
+
+  const zustandStore = await getDefaultHomeStore(ctx, queryClient);
 
   return {
     props: {
@@ -44,8 +45,8 @@ HomePage.getLayout = (page: ReactElement) => <HomeLayout>{page}</HomeLayout>;
 
 export default function HomePage() {
   return (
-    <Page title={'Home'}>
-      <AddListingFloatButton />
+    <Page>
+      {/* <AddListingFloatButton /> */}
       <HomeSection />
     </Page>
   );

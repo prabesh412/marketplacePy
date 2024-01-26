@@ -68,6 +68,7 @@ DJANGO_APPS = [
     # "django.contrib.humanize", # Handy template tags
     "django.contrib.admin",
     "django.forms",
+    'silk'
  
 ]
 THIRD_PARTY_APPS = [
@@ -92,6 +93,8 @@ LOCAL_APPS = [
     "doshro_bazar.users",
     "doshro_bazar.listings",
     "doshro_bazar.category",
+    "doshro_bazar.bookmarks",
+    "doshro_bazar.comments"
     # Your stuff: custom apps go here
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
@@ -144,6 +147,7 @@ MIDDLEWARE = [
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.locale.LocaleMiddleware",
     "django.middleware.common.CommonMiddleware",
+    'silk.middleware.SilkyMiddleware',
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
@@ -333,7 +337,7 @@ REST_FRAMEWORK = {
     "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
 
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
-    'PAGE_SIZE': 10
+    'PAGE_SIZE': 12
 
 }
 
@@ -351,3 +355,13 @@ SPECTACULAR_SETTINGS = {
 }
 # Your stuff...
 # ------------------------------------------------------------------------------
+ACCOUNT_SID='AC9eec6e4fb851d96ff7daa7c8ad099f89'
+AUTH_TOKEN='16109d8865532d676af5171794c1d7aa'
+COUNTRY_CODE='+977'
+TWILIO_PHONE_NUMBER='+9779863723133'
+
+REST_FRAMEWORK_EXTENSIONS = {
+    # 'DEFAULT_CACHE_RESPONSE_TIMEOUT': 60 * 15,
+    # 'DEFAULT_CACHE_KEY_FUNC':'rest_framework_extensions.key_constructor.constructors.DefaultKeyConstructor',
+    'DEFAULT_CACHE_ERRORS': False
+}

@@ -1,6 +1,6 @@
 import { Container } from '@mantine/core';
 import { dehydrate, QueryClient } from '@tanstack/react-query';
-import { AuthPage } from '@/components/sections/auth/AuthPage';
+import { AuthPage } from '@/components/pageSpecific/auth/AuthPage';
 import { ReactElement } from 'react';
 import AuthLayout from '@/components/layouts/AuthLayout';
 import { getDefaultStore } from '@/components/utils/PageDefaults';
@@ -29,9 +29,5 @@ export const getServerSideProps = async (ctx: NextPageContext) => {
 Auth.getLayout = (page: ReactElement) => <AuthLayout>{page}</AuthLayout>;
 
 export default function Auth() {
-  return (
-    <Container fluid>
-      <AuthPage />
-    </Container>
-  );
+  return <AuthPage />;
 }

@@ -1,5 +1,5 @@
 import { ReactNode, useState } from 'react';
-import Navbar from '@/components/common/navigation/Navbar';
+import Navbar from '@/components/ui/navigation/Navbar';
 import ResponsiveMargin from '@/components/global/ResponsiveMargin';
 
 interface AuthlayoutProps {
@@ -10,7 +10,7 @@ const Authlayout: React.FC<AuthlayoutProps> = ({ children }) => {
   return (
     <>
       <Navbar isHomepage={false} />
-      <div style={ResponsiveMargin()}>{children}</div>
+      <div>{children}</div>
     </>
   );
 };
