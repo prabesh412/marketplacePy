@@ -1,7 +1,6 @@
 import { Carousel } from '@mantine/carousel';
 import { Image, useMantineTheme } from '@mantine/core';
 import React from 'react';
-
 const HomepageCarousel = () => {
   const theme = useMantineTheme();
   return (
@@ -21,12 +20,12 @@ const HomepageCarousel = () => {
         withControls={false}
       >
         <Image
-          fit="cover"
-          w={'100%'}
+          src={
+            'https://static.vecteezy.com/system/resources/previews/015/706/698/non_2x/kathmandu-nepal-background-vector.jpg'
+          }
+          alt="banner"
+          fit="fill"
           height={'20vh'}
-          src="https://assets-cdn.kantipurdaily.com/uploads/source/ads/emi520x120-0882023070419.gif"
-          alt="hero-promotion"
-          radius={'md'}
         />
       </Carousel>
     </div>

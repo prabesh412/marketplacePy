@@ -1,3 +1,5 @@
+import { GetKeyFromValue } from '@/components/utils/GetKeyFromMap';
+import { ListingOptionMap } from '@/components/utils/ListingOptionMap';
 import {
   Avatar,
   Badge,
@@ -21,13 +23,10 @@ import {
   IconCalendar,
   IconCash,
   IconCheck,
-  IconDownload,
   IconEye,
   IconHeart,
-  IconMapPinFilled,
   IconMessage,
   IconPackage,
-  IconPhoto,
   IconShare,
   IconTag,
   IconThumbUp,
@@ -99,7 +98,7 @@ const LargeScreenProductDetail = ({
               <Group spacing={2}>
                 <IconEye size={'1.5em'} color="grey" />
                 <Text c="dimmed" size={'sm'}>
-                  1.2k views
+                  {listing?.views}
                 </Text>
               </Group>
 
@@ -121,9 +120,6 @@ const LargeScreenProductDetail = ({
                 </Tabs.Tab>
                 <Tabs.Tab value="messages" icon={<IconMessage />}>
                   Comments
-                </Tabs.Tab>
-                <Tabs.Tab value="settings" icon={<IconMapPinFilled />}>
-                  Location
                 </Tabs.Tab>
               </Tabs.List>
 
@@ -158,7 +154,10 @@ const LargeScreenProductDetail = ({
                         </Text>
                       </Group>
                       <Text fw={300} size={'sm'}>
-                        {listing?.listing_condition}
+                        {GetKeyFromValue(
+                          ListingOptionMap,
+                          listing?.listing_condition,
+                        )}
                       </Text>
                     </SimpleGrid>
                     <Divider p={rem(1)} color="gray.3" />
@@ -271,20 +270,6 @@ const LargeScreenProductDetail = ({
                     <Comments listingSlug={listing?.slug} />
                   </Box>
                 </ScrollArea>
-              </Tabs.Panel>
-
-              <Tabs.Panel value="settings">
-                <></>
-                <Divider mt={'sm'} />
-                <Group mt={'sm'} position="apart">
-                  <Button leftIcon={<IconPhoto size={14} />} variant="default">
-                    Gallery
-                  </Button>
-
-                  <Button rightIcon={<IconDownload size={14} />}>
-                    Download
-                  </Button>
-                </Group>
               </Tabs.Panel>
             </Tabs>
           </div>

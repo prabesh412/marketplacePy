@@ -7,8 +7,10 @@ const useStyles = createStyles((theme) => ({
   wrapper: {
     minHeight: '100vh',
     backgroundSize: 'cover',
+    backgroundRepeat: 'no-repeat',
+    objectFit: 'cover',
     backgroundImage:
-      'url(https://hamrobazaar.blr1.cdn.digitaloceanspaces.com/Assets/Search.gif)',
+      'url(https://getwallpapers.com/wallpaper/full/c/f/4/1307336-top-nepal-wallpaper-hd-2560x1440.jpg)',
   },
   card: {
     backgroundColor:
@@ -21,7 +23,7 @@ const useStyles = createStyles((theme) => ({
       theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.colors.gray[3]
     }`,
     minHeight: '100vh',
-    maxWidth: rem(550),
+    maxWidth: rem(500),
     paddingTop: rem(80),
 
     [theme.fn.smallerThan('sm')]: {

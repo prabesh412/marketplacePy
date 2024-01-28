@@ -1,4 +1,4 @@
-import { Container } from '@mantine/core';
+import { Container, useMantineTheme } from '@mantine/core';
 import { dehydrate, QueryClient } from '@tanstack/react-query';
 import { ReactElement } from 'react';
 import { getDefaultStore } from '@/components/utils/PageDefaults';
@@ -31,9 +31,10 @@ AddListing.getLayout = (page: ReactElement) => (
 );
 
 export default function AddListing() {
+  const theme = useMantineTheme();
   return (
-    <Container mb={'xl'} mt={'xl'} fluid>
+    <div style={{ marginTop: theme.spacing.md }}>
       <AddListingPage />
-    </Container>
+    </div>
   );
 }

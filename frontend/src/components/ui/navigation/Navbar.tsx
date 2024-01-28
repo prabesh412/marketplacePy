@@ -109,9 +109,9 @@ const Navbar = ({ isHomepage }: HeaderSearchProps) => {
         >
           <Image
             src={Logo}
-            alt="as"
-            height={120}
-            width={170}
+            alt="logo"
+            height={250}
+            width={250}
             onClick={() => router.push('/')}
             style={{ paddingBottom: theme.spacing.xs }}
           />

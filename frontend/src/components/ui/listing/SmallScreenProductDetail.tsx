@@ -32,6 +32,8 @@ import {
   IconTool,
   IconWriting,
 } from '@tabler/icons-react';
+import { GetKeyFromValue } from '@/components/utils/GetKeyFromMap';
+import { ListingOptionMap } from '@/components/utils/ListingOptionMap';
 
 type SmallScreenProductDetailProps = {
   listing?: Listings;
@@ -152,7 +154,10 @@ const SmallScreenProductDetail = ({
                       </Text>
                     </Group>
                     <Text fw={300} size={'sm'}>
-                      {listing?.listing_condition}
+                      {GetKeyFromValue(
+                        ListingOptionMap,
+                        listing?.listing_condition,
+                      )}
                     </Text>
                   </SimpleGrid>
                   <Divider p={rem(1)} />

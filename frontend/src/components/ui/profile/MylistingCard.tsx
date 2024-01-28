@@ -27,6 +27,8 @@ import {
 } from '../../../../orval/listings/listings';
 import { Listings } from '../../../../orval/model';
 import ConfirmationModal from '../common/ConfirmationModal';
+import { GetKeyFromValue } from '@/components/utils/GetKeyFromMap';
+import { ListingOptionMap } from '@/components/utils/ListingOptionMap';
 
 type HorizontalCardProps = {
   listing: Listings;
@@ -172,7 +174,10 @@ const MylistingCard = ({ listing }: HorizontalCardProps) => {
             c="dimmed"
             size="xs"
           >
-            | <Badge> Like New</Badge>
+            |
+            <Badge>
+              {GetKeyFromValue(ListingOptionMap, listing?.listing_condition)}
+            </Badge>
           </Text>
           <Text
             className={classes.smContainer}

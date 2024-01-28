@@ -26,6 +26,8 @@ import { useBookmarksCreate } from '../../../../orval/bookmarks/bookmarks';
 import { getListingsListQueryKey } from '../../../../orval/listings/listings';
 import { Listings } from '../../../../orval/model';
 import GetInitials from '../common/GetInitials';
+import { GetKeyFromValue } from '@/components/utils/GetKeyFromMap';
+import { ListingOptionMap } from '@/components/utils/ListingOptionMap';
 
 const useStyles = createStyles((theme) => ({
   card: {
@@ -254,7 +256,12 @@ const FeaturedCard = ({ listing, currentPage }: FeaturedCardProps) => {
             >
               <Group noWrap spacing={5}>
                 <IconTool size={'1.5em'} />
-                <Text truncate>Like new</Text>
+                <Text truncate>
+                  {GetKeyFromValue(
+                    ListingOptionMap,
+                    listing?.listing_condition,
+                  )}
+                </Text>
               </Group>
             </Badge>
             <Divider size={3} orientation="vertical" />
