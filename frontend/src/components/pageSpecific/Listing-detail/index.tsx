@@ -1,3 +1,4 @@
+import FeaturedCard from '@/components/ui/featured/FeaturedCard';
 import LargeScreenProductDetail from '@/components/ui/listing/LargeScreenProductDetail';
 import SmallScreenProductDetail from '@/components/ui/listing/SmallScreenProductDetail';
 import {
@@ -10,10 +11,9 @@ import {
   createStyles,
   rem,
 } from '@mantine/core';
-import { Listings } from '../../../../orval/model';
-import FeaturedCard from '@/components/ui/featured/FeaturedCard';
 import { IconArrowRight } from '@tabler/icons-react';
 import { useListingsList } from '../../../../orval/listings/listings';
+import { Listings } from '../../../../orval/model';
 
 type ProductDetailProps = {
   listingDetail?: Listings;
@@ -26,7 +26,6 @@ const ListingDetailWrapper = ({ listingDetail }: ProductDetailProps) => {
   const { data: similarListings } = useListingsList({
     category: listingDetail?.category?.id as number,
   });
-  console.log(similarListings);
 
   return (
     <>

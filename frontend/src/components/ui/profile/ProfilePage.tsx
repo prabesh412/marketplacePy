@@ -1,12 +1,13 @@
-import React from 'react';
-import ProfileTab from './ProfileTab';
+import { useUsersMeRetrieve } from '../../../../orval/users/users';
 import ProfileCard from './ProfileCard';
+import ProfileTab from './ProfileTab';
 
 const ProfilePage = () => {
+  const { data: userData } = useUsersMeRetrieve();
   return (
     <>
       <div style={{ maxWidth: '1200px', margin: 'auto' }}>
-        <ProfileCard />
+        {userData && <ProfileCard user={userData} />}
         <ProfileTab />
       </div>
     </>

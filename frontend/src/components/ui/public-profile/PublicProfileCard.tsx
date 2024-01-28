@@ -1,19 +1,15 @@
 import { Avatar, Card, Group, Text, useMantineTheme } from '@mantine/core';
-import { User } from '../../../../orval/model';
+import { useUsersMeRetrieve } from '../../../../orval/users/users';
 
-type ProfileCardProps = {
-  user: User;
-};
+const stats = [
+  { value: '1K', label: 'Listings' },
+  { value: '187', label: 'Followers' },
+  { value: '3', label: 'Closed Deals' },
+];
 
-const ProfileCard = ({ user }: ProfileCardProps) => {
+const PublicProfileCard = () => {
+  const { data: user } = useUsersMeRetrieve();
   const theme = useMantineTheme();
-
-  const stats = [
-    { value: user?.number_of_listings, label: 'No. of Listings' },
-    { value: user?.number_of_comments, label: 'No. of Comments' },
-    { value: user?.number_of_bookmark, label: 'No. of Bookmarks' },
-  ];
-
   const items = stats.map((stat) => (
     <div key={stat.label}>
       <Text ta="center" fz="lg" fw={500}>
@@ -52,4 +48,4 @@ const ProfileCard = ({ user }: ProfileCardProps) => {
     </Card>
   );
 };
-export default ProfileCard;
+export default PublicProfileCard;

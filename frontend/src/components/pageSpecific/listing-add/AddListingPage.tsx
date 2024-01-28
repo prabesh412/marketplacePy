@@ -1,14 +1,14 @@
-import React, { useState } from 'react';
+import { Button, Group } from '@mantine/core';
+import { notifications } from '@mantine/notifications';
+import { IconArrowLeft, IconArrowRight } from '@tabler/icons-react';
+import { useState } from 'react';
+import { useImageListingCreate } from '../../../../orval/image-listing/image-listing';
+import { useListingsCreate } from '../../../../orval/listings/listings';
 import FirstStep from '../../ui/add-listing/FirstStep';
-import useAddListingForm from '../../ui/add-listing/UseAddListingForm';
+import ListingAdded from '../../ui/add-listing/ListingAdded';
 import ListingStepper from '../../ui/add-listing/ListingStepper';
 import SecondStep from '../../ui/add-listing/SecondStep';
-import { Button, Group } from '@mantine/core';
-import { IconArrowLeft, IconArrowRight } from '@tabler/icons-react';
-import { useListingsCreate } from '../../../../orval/listings/listings';
-import ListingAdded from '../../ui/add-listing/ListingAdded';
-import { notifications } from '@mantine/notifications';
-import { useImageListingCreate } from '../../../../orval/image-listing/image-listing';
+import useAddListingForm from '../../ui/add-listing/UseAddListingForm';
 
 const AddListingPage = () => {
   const [active, setActive] = useState(1);

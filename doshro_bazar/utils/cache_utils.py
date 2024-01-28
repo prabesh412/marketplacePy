@@ -1,17 +1,16 @@
-from rest_framework_extensions.key_constructor.constructors import (
-    DefaultKeyConstructor
-)
-from rest_framework_extensions.key_constructor.bits import (
-    KeyBitBase,
-    RetrieveSqlQueryKeyBit,
-    ListSqlQueryKeyBit,
-    PaginationKeyBit
-)
-from rest_framework_extensions.key_constructor import bits
-from doshro_bazar.users.models import User
-
 from django.core.cache import cache
 from django.utils.encoding import force_str
+from rest_framework_extensions.key_constructor import bits
+from rest_framework_extensions.key_constructor.bits import (
+    KeyBitBase,
+    ListSqlQueryKeyBit,
+    PaginationKeyBit,
+    RetrieveSqlQueryKeyBit,
+)
+from rest_framework_extensions.key_constructor.constructors import DefaultKeyConstructor
+
+from doshro_bazar.users.models import User
+
 
 class ProfileUpdatedAtKeyBit(KeyBitBase):
     

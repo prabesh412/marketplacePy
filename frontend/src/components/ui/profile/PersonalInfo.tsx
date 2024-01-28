@@ -1,4 +1,3 @@
-import { useStore } from '@/zustand/store';
 import {
   Avatar,
   Button,
@@ -17,12 +16,11 @@ import {
 } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { IconUpload } from '@tabler/icons-react';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import {
   getUsersMeRetrieveQueryKey,
   useUsersMeRetrieve,
   useUsersUpdate,
-  usersMeRetrieve,
 } from '../../../../orval/users/users';
 
 import { notifications } from '@mantine/notifications';

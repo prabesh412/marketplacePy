@@ -1,37 +1,31 @@
 import {
-  Text,
-  Card,
-  Group,
-  createStyles,
-  Avatar,
-  Divider,
-  Badge,
   ActionIcon,
+  Avatar,
+  Badge,
+  Card,
+  Divider,
+  Group,
   Menu,
+  Text,
+  createStyles,
   rem,
-  Modal,
-  Button,
-  Alert,
 } from '@mantine/core';
+import { notifications } from '@mantine/notifications';
 import {
-  IconAlertCircle,
-  IconAlertHexagon,
   IconCheck,
   IconClock,
   IconDotsVertical,
   IconEdit,
   IconTrash,
 } from '@tabler/icons-react';
-import { Listings } from '../../../../orval/model';
+import { useQueryClient } from '@tanstack/react-query';
+import { useRouter } from 'next/router';
+import { useState } from 'react';
 import {
   getListingsMeRetrieveQueryKey,
   useListingsDestroy,
-  useListingsUpdate,
 } from '../../../../orval/listings/listings';
-import { useRouter } from 'next/router';
-import { notifications } from '@mantine/notifications';
-import { useQueryClient } from '@tanstack/react-query';
-import { useState } from 'react';
+import { Listings } from '../../../../orval/model';
 import ConfirmationModal from '../common/ConfirmationModal';
 
 type HorizontalCardProps = {

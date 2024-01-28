@@ -1,54 +1,44 @@
+import { useStore } from '@/zustand/store';
 import {
   Avatar,
-  Burger,
   Button,
   Container,
-  createStyles,
-  Group,
-  rem,
-  UnstyledButton,
-  Menu,
-  Tabs,
   Flex,
-  useMantineTheme,
+  Group,
+  Menu,
   Modal,
-  TextInput,
-  ActionIcon,
-  Divider,
+  Tabs,
   Text,
-  Chip,
-  Transition,
+  TextInput,
+  UnstyledButton,
+  createStyles,
+  rem,
+  useMantineTheme,
 } from '@mantine/core';
-import cx from 'clsx';
 import { useDisclosure, useWindowScroll } from '@mantine/hooks';
 import {
   IconCategory,
+  IconChevronDown,
+  IconCirclePlus,
   IconClock,
   IconCrown,
   IconHome,
   IconLogin,
-  IconPlus,
-  IconStars,
-  IconUser,
   IconLogout,
   IconMessage,
-  IconSettings,
-  IconChevronDown,
-  IconStar,
   IconSearch,
-  IconArrowRight,
-  IconBellPlusFilled,
-  IconCirclePlus,
-  IconCubePlus,
+  IconSettings,
+  IconStar,
+  IconStars,
+  IconUser,
 } from '@tabler/icons-react';
+import cx from 'clsx';
+import Image from 'next/image';
 import { useRouter } from 'next/router';
 import React, { useState } from 'react';
-import { useStore } from '@/zustand/store';
-import DefaultSideNav from './DefaultSideNav';
 import Logo from '../../../../public/favicon/logo.png';
-import Image from 'next/image';
 import GetInitials from '../common/GetInitials';
-import HomepageSearchArea from '../home/search-area/HomepageSearchArea';
+import DefaultSideNav from './DefaultSideNav';
 
 interface HeaderSearchProps {
   isHomepage: boolean;
@@ -189,8 +179,6 @@ const Navbar = ({ isHomepage }: HeaderSearchProps) => {
           <Group classNames={classes.burger} spacing={7}>
             <Button
               leftIcon={<IconCirclePlus />}
-              variant="gradient"
-              gradient={{ from: 'lime', to: 'cyan', deg: 30 }}
               radius={'xl'}
               className={classes.tabsList}
               onClick={() => router.push('/listing/listing-add')}

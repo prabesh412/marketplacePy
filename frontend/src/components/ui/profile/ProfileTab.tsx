@@ -1,4 +1,3 @@
-import React, { useRef } from 'react';
 import { Group, Tabs, Text, useMantineTheme } from '@mantine/core';
 import {
   IconBookmark,
@@ -7,13 +6,13 @@ import {
   IconSettings,
   IconUpload,
 } from '@tabler/icons-react';
+import { useRouter } from 'next/router';
 import { useListingsMeRetrieve } from '../../../../orval/listings/listings';
 import { Listings } from '../../../../orval/model';
-import { useRouter } from 'next/router';
 import PersonalInfo from './PersonalInfo';
 
-import MylistingCard from './MylistingCard';
 import BookMarks from './Bookmark';
+import MylistingCard from './MylistingCard';
 
 const tabs = [
   { label: 'Personal Info', icon: <IconMessageCircle size="1.2rem" /> },

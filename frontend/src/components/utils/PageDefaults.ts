@@ -1,19 +1,11 @@
-import nookies from 'nookies';
 import { initializeStore } from '@/zustand/store';
-import { NextPageContext, GetServerSidePropsContext } from 'next';
-import { usersMeRetrieve } from '../../../orval/users/users';
+import { QueryClient } from '@tanstack/react-query';
+import { GetServerSidePropsContext, NextPageContext } from 'next';
+import nookies from 'nookies';
 import { AXIOS_INSTANCE } from '../../../custom-instance';
-import {
-  getListingsListQueryKey,
-  listingsList,
-  useListingsList,
-} from '../../../orval/listings/listings';
+import { getListingsListQueryKey } from '../../../orval/listings/listings';
 import { PaginatedListingsList } from '../../../orval/model';
-import {
-  QueryClient,
-  QueryClientProviderProps,
-  useQuery,
-} from '@tanstack/react-query';
+import { usersMeRetrieve } from '../../../orval/users/users';
 
 export const getDefaultStore = async (
   ctx: NextPageContext | GetServerSidePropsContext,

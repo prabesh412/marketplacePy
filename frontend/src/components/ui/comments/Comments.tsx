@@ -1,31 +1,34 @@
-import React, { useCallback, useState } from 'react';
+import { useStore } from '@/zustand/store';
 import {
-  Text,
-  Avatar,
-  Group,
-  Box,
-  Paper,
-  Flex,
-  TextInput,
   ActionIcon,
-  rem,
+  Avatar,
+  Box,
   Card,
+  Flex,
+  Group,
+  Paper,
+  Text,
+  TextInput,
+  Transition,
+  rem,
 } from '@mantine/core';
+import { useClickOutside } from '@mantine/hooks';
+import { notifications } from '@mantine/notifications';
+import {
+  IconArrowDown,
+  IconArrowRight,
+  IconArrowUp,
+  IconDotsCircleHorizontal,
+  IconMessage,
+  IconMessageShare,
+} from '@tabler/icons-react';
+import React, { useCallback, useState } from 'react';
 import {
   useCommentsCreate,
   useCommentsList,
 } from '../../../../orval/comments/comments';
-import RecursiveReplies, { CommentsReplies } from './RecursiveReplies';
-import { notifications } from '@mantine/notifications';
-import {
-  IconArrowRight,
-  IconDotsCircleHorizontal,
-  IconMessage,
-  IconMessageShare,
-  IconThumbUp,
-} from '@tabler/icons-react';
-import { useStore } from '@/zustand/store';
 import GetInitials from '../common/GetInitials';
+import RecursiveReplies, { CommentsReplies } from './RecursiveReplies';
 
 type CommentsProps = {
   listingSlug?: string;
@@ -33,6 +36,14 @@ type CommentsProps = {
 type ActiveRepliesType = {
   [key: number]: boolean;
 };
+
+const scaleY = {
+  in: { opacity: 1, transform: 'scaleY(1)' },
+  out: { opacity: 0, transform: 'scaleY(0)' },
+  common: { transformOrigin: 'top' },
+  transitionProperty: 'transform, opacity',
+};
+
 const Comments = ({ listingSlug }: CommentsProps) => {
   const { data: comments, refetch } = useCommentsList({ listing: listingSlug });
   const { mutate: commentMutation, isLoading } = useCommentsCreate({});
@@ -40,6 +51,15 @@ const Comments = ({ listingSlug }: CommentsProps) => {
   const [commentValue, setCommentValue] = useState<string>('');
   const [replyValue, setReplyValue] = useState<string>('');
   const user = useStore((state) => state.profile);
+  const [activeLoadMore, setActiveLoadMore] = useState<{
+    [key: number]: boolean;
+  }>({});
+  const [opened, setOpened] = useState(false);
+  const clickOutsideRef = useClickOutside(() => setOpened(false));
+
+  const handleLoadMoreClick = useCallback((commentId: number) => {
+    setActiveLoadMore((prev) => ({ [commentId]: !prev[commentId] }));
+  }, []);
 
   const handleReplyClick = useCallback((commentId: number) => {
     setActiveReplies((prev) => ({ [commentId]: !prev[commentId] }));
@@ -228,6 +248,32 @@ const Comments = ({ listingSlug }: CommentsProps) => {
                       Reply
                     </Text>
                   </Group>
+                  {comment?.replies && (
+                    <Group
+                      spacing={3}
+                      onClick={() => {
+                        handleLoadMoreClick(comment.id);
+                        setActiveReplies((prev) => ({
+                          ...prev,
+                          [comment.id]: false,
+                        }));
+                      }}
+                      sx={{ cursor: 'pointer' }}
+                    >
+                      {activeLoadMore[comment.id] ? (
+                        <IconArrowUp color="gray" size={'1em'} />
+                      ) : (
+                        <IconArrowDown color="gray" size={'1em'} />
+                      )}
+
+                      <Text size={'xs'} c={'dimmed'}>
+                        {activeLoadMore[comment.id]
+                          ? 'Hide replies'
+                          : 'Load replies'}
+                      </Text>
+                    </Group>
+                  )}
+
                   <IconDotsCircleHorizontal color="gray" size={'1em'} />
                 </Group>
                 {activeReplies[comment.id] && (
@@ -265,13 +311,25 @@ const Comments = ({ listingSlug }: CommentsProps) => {
                   />
                 )}
               </Paper>
-              {comment?.replies && (
-                <RecursiveReplies
-                  replies={comment?.replies as unknown as CommentsReplies}
-                  topParentCommentId={comment.id}
-                  handleReplySubmit={handleReplySubmit}
-                />
-              )}
+
+              <Transition
+                mounted={activeLoadMore[comment.id]}
+                transition={scaleY}
+                duration={100}
+                timingFunction="ease"
+              >
+                {(styles) => (
+                  <Paper style={styles}>
+                    {comment?.replies && (
+                      <RecursiveReplies
+                        replies={comment?.replies as unknown as CommentsReplies}
+                        topParentCommentId={comment.id}
+                        handleReplySubmit={handleReplySubmit}
+                      />
+                    )}
+                  </Paper>
+                )}
+              </Transition>
             </div>
           ))}
       </Flex>

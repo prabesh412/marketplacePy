@@ -1,27 +1,9 @@
-import React, { useEffect, useRef, useState } from 'react';
-import {
-  Group,
-  Text,
-  Col,
-  Grid,
-  Button,
-  Tabs,
-  Divider,
-  rem,
-  useMantineTheme,
-  Card,
-  Paper,
-  ThemeIcon,
-} from '@mantine/core';
-import {
-  IconAdjustments,
-  IconArrowRight,
-  IconChevronDown,
-  IconCircleCheck,
-} from '@tabler/icons-react';
-import FeaturedCard from '../featured/FeaturedCard';
+import { Button, Card, Col, Grid, rem, useMantineTheme } from '@mantine/core';
+import { IconArrowRight } from '@tabler/icons-react';
+import { useEffect, useState } from 'react';
 import { useListingsList } from '../../../../orval/listings/listings';
 import { PaginatedListingsList } from '../../../../orval/model';
+import FeaturedCard from '../featured/FeaturedCard';
 
 const FeaturedListings = () => {
   const theme = useMantineTheme();
@@ -63,14 +45,13 @@ const FeaturedListings = () => {
     const totalFetchedProducts = featuredListing?.results?.length || 0;
     return totalFetchedProducts >= totalProductCount;
   };
-
   return (
     <div style={{ maxWidth: '1200px', margin: 'auto' }}>
       <div style={{ marginTop: 10 }}>
         <Grid mb={rem(2)} mt={rem(1)}>
           {featuredListing?.results?.map((listings, index) => (
             <Col span={6} xs={4} sm={3} md={3} lg={3} key={index}>
-              <FeaturedCard listing={listings} />
+              <FeaturedCard listing={listings} currentPage={page} />
             </Col>
           ))}
         </Grid>

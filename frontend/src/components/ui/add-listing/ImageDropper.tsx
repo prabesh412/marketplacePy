@@ -1,15 +1,8 @@
-import { Button, Group, Image, SimpleGrid, Text, rem } from '@mantine/core';
+import { Group, Image, SimpleGrid, Text, rem } from '@mantine/core';
 import { IconUpload, IconPhoto, IconX, IconTrash } from '@tabler/icons-react';
-import {
-  Dropzone,
-  DropzoneProps,
-  FileWithPath,
-  IMAGE_MIME_TYPE,
-} from '@mantine/dropzone';
+import { Dropzone, IMAGE_MIME_TYPE } from '@mantine/dropzone';
 import { useState } from 'react';
-import { UseFormReturnType } from '@mantine/form';
-import { notifications } from '@mantine/notifications';
-import { error } from 'console';
+
 import ShowNotification from '../common/Notification';
 
 type ImageDropperProps = {

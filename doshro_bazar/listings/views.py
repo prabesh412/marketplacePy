@@ -1,21 +1,22 @@
-from rest_framework import viewsets, status
-from doshro_bazar.listings.models import Listings, ListingImage
+from django.core.cache import cache
+from django.db.models import Exists, OuterRef
+from django.shortcuts import get_object_or_404
+from django.utils.decorators import method_decorator
+from django_filters import rest_framework as filters_new
 from drf_spectacular.utils import extend_schema, extend_schema_view
+from rest_framework import pagination, status, viewsets
+from rest_framework.decorators import action
 from rest_framework.mixins import CreateModelMixin
+from rest_framework.parsers import MultiPartParser
 from rest_framework.response import Response
 from rest_framework.viewsets import GenericViewSet
-from django_filters import rest_framework as filters_new
-from doshro_bazar.listings.serializers import ListingsSerializer, ListingsInputSerializer, ListingImageSerializer
+from rest_framework_extensions.cache.decorators import cache_response
+
+from doshro_bazar.bookmarks.models import Bookmark
 from doshro_bazar.listings.filters import ListingsFilter
-from django.shortcuts import get_object_or_404
-from django.core.cache import cache
-from rest_framework.parsers import MultiPartParser
-from rest_framework import pagination
-from rest_framework.decorators import action
-from django.utils.decorators import method_decorator
-from rest_framework_extensions.cache.decorators import (
-    cache_response
-)
+from doshro_bazar.listings.models import ListingImage, Listings
+from doshro_bazar.listings.serializers import ListingImageSerializer, ListingsInputSerializer, ListingsSerializer
+
 
 @extend_schema_view(
     retrieve=extend_schema(description="Returns the given Listing."),
@@ -32,6 +33,14 @@ class ListingsViewSet(viewsets.ModelViewSet):
         if self.action in ["create", "update", "partial_update"]:
             return ListingsInputSerializer
         return super().get_serializer_class()
+    
+    def get_queryset(self):
+        if self.request.user.is_authenticated and self.action in ["list", "retrieve"]:
+            user = self.request.user
+            bookmark_subquery = Bookmark.objects.filter(
+                listing=OuterRef('pk'), user=user)
+            return self.queryset.annotate(is_bookmarked=Exists(bookmark_subquery))
+        return self.queryset
     
     def list(self, request, *args, **kwargs):
        return super().list(self, request, *args, **kwargs)

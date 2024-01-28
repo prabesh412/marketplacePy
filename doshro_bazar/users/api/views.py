@@ -1,19 +1,22 @@
+import random
+
+from dj_rest_auth.views import LoginView
 from django.contrib.auth import get_user_model
+from django.db.models import Count
+from drf_spectacular.utils import OpenApiExample, OpenApiParameter, OpenApiTypes, extend_schema, extend_schema_view
 from rest_framework import status
 from rest_framework.decorators import action
-from rest_framework.mixins import ListModelMixin, RetrieveModelMixin, UpdateModelMixin, CreateModelMixin
+from rest_framework.mixins import CreateModelMixin, ListModelMixin, RetrieveModelMixin, UpdateModelMixin
+from rest_framework.parsers import FormParser, MultiPartParser
 from rest_framework.response import Response
 from rest_framework.viewsets import GenericViewSet
-from rest_framework.parsers import FormParser, MultiPartParser
-import random
-from .serializers import UserSerializer, UserRegisterSerializer, OTPValidationSerializer
-from doshro_bazar.utils.TwilioClient import MessageHandler
+from rest_framework_extensions.cache.decorators import cache_response
+
 from doshro_bazar.users.models import OTP
-from dj_rest_auth.views import LoginView
-from rest_framework_extensions.cache.decorators import (
-    cache_response
-)
 from doshro_bazar.utils.cache_utils import ProfileKeyConstructor
+from doshro_bazar.utils.TwilioClient import MessageHandler
+
+from .serializers import OTPValidationSerializer, UserRegisterSerializer, UserSerializer
 
 User = get_user_model()
 
@@ -32,6 +35,7 @@ class CustomLoginView(LoginView):
         
         return response
 
+
 class UserViewSet(UpdateModelMixin, GenericViewSet):
     serializer_class = UserSerializer
     queryset = User.objects.all()
@@ -41,11 +45,38 @@ class UserViewSet(UpdateModelMixin, GenericViewSet):
         assert isinstance(self.request.user.id, int)
         return self.queryset.filter(id=self.request.user.id)
     
+
+    def retrieve(self, request, *args, **kwargs):
+        try:
+            # Attempt to convert the username to an integer
+            username = int(kwargs.get('username'))
+            # Find the user with this ID
+            user_with_listing_count = User.objects.annotate(
+                            number_of_listings=Count('listings', distinct=True),
+                            number_of_bookmark=Count('bookmark', distinct=True),
+                            number_of_comments=Count('comments', distinct=True),
+                        ).get(username=username)
+            data = UserSerializer(user_with_listing_count, context={"request": request}).data
+            
+            return Response(status=status.HTTP_200_OK, data=data)
+        except ValueError:
+            # If the conversion fails, return a 400 Bad Request response
+            return Response(status=status.HTTP_400_BAD_REQUEST, data={"message": "Invalid username - must be a number"})
+        except User.DoesNotExist:
+            # If no user is found, return a 404 Not Found response
+            return Response(status=status.HTTP_404_NOT_FOUND, data={"message": "User not found"})
+       
+    
     # @cache_response(key_func=ProfileKeyConstructor())
     @action(detail=False, methods=["GET"])
     def me(self, request):
-        print(request)
-        serializer = UserSerializer(request.user, context={"request": request})
+        user_data = User.objects.annotate(
+                            number_of_listings=Count('listings', distinct=True),
+                            number_of_bookmark=Count('bookmark', distinct=True),
+                            number_of_comments=Count('comments', distinct=True),
+                        ).get(id=request.user.id)
+        
+        serializer = UserSerializer(user_data, context={"request": request})
         return Response(status=status.HTTP_200_OK, data=serializer.data)
 
 

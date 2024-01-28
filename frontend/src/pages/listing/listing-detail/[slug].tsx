@@ -2,13 +2,12 @@ import { getDefaultStore } from '@/components/utils/PageDefaults';
 import { QueryClient, dehydrate } from '@tanstack/react-query';
 import { NextPageContext } from 'next';
 import { useRouter } from 'next/router';
-import React, { ReactElement } from 'react';
+import { ReactElement } from 'react';
 import {
   getListingsListQueryKey,
   getListingsRetrieveQueryKey,
   listingsList,
   listingsRetrieve,
-  useListingsList,
   useListingsRetrieve,
 } from '../../../../orval/listings/listings';
 

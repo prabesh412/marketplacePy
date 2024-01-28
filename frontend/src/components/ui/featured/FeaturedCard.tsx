@@ -1,17 +1,16 @@
 import {
+  ActionIcon,
+  Avatar,
+  Badge,
   Card,
+  Divider,
+  Group,
   Image,
   Text,
-  Group,
-  useMantineTheme,
-  Avatar,
   createStyles,
-  ActionIcon,
-  Badge,
-  Divider,
-  rem,
+  useMantineTheme,
 } from '@mantine/core';
-import React from 'react';
+import { notifications } from '@mantine/notifications';
 import {
   IconCategory,
   IconEye,
@@ -20,10 +19,12 @@ import {
   IconStarFilled,
   IconTool,
 } from '@tabler/icons-react';
-import { Listings } from '../../../../orval/model';
+import { useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
+import { useState } from 'react';
 import { useBookmarksCreate } from '../../../../orval/bookmarks/bookmarks';
-import { notifications } from '@mantine/notifications';
+import { getListingsListQueryKey } from '../../../../orval/listings/listings';
+import { Listings } from '../../../../orval/model';
 import GetInitials from '../common/GetInitials';
 
 const useStyles = createStyles((theme) => ({
@@ -85,21 +86,27 @@ const useStyles = createStyles((theme) => ({
     },
   },
 }));
-type listing = {
+type FeaturedCardProps = {
   listing?: Listings;
+  currentPage?: number;
 };
-const FeaturedCard = ({ listing }: listing) => {
+
+const FeaturedCard = ({ listing, currentPage }: FeaturedCardProps) => {
   const theme = useMantineTheme();
   const { classes } = useStyles();
   const router = useRouter();
   const bookmarkMutation = useBookmarksCreate();
+  const [isBookmarked, setIsBookmarked] = useState<boolean>(
+    listing?.is_bookmarked || false,
+  );
+  const queryClient = useQueryClient();
   const addBookmark = () => {
     const data = {
       listing: listing?.slug as string,
     };
     notifications.show({
-      id: 'userBookmark',
-      title: `Adding to your bookmark`,
+      id: `userBookmark ${listing?.slug} ${isBookmarked}`,
+      title: `${!isBookmarked ? 'Adding' : 'Removing'} your bookmark`,
       message: `Please wait while we add to your bookmark`,
       loading: true,
       autoClose: false,
@@ -108,10 +115,16 @@ const FeaturedCard = ({ listing }: listing) => {
       bookmarkMutation.mutate(
         { data: data },
         {
-          onSuccess: () => {
+          onSuccess: async () => {
+            await queryClient.invalidateQueries(
+              getListingsListQueryKey({ page: currentPage }),
+            );
+            setIsBookmarked((prev) => !prev);
             notifications.update({
-              id: 'userBookmark',
-              title: `Bookmark successfully added`,
+              id: `userBookmark ${listing?.slug} ${isBookmarked}`,
+              title: `Bookmark successfully ${
+                !isBookmarked ? 'added' : 'removed'
+              }`,
               color: 'green',
               message: 'Successfully saved the bookmark!',
               loading: false,
@@ -121,7 +134,7 @@ const FeaturedCard = ({ listing }: listing) => {
           },
           onError: () => {
             notifications.update({
-              id: 'userBookmark',
+              id: `userBookmark ${listing?.slug} ${isBookmarked}`,
               title: `Bookmark couldnot be added`,
               color: 'red',
               message: 'Bookmark already exist',
@@ -171,7 +184,11 @@ const FeaturedCard = ({ listing }: listing) => {
               variant="filled"
               onClick={() => addBookmark()}
             >
-              <IconHeart size={24} stroke={1.5} />
+              {isBookmarked ? (
+                <IconHeartFilled size={24} stroke={1.5} />
+              ) : (
+                <IconHeart size={24} stroke={1.5} />
+              )}
             </ActionIcon>
           </div>
           <div

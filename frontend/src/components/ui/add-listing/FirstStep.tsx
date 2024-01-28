@@ -1,7 +1,5 @@
-import React, { useEffect, useRef, useState } from 'react';
 import {
   ActionIcon,
-  Button,
   Flex,
   FocusTrap,
   Grid,
@@ -10,12 +8,13 @@ import {
   Select,
   SelectItem,
   Stack,
-  Textarea,
   TextInput,
+  Textarea,
 } from '@mantine/core';
-import ImageDropper from './ImageDropper';
-import { useCategoryList } from '../../../../orval/category/category';
 import { IconMinus, IconPlus } from '@tabler/icons-react';
+import { useEffect, useState } from 'react';
+import { useCategoryList } from '../../../../orval/category/category';
+import ImageDropper from './ImageDropper';
 import useAddListingForm from './UseAddListingForm';
 
 type FirstStepProps = {

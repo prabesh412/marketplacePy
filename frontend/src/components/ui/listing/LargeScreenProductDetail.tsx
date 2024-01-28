@@ -1,4 +1,3 @@
-import { Listings } from '../../../../orval/model';
 import {
   Avatar,
   Badge,
@@ -35,8 +34,9 @@ import {
   IconTool,
   IconWriting,
 } from '@tabler/icons-react';
-import GetInitials from '../common/GetInitials';
+import { Listings } from '../../../../orval/model';
 import Comments from '../comments/Comments';
+import GetInitials from '../common/GetInitials';
 
 type LargeScreenProductDetailProps = {
   listing?: Listings;

@@ -1,20 +1,18 @@
+import HomeLayout from '@/components/layouts/HomeLayout';
+import HomeSection from '@/components/pageSpecific/home';
+import { Page } from '@/components/ui/common';
+import { getDefaultHomeStore } from '@/components/utils/PageDefaults';
 import { dehydrate, QueryClient } from '@tanstack/react-query';
 import { NextPageContext } from 'next';
-import { getDefaultHomeStore } from '@/components/utils/PageDefaults';
 import { ReactElement } from 'react';
-import { Page } from '@/components/ui/common';
-import HomeSection from '@/components/pageSpecific/home';
-import HomeLayout from '@/components/layouts/HomeLayout';
 import {
   categoryList,
   getCategoryListQueryKey,
 } from '../../orval/category/category';
-import AddListingFloatButton from '@/components/ui/add-listing/AddListingFloatButton';
 import {
   getListingsListQueryKey,
   listingsList,
 } from '../../orval/listings/listings';
-import BottomAppBar from '@/components/ui/navigation/MobileBottomAppBar';
 
 export async function getServerSideProps(ctx: NextPageContext) {
   const queryClient = new QueryClient();

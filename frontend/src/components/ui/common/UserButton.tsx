@@ -1,9 +1,9 @@
 import {
+  Avatar,
+  Group,
+  Text,
   UnstyledButton,
   UnstyledButtonProps,
-  Group,
-  Avatar,
-  Text,
   createStyles,
 } from '@mantine/core';
 import { IconChevronRight } from '@tabler/icons-react';
