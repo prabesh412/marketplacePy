@@ -8,6 +8,7 @@ import {
   createStyles,
 } from '@mantine/core';
 import React from 'react';
+import { CheckboxStates } from './HomepageSearchArea';
 const useStyles = createStyles((theme) => ({
   CheckBox: {
     backgroundColor:
@@ -16,9 +17,22 @@ const useStyles = createStyles((theme) => ({
         : theme.colors.gray[1],
   },
 }));
-const SearchCheckBox = () => {
-  const { classes } = useStyles();
 
+interface SearchCheckBoxProps {
+  checkboxStates: CheckboxStates;
+  setCheckboxStates: React.Dispatch<React.SetStateAction<CheckboxStates>>;
+}
+const SearchCheckBox = ({
+  checkboxStates,
+  setCheckboxStates,
+}: SearchCheckBoxProps) => {
+  const { classes } = useStyles();
+  const handleCheckboxChange = (checkboxName: keyof CheckboxStates) => {
+    setCheckboxStates((prevState) => ({
+      ...prevState,
+      [checkboxName]: !prevState[checkboxName],
+    }));
+  };
   return (
     <Grid w={'100%'} m={'auto'} gutter="md">
       <Grid.Col w={'100%'} span={12} md={4}>
@@ -42,7 +56,11 @@ const SearchCheckBox = () => {
                 </div>
               </Group>
             </Group>
-            <Checkbox size={'md'} radius={'md'} />
+            <Checkbox
+              onChange={() => handleCheckboxChange('is_negotiable')}
+              size={'md'}
+              radius={'md'}
+            />
           </Group>
         </Card>
       </Grid.Col>
@@ -67,7 +85,11 @@ const SearchCheckBox = () => {
                 </div>
               </Group>
             </Group>
-            <Checkbox size={'md'} radius={'md'} />
+            <Checkbox
+              onChange={() => handleCheckboxChange('condition')}
+              size={'md'}
+              radius={'md'}
+            />
           </Group>
         </Card>
       </Grid.Col>{' '}
@@ -78,21 +100,25 @@ const SearchCheckBox = () => {
               <Avatar
                 radius={'xl'}
                 src={
-                  'https://img.freepik.com/free-vector/address-illustration-concept_114360-301.jpg'
+                  'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTiIGWrlszaSb4FF8tc2lVmlT8OD5xxUJpY0Q&usqp=CAU'
                 }
               />
               <Group position="apart" pl={'sm'} pr={'sm'}>
                 <div>
                   <Text c={'dimmed'} size={'xs'}>
-                    Location
+                    Status
                   </Text>
                   <Text fw={'bold'} size={'sm'}>
-                    Near me
+                    Featured
                   </Text>
                 </div>
               </Group>
             </Group>
-            <Checkbox size={'md'} radius={'md'} />
+            <Checkbox
+              onChange={() => handleCheckboxChange('is_featured')}
+              size={'md'}
+              radius={'md'}
+            />
           </Group>
         </Card>
       </Grid.Col>

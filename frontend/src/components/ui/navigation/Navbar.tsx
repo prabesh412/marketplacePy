@@ -171,9 +171,8 @@ const Navbar = ({ isHomepage }: HeaderSearchProps) => {
           </Tabs>
           <IconSearch
             onClick={() => setModalTrigger((prev) => !prev)}
-            className={classes.burger}
-            size="2em"
-            stroke={'2'}
+            size="1.5em"
+            stroke={'3'}
           />
 
           <Group classNames={classes.burger} spacing={7}>
