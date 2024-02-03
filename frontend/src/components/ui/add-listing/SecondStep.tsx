@@ -9,10 +9,7 @@ import {
   Text,
   TextInput,
   createStyles,
-  useMantineTheme,
 } from '@mantine/core';
-import React, { useState } from 'react';
-import useAddListingForm from './UseAddListingForm';
 import {
   IconCheck,
   IconClick,
@@ -22,6 +19,8 @@ import {
   IconPlus,
   IconQuestionMark,
 } from '@tabler/icons-react';
+import { useState } from 'react';
+import useAddListingForm from './UseAddListingForm';
 
 type SecondStepProps = {
   form: ReturnType<typeof useAddListingForm>;

@@ -1,14 +1,13 @@
-import { useState } from 'react';
+import { Card, Stepper } from '@mantine/core';
 import {
-  IconUserCheck,
-  IconCircleCheck,
-  IconWriting,
-  IconUpload,
-  IconCircleX,
   IconCheck,
+  IconCircleCheck,
+  IconCircleX,
   IconPhoto,
+  IconUpload,
+  IconUserCheck,
+  IconWriting,
 } from '@tabler/icons-react';
-import { Card, Center, Stepper } from '@mantine/core';
 
 const ListingStepper = ({ step, form }: any) => {
   return (

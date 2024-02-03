@@ -1,19 +1,6 @@
-import React from 'react';
-import {
-  Card,
-  Col,
-  Grid,
-  Group,
-  Stack,
-  Title,
-  Text,
-  useMantineTheme,
-  Badge,
-} from '@mantine/core';
-import { PlainDivider } from '../common/PlainDivider';
+import { Card, useMantineTheme } from '@mantine/core';
 import HorizontalCard from '../listing/HorizontalCard';
 import useAddListingForm from './UseAddListingForm';
-import { IconCamera } from '@tabler/icons-react';
 
 interface ListingDetailProps {
   form: ReturnType<typeof useAddListingForm>;

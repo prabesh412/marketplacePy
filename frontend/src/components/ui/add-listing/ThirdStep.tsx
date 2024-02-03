@@ -1,8 +1,7 @@
 import { Card, Group, Text, useMantineTheme } from '@mantine/core';
-import React, { useState } from 'react';
-import useAddListingForm from './UseAddListingForm';
 import { IconPhotoSearch } from '@tabler/icons-react';
 import ImageDropper from './ImageDropper';
+import useAddListingForm from './UseAddListingForm';
 
 type SecondStepProps = {
   form: ReturnType<typeof useAddListingForm>;

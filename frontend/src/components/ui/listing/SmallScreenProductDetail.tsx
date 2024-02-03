@@ -1,5 +1,6 @@
+import { GetKeyFromValue } from '@/components/utils/GetKeyFromMap';
+import { ListingOptionMap } from '@/components/utils/ListingOptionMap';
 import { Carousel } from '@mantine/carousel';
-import { Listings } from '../../../../orval/model';
 import {
   Avatar,
   Badge,
@@ -20,20 +21,18 @@ import {
   IconCalendar,
   IconCash,
   IconCheck,
-  IconDownload,
   IconEye,
   IconHeart,
   IconMessage,
   IconPackage,
-  IconPhoto,
   IconShare,
   IconTag,
   IconThumbUp,
   IconTool,
   IconWriting,
 } from '@tabler/icons-react';
-import { GetKeyFromValue } from '@/components/utils/GetKeyFromMap';
-import { ListingOptionMap } from '@/components/utils/ListingOptionMap';
+import { Listings } from '../../../../orval/model';
+import Comments from '../comments/Comments';
 
 type SmallScreenProductDetailProps = {
   listing?: Listings;
@@ -122,12 +121,7 @@ const SmallScreenProductDetail = ({
 
             <Tabs.Panel value="Description">
               <Text c={'dimmed'} mt={'sm'}>
-                Its less used laptop brought from Korea without any scratches..
-                FEEL FREE TO VISIT MY HOUSE, CHECK THE LAPTOP AND BUY🙂 (No
-                exchange!!!) Direct Call: 9843297470 Location: Sorokhutte Chowk
-                Brand: MacBook Model: Pro 2018(TouchBar Series) Processor: Intel
-                i5 processor Ram: 16GB SSD: 256GB Screen size: 13" Battery
-                Backup: 4-5Hrs Price: NRs 80,000/-
+                {listing?.description}
               </Text>
               <Text fw={500} c={'dimmed'} mt={'sm'}>
                 Specifications
@@ -260,9 +254,11 @@ const SmallScreenProductDetail = ({
               </Button>
             </Tabs.Panel>
 
-            <Tabs.Panel value="messages">Messages tab content</Tabs.Panel>
+            <Tabs.Panel value="messages">
+              <Comments listingSlug={listing?.slug} />
+            </Tabs.Panel>
 
-            <Tabs.Panel value="settings">
+            {/* <Tabs.Panel value="settings">
               <></>
               <Divider mt={'sm'} />
               <Group mt={'sm'} position="apart">
@@ -272,7 +268,7 @@ const SmallScreenProductDetail = ({
 
                 <Button rightIcon={<IconDownload size={14} />}>Download</Button>
               </Group>
-            </Tabs.Panel>
+            </Tabs.Panel> */}
           </Tabs>
         </div>
       </Card>

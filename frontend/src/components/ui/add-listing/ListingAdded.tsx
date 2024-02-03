@@ -2,20 +2,17 @@ import {
   Button,
   Card,
   Center,
-  Container,
   Group,
   Paper,
   Stack,
   Text,
-  ThemeIcon,
   Title,
   rem,
   useMantineTheme,
 } from '@mantine/core';
 import { IconArrowRight, IconCircleCheck } from '@tabler/icons-react';
-import { Keyframes } from '@emotion/react';
-import ListingStepper from './ListingStepper';
 import { useRouter } from 'next/router';
+import ListingStepper from './ListingStepper';
 
 const ListingAdded = () => {
   const theme = useMantineTheme();

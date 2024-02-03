@@ -1,8 +1,10 @@
 from celery import shared_task
-from doshro_bazar.listings.models import ListingViews, Listings
 from django.core.cache import cache
+
 from doshro_bazar.category.models import Category
+from doshro_bazar.listings.models import Listings, ListingViews
 from doshro_bazar.listings.scraper import scrape_listing_paginated
+
 
 @shared_task
 def update_views():

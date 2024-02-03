@@ -1,7 +1,6 @@
 import { Badge, createStyles, rem } from '@mantine/core';
 import { IconCirclePlus } from '@tabler/icons-react';
 import { useRouter } from 'next/router';
-import React from 'react';
 
 const AddListingFloatButton = () => {
   const router = useRouter();

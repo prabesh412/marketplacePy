@@ -1,6 +1,4 @@
-import React from 'react';
 import {
-  Avatar,
   Badge,
   Box,
   Divider,
@@ -11,9 +9,9 @@ import {
   useMantineTheme,
 } from '@mantine/core';
 
-import { useCategoryList } from '../../../../orval/category/category';
 import { Carousel } from '@mantine/carousel';
 import { useRouter } from 'next/router';
+import { useCategoryList } from '../../../../orval/category/category';
 const useStyles = createStyles((theme) => ({
   textInput: {
     width: '100%',

@@ -68,7 +68,7 @@ export default function PublicProfile() {
       {userData && <ProfileCard user={userData} />}
       {listingsData?.results &&
         listingsData?.results.map((listing) => (
-          <div key={listing.slug}>
+          <div key={listing.slug} style={{ paddingBottom: '15px' }}>
             <HorizontalCard listing={listing} />
           </div>
         ))}

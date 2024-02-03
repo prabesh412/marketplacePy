@@ -1,6 +1,5 @@
 import { Carousel } from '@mantine/carousel';
 import { Image, useMantineTheme } from '@mantine/core';
-import React from 'react';
 const HomepageCarousel = () => {
   const theme = useMantineTheme();
   return (

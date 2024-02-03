@@ -33,6 +33,7 @@ import {
   IconTool,
   IconWriting,
 } from '@tabler/icons-react';
+import { useRouter } from 'next/router';
 import { Listings } from '../../../../orval/model';
 import Comments from '../comments/Comments';
 import GetInitials from '../common/GetInitials';
@@ -44,6 +45,7 @@ const LargeScreenProductDetail = ({
   listing,
 }: LargeScreenProductDetailProps) => {
   const theme = useMantineTheme();
+  const router = useRouter();
   return (
     <Container maw={'1300px'} m={'auto'} fluid mt={'lg'}>
       <Group position="apart" style={{ alignItems: 'flex-start' }}>
@@ -259,7 +261,13 @@ const LargeScreenProductDetail = ({
                     </Text>
                   </div>
                 </Group>
-                <Button radius={'lg'} mt={'sm'}>
+                <Button
+                  radius={'lg'}
+                  mt={'sm'}
+                  onClick={() =>
+                    router.push(`/public-profile/${listing?.user?.username}`)
+                  }
+                >
                   Visit profile
                 </Button>
               </Tabs.Panel>

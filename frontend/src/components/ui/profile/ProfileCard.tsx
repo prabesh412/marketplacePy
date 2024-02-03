@@ -9,9 +9,9 @@ const ProfileCard = ({ user }: ProfileCardProps) => {
   const theme = useMantineTheme();
 
   const stats = [
-    { value: user?.number_of_listings, label: 'No. of Listings' },
-    { value: user?.number_of_comments, label: 'No. of Comments' },
-    { value: user?.number_of_bookmark, label: 'No. of Bookmarks' },
+    { value: user?.number_of_listings, label: 'Total Listings' },
+    { value: user?.number_of_comments, label: 'Total Comments' },
+    { value: user?.number_of_bookmark, label: 'Total Bookmarks' },
   ];
 
   const items = stats.map((stat) => (

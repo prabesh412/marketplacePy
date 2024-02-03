@@ -1,19 +1,13 @@
 import {
-  Badge,
-  Box,
   Card,
-  Divider,
   Group,
-  Overlay,
   Text,
-  Title,
   createStyles,
   useMantineTheme,
 } from '@mantine/core';
-import React from 'react';
+import { IconPhotoSearch } from '@tabler/icons-react';
 import ListingOverview from './ListingOverview';
 import useAddListingForm from './UseAddListingForm';
-import { IconCamera, IconPhotoSearch } from '@tabler/icons-react';
 
 type FourthStepProps = {
   form: ReturnType<typeof useAddListingForm>;
