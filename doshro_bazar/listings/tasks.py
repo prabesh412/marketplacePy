@@ -26,7 +26,7 @@ def print_current_scraping_category(category_id):
     print(category_id, "current_category")
 
 
-# @shared_task
+@shared_task
 def get_all_categories():
     categories = Category.objects.all()
     category_id_list = []
