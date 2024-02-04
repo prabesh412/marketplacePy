@@ -33,4 +33,4 @@ django-cloudinary-storage
 cloudinary
 pillow
 twilio
-
+django-silk==5.0.2
