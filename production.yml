@@ -97,8 +97,6 @@ services:
       context: .
       dockerfile: ./compose/production/frontend/Dockerfile
 
-    command: yarn start
-
     depends_on:
       - redis
       - postgres
