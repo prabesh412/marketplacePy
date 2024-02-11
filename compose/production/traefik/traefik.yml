@@ -31,7 +31,7 @@ certificatesResolvers:
 http:
   routers:
     web-secure-router:
-      rule: "Path(`/robots.txt/`, `/robots.txt`,`/sitemap.xml`, `/sitemap.xml/` ) || PathPrefix(`/api/`, `/api-schema/`, `/admin/`, `/static/`,`/rest-auth/`, `/dj-rest-auth/`)"
+      rule: "Path(`/robots.txt`, `/sitemap.xml`) || PathPrefix(`/api`, `/api-schema`, `/admin`, `/static`, `/rest-auth`, `/dj-rest-auth`)"
       entryPoints:
         - web-secure
       middlewares:
