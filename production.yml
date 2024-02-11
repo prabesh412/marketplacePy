@@ -62,12 +62,6 @@ services:
       - redis
       - postgres
 
-    deploy:
-      resources:
-        limits:
-          cpus: "0.8"
-      replicas: 3
-
   celerybeat:
     <<: *django
     image: doshro_bazar_production_celerybeat
@@ -87,12 +81,12 @@ services:
     image: doshro_bazar_production_flower
     command: /start-flower
 
-  nginx:
-    build:
-      context: .
-      dockerfile: ./compose/production/nginx/Dockerfile
-    image: doshro_bazar_local_nginx
-    depends_on:
-      - django
-    volumes:
-      - production_django_media:/usr/share/nginx/media:ro
+  # nginx:
+  #   build:
+  #     context: .
+  #     dockerfile: ./compose/production/nginx/Dockerfile
+  #   image: doshro_bazar_local_nginx
+  #   depends_on:
+  #     - django
+  #   volumes:
+  #     - production_django_media:/usr/share/nginx/media:ro
