@@ -2,7 +2,7 @@ import Axios, { AxiosRequestConfig } from 'axios';
 import { parseCookies } from 'nookies';
 
 export const AXIOS_INSTANCE = Axios.create({
-  baseURL: 'http://localhost:8000',
+  baseURL: 'http://django:5000',
 });
 
 export const customInstance = <T>(config: AxiosRequestConfig): Promise<T> =>
