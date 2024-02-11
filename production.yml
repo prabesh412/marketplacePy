@@ -55,18 +55,18 @@ services:
     <<: *django
     image: doshro_bazar_production_celeryworker
     command: /start-celeryworker
+    depends_on:
+      - redis
+      - postgres
 
   celerybeat:
     <<: *django
     image: doshro_bazar_production_celerybeat
     command: /start-celerybeat
-    environment:
-      - POSTGRES_USER=debug
-      - POSTGRES_PASSWORD=debug
-      - POSTGRES_DB=doshro_bazar
-    restart: on-failure
     depends_on:
+      - redis
       - postgres
+    restart: on-failure
 
   flower:
     <<: *django
