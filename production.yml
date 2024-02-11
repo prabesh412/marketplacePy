@@ -62,6 +62,12 @@ services:
       - redis
       - postgres
 
+    deploy:
+      resources:
+        limits:
+          cpus: "0.8"
+      replicas: 3
+
   celerybeat:
     <<: *django
     image: doshro_bazar_production_celerybeat
