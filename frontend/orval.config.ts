@@ -1,7 +1,7 @@
 module.exports = {
   doshroBazar: {
     input: {
-      target: 'https://34.228.20.185/api/schema/',
+      target: './doshro_bazar.yaml',
     },
     output: {
       mode: 'tags-split',
