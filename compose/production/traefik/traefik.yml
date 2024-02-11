@@ -42,7 +42,7 @@ http:
         certResolver: letsencrypt
 
     flower-secure-router:
-      rule: "PathPrefix(`/`)"
+      rule: "Host(`djangocutter.store`)"
       entryPoints:
         - flower
       service: flower
@@ -51,7 +51,7 @@ http:
         certResolver: letsencrypt
 
     web-media-router:
-      rule: "PathPrefix(`/`)"
+      rule: "Host(`djangocutter.store`)"
       entryPoints:
         - web-secure
       middlewares:
