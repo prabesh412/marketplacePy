@@ -9,7 +9,7 @@
     "start": "next start",
     "prettier": "prettier --write .",
     "api": "orval",
-    "prod_start": "node server.js"
+    "prod_start": "node ./server.js"
   },
   "dependencies": {
     "@emotion/react": "^11.11.1",
