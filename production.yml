@@ -55,6 +55,9 @@ services:
     <<: *django
     image: doshro_bazar_production_celeryworker
     command: /start-celeryworker
+    environment:
+      - DATABASE_URL=postgres://debug:debug@postgres/doshro_bazar
+      - CELERY_BROKER_URL=redis://redis:6379/0
     depends_on:
       - redis
       - postgres
