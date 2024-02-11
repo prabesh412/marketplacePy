@@ -9,4 +9,4 @@
 .travis.yml
 venv
 .git
-node_modules/
+frontend/node_modules/
