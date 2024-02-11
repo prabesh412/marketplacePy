@@ -91,33 +91,33 @@ services:
     volumes:
       - production_django_media:/usr/share/nginx/media:ro
 
-  # frontend:
-  #   image: doshrodeal_production_frontend
-  #   build:
-  #     context: .
-  #     dockerfile: ./compose/production/frontend/Dockerfile
+  frontend:
+    image: doshrodeal_production_frontend
+    build:
+      context: .
+      dockerfile: ./compose/production/frontend/Dockerfile
 
-  #   depends_on:
-  #     - redis
-  #     - postgres
-  #     - django
-  #   restart: on-failure
+    depends_on:
+      - redis
+      - postgres
+      - django
+    restart: on-failure
 
-  #   deploy:
-  #     update_config:
-  #       parallelism: 1
-  #       order: start-first
+    deploy:
+      update_config:
+        parallelism: 1
+        order: start-first
 
-  #   healthcheck:
-  #     test:
-  #       [
-  #         "CMD",
-  #         "wget",
-  #         "--quiet",
-  #         "--tries=1",
-  #         "--spider",
-  #         "http://localhost:3000/",
-  #       ]
-  #     interval: 2s
-  #     timeout: 3s
-  #     retries: 2
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "wget",
+          "--quiet",
+          "--tries=1",
+          "--spider",
+          "http://localhost:3000/",
+        ]
+      interval: 2s
+      timeout: 3s
+      retries: 2
