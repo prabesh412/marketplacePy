@@ -31,7 +31,7 @@ certificatesResolvers:
 http:
   routers:
     web-secure-router:
-      rule: "Host(`ec2-13-201-90-145.ap-south-1.compute.amazonaws.com`) || Host(`www.ec2-13-201-90-145.ap-south-1.compute.amazonaws.com`)"
+      rule: "Path(`/robots.txt/`, `/robots.txt`,`/sitemap.xml`, `/sitemap.xml/` ) || PathPrefix(`/api/`, `/api-schema/`, `/admin/`, `/static/`,`/rest-auth/`, `/dj-rest-auth/`)"
       entryPoints:
         - web-secure
       middlewares:
@@ -42,7 +42,7 @@ http:
         certResolver: letsencrypt
 
     flower-secure-router:
-      rule: "Host(`ec2-13-201-90-145.ap-south-1.compute.amazonaws.com`)"
+      rule: "PathPrefix(`/`)"
       entryPoints:
         - flower
       service: flower
@@ -51,7 +51,7 @@ http:
         certResolver: letsencrypt
 
     web-media-router:
-      rule: "(Host(`ec2-13-201-90-145.ap-south-1.compute.amazonaws.com`) || Host(`www.ec2-13-201-90-145.ap-south-1.compute.amazonaws.com`)) && PathPrefix(`/media/`)"
+      rule: "PathPrefix(`/`)"
       entryPoints:
         - web-secure
       middlewares:
