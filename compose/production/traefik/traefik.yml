@@ -31,12 +31,24 @@ certificatesResolvers:
 http:
   routers:
     web-secure-router:
-      rule: 'Host(`doshrodeal.com`) && PathPrefix(`/api/`, `/rest-auth/`, `/dj-rest-auth/`, `/api-schema/`, `/{{env "DJANGO_ADMIN_URL"}}` ) || Host(`www.nejdej.com`) && PathPrefix(`/api/`,`/rest-auth/`, `/dj-rest-auth/`, `/api-schema/`, `/{{env "DJANGO_ADMIN_URL"}}`)'
+      rule: "Path(`/robots.txt/`, `/robots.txt`,`/sitemap.xml`, `/sitemap.xml/` ) || PathPrefix(`/api/`, `/api-schema/`, `/admin/`, `/static/`,`/rest-auth/`, `/dj-rest-auth/`)"
       entryPoints:
         - web-secure
       middlewares:
         - csrf
       service: django
+      tls:
+        # https://docs.traefik.io/master/routing/routers/#certresolver
+        certResolver: letsencrypt
+
+    web-secure-router-frontend:
+      rule: "Host(`doshrodeal.com`)"
+      entryPoints:
+        - web
+      middlewares:
+        - csrf
+        - test-compress
+      service: frontend
       tls:
         # https://docs.traefik.io/master/routing/routers/#certresolver
         certResolver: letsencrypt
@@ -59,18 +71,6 @@ http:
     #   service: django-media
     #   tls:
     #     certResolver: letsencrypt
-
-    web-secure-router-frontend:
-      rule: "Host(`doshrodeal.com`)"
-      entryPoints:
-        - web
-      middlewares:
-        - csrf
-        - test-compress
-      service: frontend
-      tls:
-        # https://docs.traefik.io/master/routing/routers/#certresolver
-        certResolver: letsencrypt
 
   middlewares:
     csrf:
