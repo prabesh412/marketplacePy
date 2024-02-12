@@ -31,7 +31,7 @@ certificatesResolvers:
 http:
   routers:
     web-secure-router:
-      rule: "Path(`/robots.txt/`, `/robots.txt`,`/sitemap.xml`, `/sitemap.xml/` ) || PathPrefix(`/api/`, `/api-schema/`, `/admin/`, `/static/`,`/rest-auth/`, `/dj-rest-auth/`)"
+      rule: "Host(`doshrodeal.com`) && PathPrefix(`/api/`, `/rest-auth/`, `/dj-rest-auth/`, `/api-schema/`, `/admin` ) || Host(`www.doshrodeal.com`) && PathPrefix(`/api/`,`/rest-auth/`, `/dj-rest-auth/`, `/api-schema/`, `/admin`)"
       entryPoints:
         - web-secure
       middlewares:
@@ -42,7 +42,7 @@ http:
         certResolver: letsencrypt
 
     web-secure-router-frontend:
-      rule: "Host(`doshrodeal.com`)"
+      rule: "Host(`doshrodeal.com`) || Host(`www.doshrodeal.com`)"
       entryPoints:
         - web-secure
       middlewares:
