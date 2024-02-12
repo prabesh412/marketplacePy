@@ -76,6 +76,7 @@ ADMIN_URL = env("DJANGO_ADMIN_URL")
 # ------------------------------------------------------------------------------
 # https://anymail.readthedocs.io/en/stable/installation/#installing-anymail
 INSTALLED_APPS += ["anymail"]  # noqa: F405
+INSTALLED_APPS += ["django_extensions"] 
 # https://docs.djangoproject.com/en/dev/ref/settings/#email-backend
 # https://anymail.readthedocs.io/en/stable/installation/#anymail-settings-reference
 # https://anymail.readthedocs.io/en/stable/esps/mailjet/
