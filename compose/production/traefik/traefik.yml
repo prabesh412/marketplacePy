@@ -87,10 +87,10 @@ http:
         servers:
           - url: http://flower:5555
 
-    django-media:
-      loadBalancer:
-        servers:
-          - url: http://nginx:80
+    # django-media:
+    #   loadBalancer:
+    #     servers:
+    #       - url: http://nginx:80
 
     frontend:
       loadBalancer:
