@@ -18,9 +18,6 @@ entryPoints:
   flower:
     address: ":5555"
 
-  django:
-    address: ":8080"
-
 certificatesResolvers:
   letsencrypt:
     # https://docs.traefik.io/master/https/acme/#lets-encrypt
@@ -51,14 +48,6 @@ http:
       service: flower
       tls:
         # https://docs.traefik.io/master/routing/routers/#certresolver
-        certResolver: letsencrypt
-
-    django-router:
-      rule: "PathPrefix(`/`)"
-      entryPoints:
-        - django
-      service: django
-      tls:
         certResolver: letsencrypt
 
     web-media-router:
