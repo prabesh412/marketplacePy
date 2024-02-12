@@ -44,7 +44,7 @@ http:
     web-secure-router-frontend:
       rule: "Host(`doshrodeal.com`)"
       entryPoints:
-        - web
+        - web-secure
       middlewares:
         - csrf
         - test-compress
