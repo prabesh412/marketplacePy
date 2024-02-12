@@ -11,6 +11,9 @@ entryPoints:
         entryPoint:
           to: web-secure
 
+  django-app:
+    address: ":5000"
+
   web-secure:
     # https
     address: ":443"
@@ -40,6 +43,12 @@ http:
       tls:
         # https://docs.traefik.io/master/routing/routers/#certresolver
         certResolver: letsencrypt
+
+    django-app-router:
+      rule: "PathPrefix(`/`)"
+      entryPoints:
+        - django-app
+      service: django
 
     flower-secure-router:
       rule: "PathPrefix(`/`)"
