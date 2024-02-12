@@ -1,10 +1,13 @@
 import json
 import os
-from doshro_bazar.category.models import Category
-from doshro_bazar.users.models import User
-from doshro_bazar.listings.models import Listings
-from django.utils.text import slugify
 import random
+
+from django.utils.text import slugify
+
+from doshro_bazar.category.models import Category
+from doshro_bazar.listings.models import Listings
+from doshro_bazar.users.models import User
+
 
 def fill_category_db():
     file_path = os.path.join(os.path.dirname(__file__), 'mock', 'data.json')
@@ -78,7 +81,7 @@ def delete_cache():
 
 
 def run():
-    create_link()
+    fill_category_db()
     
 
 if __name__ == '__main__': 
