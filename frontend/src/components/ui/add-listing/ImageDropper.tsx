@@ -12,9 +12,10 @@ import { IconPhoto, IconTrash, IconUpload, IconX } from '@tabler/icons-react';
 import { useState } from 'react';
 
 import ShowNotification from '../common/Notification';
+import useAddListingForm from './UseAddListingForm';
 
 type ImageDropperProps = {
-  form: any;
+  form: ReturnType<typeof useAddListingForm>;
 };
 
 const ImageDropper = ({ form }: ImageDropperProps) => {

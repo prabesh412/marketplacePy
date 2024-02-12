@@ -23,7 +23,7 @@ const HomepageCarousel = () => {
             'https://static.vecteezy.com/system/resources/previews/015/706/698/non_2x/kathmandu-nepal-background-vector.jpg'
           }
           alt="banner"
-          fit="fill"
+          fit="cover"
           height={'20vh'}
         />
       </Carousel>
