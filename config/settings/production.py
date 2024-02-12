@@ -134,7 +134,7 @@ LOGGING = {
 # -------------------------------------------------------------------------------
 # Tools that generate code samples can use SERVERS to point to the correct domain
 SPECTACULAR_SETTINGS["SERVERS"] = [  # noqa: F405
-    {"url": "https://34.228.20.185", "description": "Production server"},
+    {"url": "https://doshrodeal.com", "description": "Production server"},
 ]
 # Your stuff...
 # ------------------------------------------------------------------------------
