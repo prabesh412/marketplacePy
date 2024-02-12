@@ -42,7 +42,7 @@ http:
         certResolver: letsencrypt
 
     flower-secure-router:
-      rule: "PathPrefix(`/flower`)"
+      rule: "PathPrefix(`/`)"
       entryPoints:
         - flower
       service: flower
@@ -50,15 +50,15 @@ http:
         # https://docs.traefik.io/master/routing/routers/#certresolver
         certResolver: letsencrypt
 
-    web-media-router:
-      rule: "PathPrefix(`/web`)"
-      entryPoints:
-        - web-secure
-      middlewares:
-        - csrf
-      service: django-media
-      tls:
-        certResolver: letsencrypt
+    # web-media-router:
+    #   rule: "PathPrefix(`/`)"
+    #   entryPoints:
+    #     - web-secure
+    #   middlewares:
+    #     - csrf
+    #   service: django-media
+    #   tls:
+    #     certResolver: letsencrypt
 
     web-secure-router-frontend:
       rule: "PathPrefix(`/`)"
