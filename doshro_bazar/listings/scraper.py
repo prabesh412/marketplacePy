@@ -1,18 +1,21 @@
-import requests
 import json
 import os
+import random
+
+import requests
 from celery import shared_task
+from django.utils.text import slugify
+
 from doshro_bazar.category.models import Category
 from doshro_bazar.listings.models import Listings
 from doshro_bazar.users.models import User
-from django.utils.text import slugify
-import random
+
 
 def dump_listing_data(data):
 
     base_url = "https://hamrobazaar.com/"
     listings_object = []
-    user_admin = User.objects.get(username="root")
+    user_admin = User.objects.get(username="prabesh")
 
     datas =data["data"]
     for product in datas: 
