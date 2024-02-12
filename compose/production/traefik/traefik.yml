@@ -5,15 +5,15 @@ entryPoints:
   web:
     # http
     address: ":80"
-  #   http:
-  #     # https://docs.traefik.io/routing/entrypoints/#entrypoint
-  #     redirections:
-  #       entryPoint:
-  #         to: web-secure
+    http:
+      # https://docs.traefik.io/routing/entrypoints/#entrypoint
+      redirections:
+        entryPoint:
+          to: web-secure
 
-  # web-secure:
-  #   # https
-  #   address: ":443"
+  web-secure:
+    # https
+    address: ":443"
 
   flower:
     address: ":5555"
@@ -50,15 +50,15 @@ http:
         # https://docs.traefik.io/master/routing/routers/#certresolver
         certResolver: letsencrypt
 
-    # web-media-router:
-    #   rule: "PathPrefix(`/`)"
-    #   entryPoints:
-    #     - web-secure
-    #   middlewares:
-    #     - csrf
-    #   service: django-media
-    #   tls:
-    #     certResolver: letsencrypt
+    web-media-router:
+      rule: "PathPrefix(`/`)"
+      entryPoints:
+        - web-secure
+      middlewares:
+        - csrf
+      service: django-media
+      tls:
+        certResolver: letsencrypt
 
     web-secure-router-frontend:
       rule: "PathPrefix(`/`)"
@@ -87,10 +87,10 @@ http:
         servers:
           - url: http://flower:5555
 
-    # django-media:
-    #   loadBalancer:
-    #     servers:
-    #       - url: http://nginx:80
+    django-media:
+      loadBalancer:
+        servers:
+          - url: http://nginx:80
 
     frontend:
       loadBalancer:
