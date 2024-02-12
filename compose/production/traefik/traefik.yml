@@ -42,7 +42,7 @@ http:
         certResolver: letsencrypt
 
     web-secure-router-frontend:
-      rule: "Host(`doshrodeal.com`) || Host(`www.doshrodeal.com`) && !PathPrefix(`/api/`, `/rest-auth/`, `/dj-rest-auth/`, `/api-schema/`, `/admin/`)"
+      rule: "Host(`doshrodeal.com`) || Host(`www.doshrodeal.com`) "
       entryPoints:
         - web-secure
       middlewares:
