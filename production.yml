@@ -81,15 +81,15 @@ services:
     image: doshro_bazar_production_flower
     command: /start-flower
 
-  nginx:
-    build:
-      context: .
-      dockerfile: ./compose/production/nginx/Dockerfile
-    image: doshro_bazar_local_nginx
-    depends_on:
-      - django
-    volumes:
-      - production_django_media:/usr/share/nginx/media:ro
+  # nginx:
+  #   build:
+  #     context: .
+  #     dockerfile: ./compose/production/nginx/Dockerfile
+  #   image: doshro_bazar_local_nginx
+  #   depends_on:
+  #     - django
+  #   volumes:
+  #     - production_django_media:/usr/share/nginx/media:ro
 
   frontend:
     image: doshrodeal_production_frontend
@@ -102,6 +102,9 @@ services:
       - postgres
       - django
     restart: on-failure
+
+    ports:
+      - "3000:3000"
 
     deploy:
       update_config:
