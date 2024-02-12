@@ -9,7 +9,7 @@ const Page = ({ children }: PageProps) => {
   return (
     <>
       <Head>
-        <title> Doroso Bazaar</title>
+        <title>Doshro Deal</title>
         {/*  TODO : add meta tags  */}
       </Head>
       {children}

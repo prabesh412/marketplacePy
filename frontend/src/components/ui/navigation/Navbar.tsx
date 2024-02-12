@@ -148,21 +148,21 @@ const Navbar = ({ isHomepage }: HeaderSearchProps) => {
 
               <Tabs.Tab
                 className={classes.tab}
-                value="settings"
+                value="featured"
                 icon={<IconStars size="0.8rem" />}
               >
                 Featured
               </Tabs.Tab>
               <Tabs.Tab
                 className={classes.tab}
-                value="settings"
+                value="popular"
                 icon={<IconCrown size="0.8rem" />}
               >
                 Popular
               </Tabs.Tab>
               <Tabs.Tab
                 className={classes.tab}
-                value="settings"
+                value="latest"
                 icon={<IconClock size="0.8rem" />}
               >
                 Latest
@@ -172,6 +172,7 @@ const Navbar = ({ isHomepage }: HeaderSearchProps) => {
           <IconSearch
             onClick={() => setModalTrigger((prev) => !prev)}
             size="1.5em"
+            className={classes.burger}
             stroke={'3'}
           />
 
