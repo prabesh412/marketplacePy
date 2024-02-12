@@ -31,7 +31,7 @@ certificatesResolvers:
 http:
   routers:
     web-secure-router:
-      rule: "Path(`/robots.txt/`, `/robots.txt`,`/sitemap.xml`, `/sitemap.xml/` ) || PathPrefix(`/api/`, `/api-schema/`, `/admin/`, `/static/`,`/rest-auth/`, `/dj-rest-auth/`)"
+      rule: 'Host(`doshrodeal.com`) && PathPrefix(`/api/`, `/rest-auth/`, `/dj-rest-auth/`, `/api-schema/`, `/{{env "DJANGO_ADMIN_URL"}}` ) || Host(`www.nejdej.com`) && PathPrefix(`/api/`,`/rest-auth/`, `/dj-rest-auth/`, `/api-schema/`, `/{{env "DJANGO_ADMIN_URL"}}`)'
       entryPoints:
         - web-secure
       middlewares:
@@ -42,7 +42,7 @@ http:
         certResolver: letsencrypt
 
     flower-secure-router:
-      rule: "PathPrefix(`/`)"
+      rule: "Host(`doshrodeal.com`)"
       entryPoints:
         - flower
       service: flower
@@ -50,24 +50,27 @@ http:
         # https://docs.traefik.io/master/routing/routers/#certresolver
         certResolver: letsencrypt
 
-    web-media-router:
-      rule: "PathPrefix(`/`)"
-      entryPoints:
-        - web-secure
-      middlewares:
-        - csrf
-      service: django-media
-      tls:
-        certResolver: letsencrypt
+    # web-media-router:
+    #   rule: "PathPrefix(`/`)"
+    #   entryPoints:
+    #     - web-secure
+    #   middlewares:
+    #     - csrf
+    #   service: django-media
+    #   tls:
+    #     certResolver: letsencrypt
 
     web-secure-router-frontend:
-      rule: "PathPrefix(`/`)"
+      rule: "Host(`doshrodeal.com`)"
       entryPoints:
         - web
       middlewares:
         - csrf
         - test-compress
       service: frontend
+      tls:
+        # https://docs.traefik.io/master/routing/routers/#certresolver
+        certResolver: letsencrypt
 
   middlewares:
     csrf:
@@ -87,10 +90,10 @@ http:
         servers:
           - url: http://flower:5555
 
-    django-media:
-      loadBalancer:
-        servers:
-          - url: http://nginx:80
+    # django-media:
+    #   loadBalancer:
+    #     servers:
+    #       - url: http://nginx:80
 
     frontend:
       loadBalancer:
