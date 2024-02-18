@@ -58,6 +58,11 @@ const useStyles = createStyles((theme) => ({
       width: '100%',
     },
   },
+  divider: {
+    '@media (max-width: 576px)': {
+      paddingTop: 10,
+    },
+  },
 }));
 const CategoryMarquee = () => {
   const theme = useMantineTheme();
@@ -120,9 +125,9 @@ const CategoryMarquee = () => {
         label={<Badge>Browse Featured Listings</Badge>}
         labelPosition="center"
         c={'dimmed'}
-        mt={1}
         mb={-5}
         size={1}
+        className={classes.divider}
         orientation="horizontal"
       />
     </div>

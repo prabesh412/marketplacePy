@@ -126,7 +126,7 @@ const HomepageSearchArea = (props: TextInputProps) => {
     const queryParams = new URLSearchParams({ title__icontains: searchValue });
     if (checkboxStates.is_negotiable)
       queryParams.append('is_negotiable', 'true');
-    if (checkboxStates.condition) queryParams.append('condition', 'BN');
+    if (checkboxStates.condition) queryParams.append('listing_condition', 'BN');
     if (checkboxStates.is_featured) queryParams.append('is_featured', 'true');
 
     router.push(`/search?${queryParams.toString()}`);
@@ -156,8 +156,13 @@ const HomepageSearchArea = (props: TextInputProps) => {
                 size="lg"
                 radius={'xl'}
                 icon={<IconSearch />}
-                placeholder="Search what you are lookng for"
+                placeholder="Search what you are looking for"
                 rightSectionWidth={40}
+                onKeyDown={(event) => {
+                  if (event.key === 'Enter') {
+                    handleSearch();
+                  }
+                }}
                 rightSection={
                   <ActionIcon
                     size={35}
@@ -167,6 +172,7 @@ const HomepageSearchArea = (props: TextInputProps) => {
                     color={theme.primaryColor}
                     variant="filled"
                     onClick={() => handleSearch()}
+                    tabIndex={0}
                   >
                     <IconArrowRight
                       style={{ width: rem(18), height: rem(18) }}

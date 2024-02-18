@@ -1,4 +1,38 @@
+import SearchLayout from '@/components/layouts/SearchLayout';
+import HorizontalCard from '@/components/ui/listing/HorizontalCard';
+import { ListingOptionMap } from '@/components/utils/ListingOptionMap';
 import { getDefaultStore } from '@/components/utils/PageDefaults';
+import {
+  ActionIcon,
+  Button,
+  Card,
+  Center,
+  Divider,
+  Group,
+  Modal,
+  Pagination,
+  Select,
+  Text,
+  TextInput,
+  createStyles,
+  rem,
+  useMantineTheme,
+} from '@mantine/core';
+import { DatePickerInput } from '@mantine/dates';
+import { useForm } from '@mantine/form';
+import {
+  IconAdjustments,
+  IconArrowBarBoth,
+  IconArrowRight,
+  IconCalendar,
+  IconCash,
+  IconChevronDown,
+  IconCurrencyRupeeNepalese,
+  IconSortAscending2,
+  IconStar,
+  IconThumbUp,
+  IconTool,
+} from '@tabler/icons-react';
 import { QueryClient, dehydrate } from '@tanstack/react-query';
 import { NextPageContext } from 'next';
 import { useRouter } from 'next/router';
@@ -8,42 +42,7 @@ import {
   listingsList,
   useListingsList,
 } from '../../../orval/listings/listings';
-import SearchLayout from '@/components/layouts/SearchLayout';
-import {
-  Group,
-  Select,
-  createStyles,
-  rem,
-  Text,
-  Button,
-  TextInput,
-  useMantineTheme,
-  ActionIcon,
-  Divider,
-  Modal,
-  Pagination,
-  Center,
-  Card,
-} from '@mantine/core';
 import { Listings } from '../../../orval/model/listings';
-import {
-  IconAdjustments,
-  IconArrowBarBoth,
-  IconArrowRight,
-  IconCalendar,
-  IconCash,
-  IconChevronDown,
-  IconCurrencyRupeeNepalese,
-  IconSearch,
-  IconSortAscending2,
-  IconStar,
-  IconThumbUp,
-  IconTool,
-} from '@tabler/icons-react';
-import { useForm } from '@mantine/form';
-import HorizontalCard from '@/components/ui/listing/HorizontalCard';
-import { ListingOptionMap } from '@/components/utils/ListingOptionMap';
-import { DatePickerInput } from '@mantine/dates';
 
 const useStyles = createStyles((theme) => ({
   parent: {
@@ -256,9 +255,15 @@ export default function Search() {
           onChange={(event) => setSearchValue(event.target.value)}
           size="md"
           radius={'xl'}
-          icon={<IconSearch />}
           placeholder={queryParams?.title__icontains as string}
           rightSectionWidth={40}
+          onKeyDown={(event) => {
+            if (event.key === 'Enter') {
+              if (searchValue.length > 0) {
+                router.push(`/search?title__icontains=${searchValue}`);
+              }
+            }
+          }}
           rightSection={
             <ActionIcon
               size={30}
@@ -268,7 +273,7 @@ export default function Search() {
               color={theme.primaryColor}
               variant="filled"
               onClick={() => {
-                if (searchValue) {
+                if (searchValue.length > 0) {
                   router.push(`/search?title__icontains=${searchValue}`);
                 }
               }}

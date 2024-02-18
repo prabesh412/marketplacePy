@@ -10,7 +10,7 @@ const useStyles = createStyles((theme) => ({
     alignItems: 'center',
     padding: theme.spacing.md,
     borderRadius: theme.radius.md,
-    marginBottom: 10,
+    paddingBottom: 10,
   },
   imageSkeleton: {
     width: 185,

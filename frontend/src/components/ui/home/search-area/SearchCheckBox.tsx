@@ -8,7 +8,11 @@ import {
   createStyles,
 } from '@mantine/core';
 import React from 'react';
+import Condition from '../../../../../public/quick-select-condition.jpg';
+import Feature from '../../../../../public/quick-select-featured.png';
+import Negotiable from '../../../../../public/quick-select-negotiable.jpg';
 import { CheckboxStates } from './HomepageSearchArea';
+
 const useStyles = createStyles((theme) => ({
   CheckBox: {
     backgroundColor:
@@ -39,12 +43,7 @@ const SearchCheckBox = ({
         <Card w={'auto'} radius={'md'} className={classes.CheckBox} p={10}>
           <Group position="apart" pl={'sm'} pr={'sm'}>
             <Group spacing={3}>
-              <Avatar
-                radius={'xl'}
-                src={
-                  'https://www.legalzoom.com/sites/lz.com/files/inline-images/articles/when_is_a_promissory_note_negotiable_1.jpg'
-                }
-              />
+              <Avatar radius={'xl'} src={Negotiable.src} />
               <Group position="apart" pl={'sm'} pr={'sm'}>
                 <div>
                   <Text c={'dimmed'} size={'xs'}>
@@ -68,12 +67,7 @@ const SearchCheckBox = ({
         <Card w={'auto'} radius={'md'} className={classes.CheckBox} p={10}>
           <Group position="apart" pl={'sm'} pr={'sm'}>
             <Group spacing={3}>
-              <Avatar
-                radius={'xl'}
-                src={
-                  'https://static.vecteezy.com/system/resources/previews/005/073/083/original/add-new-product-concept-illustration-flat-design-eps10-modern-graphic-element-for-landing-page-empty-state-ui-infographic-icon-vector.jpg'
-                }
-              />
+              <Avatar radius={'xl'} src={Feature.src} />
               <Group position="apart" pl={'sm'} pr={'sm'}>
                 <div>
                   <Text c={'dimmed'} size={'xs'}>
@@ -97,12 +91,7 @@ const SearchCheckBox = ({
         <Card w={'auto'} radius={'md'} className={classes.CheckBox} p={10}>
           <Group position="apart" pl={'sm'} pr={'sm'}>
             <Group spacing={3}>
-              <Avatar
-                radius={'xl'}
-                src={
-                  'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTiIGWrlszaSb4FF8tc2lVmlT8OD5xxUJpY0Q&usqp=CAU'
-                }
-              />
+              <Avatar radius={'xl'} src={Condition.src} />
               <Group position="apart" pl={'sm'} pr={'sm'}>
                 <div>
                   <Text c={'dimmed'} size={'xs'}>

@@ -65,7 +65,7 @@ const Login = () => {
         onSuccess: (data) => {
           setToken(data.key);
           setUser(data.key);
-          router.push(PATH_APP.root);
+          window.location.replace(PATH_APP.root);
           notifications.update({
             id: 'login',
             title: `Login Success`,
@@ -76,6 +76,7 @@ const Login = () => {
 
             withCloseButton: true,
           });
+          form.reset();
         },
         onError: (error: any) => {
           notifications.update({
@@ -86,7 +87,8 @@ const Login = () => {
               error['response']['data']['email'] ||
               error['response']['data']['username'] ||
               error['response']['data']['non_field_errors'] ||
-              error['response']['data']['password1']
+              error['response']['data']['password1'] ||
+              'Unexpected error occured'
             }`,
             loading: false,
             autoClose: true,

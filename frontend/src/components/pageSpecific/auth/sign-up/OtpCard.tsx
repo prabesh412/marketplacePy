@@ -1,18 +1,11 @@
-import { Card, Text, Button, Group, PinInput, rem } from '@mantine/core';
-import { useDjRestAuthOtpCreate } from '../../../../../orval/dj-rest-auth/dj-rest-auth';
-import { useForm } from '@mantine/form';
-import { notifications } from '@mantine/notifications';
-import { useRouter } from 'next/router';
 import { ROOTS_AUTH } from '@/components/routes';
-import {
-  IconLock,
-  IconLockAccess,
-  IconLockBolt,
-  IconLockPin,
-  IconLockSquareRoundedFilled,
-  IconShieldLockFilled,
-} from '@tabler/icons-react';
+import { Button, Card, Group, PinInput, Text, rem } from '@mantine/core';
+import { useForm } from '@mantine/form';
 import { useMediaQuery } from '@mantine/hooks';
+import { notifications } from '@mantine/notifications';
+import { IconShieldLockFilled } from '@tabler/icons-react';
+import { useRouter } from 'next/router';
+import { useDjRestAuthOtpCreate } from '../../../../../orval/dj-rest-auth/dj-rest-auth';
 
 interface OtpProps {
   phone_number: string;
@@ -29,7 +22,6 @@ const OtpCard = ({ phone_number }: OtpProps) => {
     },
   });
   const handleOtp = (values: { otp: string }) => {
-    console.log('clicked');
     const data = {
       otp: values.otp,
       phone_number: phone_number,
@@ -57,6 +49,7 @@ const OtpCard = ({ phone_number }: OtpProps) => {
 
             withCloseButton: true,
           });
+          form.reset();
         },
         onError: (error: any) => {
           console.log(error);

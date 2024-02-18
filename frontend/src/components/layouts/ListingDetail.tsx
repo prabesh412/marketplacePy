@@ -1,6 +1,6 @@
-import { ReactNode } from 'react';
-import Navbar from '@/components/ui/navigation/Navbar';
 import ResponsiveMargin from '@/components/global/ResponsiveMargin';
+import Navbar from '@/components/ui/navigation/Navbar';
+import { ReactNode } from 'react';
 
 interface AddListingProps {
   children: ReactNode;
@@ -9,7 +9,7 @@ interface AddListingProps {
 const ListingDetailLayout: React.FC<AddListingProps> = ({ children }) => {
   return (
     <>
-      <Navbar isHomepage={false} />
+      <Navbar isHomepage={true} />
       <ResponsiveMargin>
         <div>{children}</div>
       </ResponsiveMargin>

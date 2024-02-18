@@ -23,7 +23,7 @@ const useStyles = createStyles((theme) => ({
         : theme.colors.dark[4],
     minHeight: '100vh',
     '@media (max-width: 576px)': {
-      paddingBottom: 65,
+      paddingBottom: 75,
     },
   },
 }));

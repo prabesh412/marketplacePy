@@ -6,12 +6,12 @@ import {
   TextInput,
   Title,
 } from '@mantine/core';
-import { useRouter } from 'next/router';
-import { useDjRestAuthRegisterCreate } from '../../../../../orval/dj-rest-auth/dj-rest-auth';
 import { useForm } from '@mantine/form';
-import { useState } from 'react';
-import OtpCard from './OtpCard';
 import { notifications } from '@mantine/notifications';
+import { useRouter } from 'next/router';
+import { useState } from 'react';
+import { useDjRestAuthRegisterCreate } from '../../../../../orval/dj-rest-auth/dj-rest-auth';
+import OtpCard from './OtpCard';
 
 const Register = () => {
   const [step, setStep] = useState<Boolean>(false);
@@ -65,7 +65,8 @@ const Register = () => {
               error['response']['data']['email'] ||
               error['response']['data']['username'] ||
               error['response']['data']['non_field_errors'] ||
-              error['response']['data']['password1']
+              error['response']['data']['password1'] ||
+              'Unexpected error occured'
             }`,
             loading: false,
 

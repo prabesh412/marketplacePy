@@ -1,3 +1,5 @@
+import { GetKeyFromValue } from '@/components/utils/GetKeyFromMap';
+import { ListingOptionMap } from '@/components/utils/ListingOptionMap';
 import {
   ActionIcon,
   Avatar,
@@ -26,68 +28,7 @@ import { useBookmarksCreate } from '../../../../orval/bookmarks/bookmarks';
 import { getListingsListQueryKey } from '../../../../orval/listings/listings';
 import { Listings } from '../../../../orval/model';
 import GetInitials from '../common/GetInitials';
-import { GetKeyFromValue } from '@/components/utils/GetKeyFromMap';
-import { ListingOptionMap } from '@/components/utils/ListingOptionMap';
 
-const useStyles = createStyles((theme) => ({
-  card: {
-    '@media (max-width: 980px)': {
-      borderRadius: theme.radius.md,
-      padding: theme.radius.md,
-    },
-  },
-  image: {
-    '@media (max-width: 575px)': {
-      borderRadius: 0,
-    },
-    '@media (max-width: 980px)': {
-      borderRadius: theme.radius.sm,
-    },
-  },
-
-  badge: {
-    '@media (max-width: 320px)': {
-      display: 'none',
-    },
-  },
-  icon: {
-    '@media (max-width: 575px)': {
-      height: '1.2em',
-    },
-  },
-  rating: {
-    '@media (max-width: 575px)': {
-      display: 'none',
-    },
-  },
-  smText: {
-    display: '-webkit-box',
-    WebkitBoxOrient: 'vertical',
-    overflow: 'hidden',
-
-    WebkitLineClamp: 1,
-    '@media (max-width: 576px)': {
-      display: '-webkit-box',
-      height: '2.6em',
-      lineHeight: '1.3em',
-      WebkitBoxOrient: 'vertical',
-      overflow: 'hidden',
-      WebkitLineClamp: 2,
-      fontSize: theme.fontSizes.sm,
-    },
-  },
-  smGroup: {
-    '@media (max-width: 576px)': {
-      marginTop: 5,
-    },
-  },
-  price: {
-    '@media (max-width: 576px)': {
-      fontSize: theme.fontSizes.md,
-      marginTop: -7,
-    },
-  },
-}));
 type FeaturedCardProps = {
   listing?: Listings;
   currentPage?: number;
@@ -108,8 +49,10 @@ const FeaturedCard = ({ listing, currentPage }: FeaturedCardProps) => {
     };
     notifications.show({
       id: `userBookmark ${listing?.slug} ${isBookmarked}`,
-      title: `${!isBookmarked ? 'Adding' : 'Removing'} your bookmark`,
-      message: `Please wait while we add to your bookmark`,
+      title: `${!isBookmarked ? 'Adding' : 'removing'} your bookmark`,
+      message: `Please wait while we ${
+        !isBookmarked ? 'add' : 'remove'
+      }  your bookmark`,
       loading: true,
       autoClose: false,
       withCloseButton: false,
@@ -118,9 +61,7 @@ const FeaturedCard = ({ listing, currentPage }: FeaturedCardProps) => {
         { data: data },
         {
           onSuccess: async () => {
-            await queryClient.invalidateQueries(
-              getListingsListQueryKey({ page: currentPage }),
-            );
+            await queryClient.invalidateQueries(getListingsListQueryKey());
             setIsBookmarked((prev) => !prev);
             notifications.update({
               id: `userBookmark ${listing?.slug} ${isBookmarked}`,
@@ -128,18 +69,21 @@ const FeaturedCard = ({ listing, currentPage }: FeaturedCardProps) => {
                 !isBookmarked ? 'added' : 'removed'
               }`,
               color: 'green',
-              message: 'Successfully saved the bookmark!',
+              message: `Successfully  ${
+                !isBookmarked ? 'added' : 'removed'
+              } the bookmark!`,
               loading: false,
               autoClose: true,
               withCloseButton: true,
             });
           },
-          onError: () => {
+          onError: (error) => {
+            console.log(error);
             notifications.update({
               id: `userBookmark ${listing?.slug} ${isBookmarked}`,
               title: `Bookmark couldnot be added`,
               color: 'red',
-              message: 'Bookmark already exist',
+              message: 'Please make sure you are logged in',
               loading: false,
               autoClose: true,
               withCloseButton: true,
@@ -338,3 +282,62 @@ const FeaturedCard = ({ listing, currentPage }: FeaturedCardProps) => {
   );
 };
 export default FeaturedCard;
+const useStyles = createStyles((theme) => ({
+  card: {
+    '@media (max-width: 980px)': {
+      borderRadius: theme.radius.md,
+      padding: theme.radius.md,
+    },
+  },
+  image: {
+    '@media (max-width: 575px)': {
+      borderRadius: 0,
+    },
+    '@media (max-width: 980px)': {
+      borderRadius: theme.radius.sm,
+    },
+  },
+
+  badge: {
+    '@media (max-width: 320px)': {
+      display: 'none',
+    },
+  },
+  icon: {
+    '@media (max-width: 575px)': {
+      height: '1.2em',
+    },
+  },
+  rating: {
+    '@media (max-width: 575px)': {
+      display: 'none',
+    },
+  },
+  smText: {
+    display: '-webkit-box',
+    WebkitBoxOrient: 'vertical',
+    overflow: 'hidden',
+
+    WebkitLineClamp: 1,
+    '@media (max-width: 576px)': {
+      display: '-webkit-box',
+      height: '2.6em',
+      lineHeight: '1.3em',
+      WebkitBoxOrient: 'vertical',
+      overflow: 'hidden',
+      WebkitLineClamp: 2,
+      fontSize: theme.fontSizes.sm,
+    },
+  },
+  smGroup: {
+    '@media (max-width: 576px)': {
+      marginTop: 5,
+    },
+  },
+  price: {
+    '@media (max-width: 576px)': {
+      fontSize: theme.fontSizes.md,
+      marginTop: -7,
+    },
+  },
+}));

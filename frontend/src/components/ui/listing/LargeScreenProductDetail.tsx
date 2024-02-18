@@ -1,3 +1,4 @@
+import ExpandableText from '@/components/utils/ExpandableText';
 import { GetKeyFromValue } from '@/components/utils/GetKeyFromMap';
 import { ListingOptionMap } from '@/components/utils/ListingOptionMap';
 import {
@@ -18,6 +19,7 @@ import {
   rem,
   useMantineTheme,
 } from '@mantine/core';
+import { notifications } from '@mantine/notifications';
 import {
   IconArrowLeft,
   IconCalendar,
@@ -25,6 +27,7 @@ import {
   IconCheck,
   IconEye,
   IconHeart,
+  IconHeartFilled,
   IconMessage,
   IconPackage,
   IconShare,
@@ -33,10 +36,15 @@ import {
   IconTool,
   IconWriting,
 } from '@tabler/icons-react';
+import { useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
+import { useState } from 'react';
+import { useBookmarksCreate } from '../../../../orval/bookmarks/bookmarks';
+import { getListingsRetrieveQueryKey } from '../../../../orval/listings/listings';
 import { Listings } from '../../../../orval/model';
 import Comments from '../comments/Comments';
 import GetInitials from '../common/GetInitials';
+import ShareSocialMediaModal from '../common/ShareSocialMedia';
 
 type LargeScreenProductDetailProps = {
   listing?: Listings;
@@ -45,13 +53,77 @@ const LargeScreenProductDetail = ({
   listing,
 }: LargeScreenProductDetailProps) => {
   const theme = useMantineTheme();
+  const queryClient = useQueryClient();
+  const [shareModalOpened, setShareModalOpened] = useState<boolean>(false);
   const router = useRouter();
+
+  const bookmarkMutation = useBookmarksCreate();
+  const [isBookmarked, setIsBookmarked] = useState<boolean>(
+    listing?.is_bookmarked || false,
+  );
+  const { slug } = router.query;
+  const addBookmark = () => {
+    const data = {
+      listing: listing?.slug as string,
+    };
+    notifications.show({
+      id: `userBookmark ${listing?.slug} ${isBookmarked}`,
+      title: `${!isBookmarked ? 'Adding' : 'Removing'} your bookmark`,
+      message: `Please wait while we ${
+        !isBookmarked ? 'add' : 'remove'
+      } to your bookmark`,
+      loading: true,
+      autoClose: false,
+      withCloseButton: false,
+    }),
+      bookmarkMutation.mutate(
+        { data: data },
+        {
+          onSuccess: async () => {
+            await queryClient.invalidateQueries(
+              getListingsRetrieveQueryKey(slug as string),
+            );
+            setIsBookmarked((prev) => !prev);
+            notifications.update({
+              id: `userBookmark ${listing?.slug} ${isBookmarked}`,
+              title: `Bookmark successfully ${
+                !isBookmarked ? 'added' : 'removed'
+              }`,
+              color: 'green',
+              message: `Successfully ${
+                !isBookmarked ? 'added' : 'removed'
+              } the bookmark!`,
+              loading: false,
+              autoClose: true,
+              withCloseButton: true,
+            });
+          },
+          onError: (error) => {
+            console.log(error);
+            notifications.update({
+              id: `userBookmark ${listing?.slug} ${isBookmarked}`,
+              title: `Bookmark couldnot be added`,
+              color: 'red',
+              message: 'Please make sure you are logged in',
+              loading: false,
+              autoClose: true,
+              withCloseButton: true,
+            });
+          },
+        },
+      );
+  };
   return (
     <Container maw={'1300px'} m={'auto'} fluid mt={'lg'}>
       <Group position="apart" style={{ alignItems: 'flex-start' }}>
         <ScrollArea
           style={{ flex: 5, flexDirection: 'row', minHeight: '100vh' }}
         >
+          {listing?.images.length === 0 && (
+            <Text align="center" c={'dimmed'} underline>
+              No image available
+            </Text>
+          )}
           {listing?.images?.map((listingImage, index) => (
             <Card key={index} mb={'md'} radius={'md'} shadow="sm">
               <Image
@@ -105,13 +177,25 @@ const LargeScreenProductDetail = ({
               </Group>
 
               <Group>
-                <Group spacing={3}>
+                <Group
+                  style={{ cursor: 'pointer' }}
+                  spacing={3}
+                  onClick={() => setShareModalOpened(true)}
+                >
                   <IconShare />
                   <Text size={'xs'}>Share</Text>
                 </Group>
-                <Group spacing={3}>
-                  <IconHeart />
-                  <Text size={'xs'}>Save</Text>
+                <Group
+                  spacing={3}
+                  style={{ cursor: 'pointer' }}
+                  onClick={() => addBookmark()}
+                >
+                  {isBookmarked ? (
+                    <IconHeartFilled size={24} stroke={1.5} />
+                  ) : (
+                    <IconHeart size={24} stroke={1.5} />
+                  )}
+                  <Text size={'xs'}>{isBookmarked ? 'Saved' : 'Save'}</Text>
                 </Group>
               </Group>
             </Group>
@@ -126,9 +210,7 @@ const LargeScreenProductDetail = ({
               </Tabs.List>
 
               <Tabs.Panel value="Description">
-                <Text c={'dimmed'} mt={'sm'}>
-                  {listing?.description}
-                </Text>
+                <ExpandableText description={listing?.description as string} />
                 <Text fw={500} c={'dimmed'} mt={'sm'}>
                   Specifications
                 </Text>
@@ -171,7 +253,7 @@ const LargeScreenProductDetail = ({
                         </Text>
                       </Group>
                       <Text fw={300} size={'sm'}>
-                        {listing?.status}
+                        N/A
                       </Text>
                     </SimpleGrid>
                     <Divider p={rem(1)} color="gray.3" />
@@ -183,7 +265,7 @@ const LargeScreenProductDetail = ({
                         </Text>
                       </Group>
                       <Text fw={300} size={'sm'}>
-                        {listing?.sale_status}
+                        N/A
                       </Text>
                     </SimpleGrid>
                     <Divider p={rem(1)} color="gray.3" />
@@ -283,6 +365,12 @@ const LargeScreenProductDetail = ({
           </div>
         </Card>
       </Group>
+      <ShareSocialMediaModal
+        opened={shareModalOpened}
+        setOpened={setShareModalOpened}
+        shareUrl={window.location.href as string}
+        title={'Check this product on doshrodeal.com!'}
+      />
     </Container>
   );
 };
