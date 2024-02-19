@@ -1,3 +1,4 @@
+import SeoElement from '@/components/global/SeoElement';
 import HomeLayout from '@/components/layouts/HomeLayout';
 import ProfilePage from '@/components/ui/profile/ProfilePage';
 import { getDefaultStore } from '@/components/utils/PageDefaults';
@@ -55,5 +56,18 @@ export const getServerSideProps = async (ctx: NextPageContext) => {
 Profile.getLayout = (page: ReactElement) => <HomeLayout>{page}</HomeLayout>;
 
 export default function Profile() {
-  return <ProfilePage />;
+  return (
+    <>
+      <SeoElement
+        title={'My Profile | Doshrodeal'}
+        description={
+          'View and manage your profile on Doshrodeal. Access your listings, bookmarks, and account settings to personalize your Doshrodeal experience.'
+        }
+        url={`https://www.doshrodeal.com/users/profile`}
+        image=""
+        keywords={`Doshrodeal, My Profile, User Account, Listings, Bookmarks, Account Settings, Personalize, Online Marketplace, Nepal, Buy, Sell, User Dashboard`}
+      />
+      <ProfilePage />
+    </>
+  );
 }

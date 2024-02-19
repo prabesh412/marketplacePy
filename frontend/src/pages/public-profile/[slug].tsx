@@ -9,6 +9,7 @@ import {
   useListingsList,
 } from '../../../orval/listings/listings';
 
+import SeoElement from '@/components/global/SeoElement';
 import HomeLayout from '@/components/layouts/HomeLayout';
 import HorizontalCard from '@/components/ui/listing/HorizontalCard';
 import ProfileCard from '@/components/ui/profile/ProfileCard';
@@ -69,6 +70,15 @@ export default function PublicProfile() {
 
   return (
     <>
+      <SeoElement
+        title={`${userData?.username || 'User'}'s Public Profile | Doshrodeal`}
+        description={`${
+          userData?.username || 'This user'
+        }'s profile on Doshrodeal showcases a unique selection of listings ranging from electronics to home goods, all available in Nepal. Connect, explore, and discover the best deals from our community members.`}
+        url={`https://www.doshrodeal.com/public-profile/${slug}`}
+        image={''}
+        keywords={`Public Profile, ${userData?.username},doshrodeal ${userData?.username}, Doshrodeal ${userData?.username}  User Listings, Doshrodeal, Nepal, Online Marketplace, Buy and Sell, Community, Electronics, Home Goods, Second-hand, Pre-loved, Deals,'Shopping, Selling'}`}
+      />
       <div style={{ paddingBottom: '15px' }}>
         {userData && <ProfileCard user={userData} isPublic={true} />}
       </div>
