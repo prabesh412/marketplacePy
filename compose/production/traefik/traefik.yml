@@ -31,7 +31,7 @@ certificatesResolvers:
 http:
   routers:
     web-secure-router:
-      rule: "Host(`doshrodeal.com`) && (PathPrefix(`/api/`, `/rest-auth/`, `/dj-rest-auth/`, `/api-schema/`) || Path(`/7wIuSQjdu4p0o5qROEodZoqgUg0qmQZn/`) || PathPrefix(`/7wIuSQjdu4p0o5qROEodZoqgUg0qmQZn/{anything:.*}`))"
+      rule: "Host(`doshrodeal.com`) && PathPrefix(`/api/`, `/rest-auth/`, `/dj-rest-auth/`, `/api-schema/`, `/admin/` )"
       entryPoints:
         - web-secure
       middlewares:
