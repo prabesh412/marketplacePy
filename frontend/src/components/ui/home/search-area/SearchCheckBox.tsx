@@ -8,9 +8,10 @@ import {
   createStyles,
 } from '@mantine/core';
 import React from 'react';
-import Condition from '../../../../../public/quick-select-condition.jpg';
-import Feature from '../../../../../public/quick-select-featured.png';
+import Condition from '../../../../../public/quick-select-condition.png';
+import Featured from '../../../../../public/quick-select-featured.png';
 import Negotiable from '../../../../../public/quick-select-negotiable.jpg';
+
 import { CheckboxStates } from './HomepageSearchArea';
 
 const useStyles = createStyles((theme) => ({
@@ -67,7 +68,7 @@ const SearchCheckBox = ({
         <Card w={'auto'} radius={'md'} className={classes.CheckBox} p={10}>
           <Group position="apart" pl={'sm'} pr={'sm'}>
             <Group spacing={3}>
-              <Avatar radius={'xl'} src={Feature.src} />
+              <Avatar size={30} src={Condition.src} />
               <Group position="apart" pl={'sm'} pr={'sm'}>
                 <div>
                   <Text c={'dimmed'} size={'xs'}>
@@ -91,7 +92,7 @@ const SearchCheckBox = ({
         <Card w={'auto'} radius={'md'} className={classes.CheckBox} p={10}>
           <Group position="apart" pl={'sm'} pr={'sm'}>
             <Group spacing={3}>
-              <Avatar radius={'xl'} src={Condition.src} />
+              <Avatar radius={'xl'} src={Featured.src} />
               <Group position="apart" pl={'sm'} pr={'sm'}>
                 <div>
                   <Text c={'dimmed'} size={'xs'}>
