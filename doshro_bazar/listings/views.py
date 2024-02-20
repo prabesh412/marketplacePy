@@ -23,7 +23,7 @@ from doshro_bazar.listings.serializers import ListingImageSerializer, ListingsIn
 )
 class ListingsViewSet(viewsets.ModelViewSet):
     queryset = Listings.objects.all().select_related( "user", "views", "category").prefetch_related("images").annotate(
-        number_of_bookmark=Count('bookmark', distinct=True),
+        number_of_bookmark=Count('bookmarks', distinct=True),
     )
     serializer_class = ListingsSerializer
     filter_backends = (filters_new.DjangoFilterBackend, )
