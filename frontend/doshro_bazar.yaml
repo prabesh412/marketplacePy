@@ -1532,6 +1532,9 @@ components:
         is_bookmarked:
           type: boolean
           readOnly: true
+        number_of_bookmark:
+          type: integer
+          readOnly: true
         created_at:
           type: string
           format: date-time
@@ -1599,6 +1602,7 @@ components:
       - images
       - is_bookmarked
       - listing_features
+      - number_of_bookmark
       - price
       - slug
       - title
@@ -2151,5 +2155,5 @@ components:
       name: Authorization
       description: Token-based authentication with required prefix "Token"
 servers:
-- url: https://34.228.20.185
+- url: https://doshrodeal.com
   description: Production server

@@ -237,7 +237,7 @@ const FeaturedCard = ({ listing, currentPage }: FeaturedCardProps) => {
             <Group noWrap spacing={4}>
               <IconHeart stroke={2.1} style={{ color: theme.colors.lime[8] }} />
               <Text size={'md'} c={'dimmed'}>
-                3
+                {listing?.number_of_bookmark || 0}
               </Text>
             </Group>
           </Group>
