@@ -200,7 +200,7 @@ const HorizontalCard = ({
           !isOverview &&
           (!listing?.is_scraped
             ? router.push(`/listing/listing-detail/${listing?.slug}`)
-            : window.open(listing.link_to_original as string))
+            : window?.open(listing.link_to_original as string))
         }
       >
         <Group position="apart" noWrap>

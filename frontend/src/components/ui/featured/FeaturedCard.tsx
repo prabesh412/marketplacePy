@@ -161,7 +161,7 @@ const FeaturedCard = ({ listing, currentPage }: FeaturedCardProps) => {
             src={listing?.banner_image || listing?.images[0]?.image}
             onClick={() =>
               listing?.is_scraped
-                ? window.open(listing.link_to_original as string)
+                ? window?.open(listing.link_to_original as string)
                 : router.push(`/listing/listing-detail/${listing?.slug}`)
             }
             height="200px"
@@ -183,7 +183,7 @@ const FeaturedCard = ({ listing, currentPage }: FeaturedCardProps) => {
           sx={{ cursor: 'pointer' }}
           onClick={() =>
             listing?.is_scraped
-              ? window.open(listing.link_to_original as string)
+              ? window?.open(listing.link_to_original as string)
               : router.push(`/listing/listing-detail/${listing?.slug}`)
           }
         >

@@ -368,7 +368,7 @@ const LargeScreenProductDetail = ({
       <ShareSocialMediaModal
         opened={shareModalOpened}
         setOpened={setShareModalOpened}
-        shareUrl={window.location.href as string}
+        shareUrl={window?.location?.href as string}
         title={'Check this product on doshrodeal.com!'}
       />
     </Container>

@@ -56,7 +56,7 @@ const Navbar = ({ isHomepage }: HeaderSearchProps) => {
   const theme = useMantineTheme();
   const handleLogout = () => {
     logout();
-    window.location.reload();
+    window?.location?.reload();
   };
   const pills = [
     {
