@@ -27,11 +27,12 @@ class ListingsSerializer(serializers.ModelSerializer):
     category =  CategorySerializer(read_only=True)
     listing_features = serializers.JSONField(read_only=True)
     is_bookmarked = serializers.BooleanField(read_only=True)
+    number_of_bookmark = serializers.IntegerField(read_only=True)
 
     class Meta:
         model = Listings
         fields = "__all__"
-        read_only_fields = ["slug", "created_at", "updated_at", "views", "is_bookmarked"]
+        read_only_fields = ["slug", "created_at", "updated_at", "views", "is_bookmarked", "number_of_bookmark"]
 
    
 

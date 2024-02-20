@@ -1,7 +1,6 @@
 from django.core.cache import cache
-from django.db.models import Exists, OuterRef
+from django.db.models import Count, Exists, OuterRef
 from django.shortcuts import get_object_or_404
-from django.utils.decorators import method_decorator
 from django_filters import rest_framework as filters_new
 from drf_spectacular.utils import extend_schema, extend_schema_view
 from rest_framework import pagination, status, viewsets
@@ -23,7 +22,9 @@ from doshro_bazar.listings.serializers import ListingImageSerializer, ListingsIn
     list=extend_schema(description="Return a list of all the existing listings."),
 )
 class ListingsViewSet(viewsets.ModelViewSet):
-    queryset = Listings.objects.all().select_related( "user", "views", "category").prefetch_related("images")
+    queryset = Listings.objects.all().select_related( "user", "views", "category").prefetch_related("images").annotate(
+        number_of_bookmark=Count('bookmark', distinct=True),
+    )
     serializer_class = ListingsSerializer
     filter_backends = (filters_new.DjangoFilterBackend, )
     filterset_class = ListingsFilter
