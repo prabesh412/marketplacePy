@@ -46,37 +46,54 @@ const Navbar = ({ isHomepage }: HeaderSearchProps) => {
 
   const router = useRouter();
 
+  const getPathBasedActiveTab = () => {
+    const pathMap: { [key: string]: string } = {
+      '/': 'Home',
+      '/featured': 'Featured',
+      '/popular': 'Popular',
+      '/latest': 'Latest',
+    };
+    const activeTab =
+      router.pathname in pathMap ? pathMap[router.pathname] : '/';
+    return activeTab;
+  };
   const user = useStore((state) => state.profile);
   const logout = useStore((state) => state.logout);
 
-  const defaultTab = router.pathname === '/' ? 'Home' : '';
-
-  const [activeTab, setActiveTab] = useState<string | null>(defaultTab);
+  const [activeTab, setActiveTab] = useState<string | null>(
+    getPathBasedActiveTab(),
+  );
 
   const theme = useMantineTheme();
   const handleLogout = () => {
     logout();
     window?.location?.reload();
   };
+  const handlePillClick = (value: string) => {
+    switch (value) {
+      case 'Home':
+        router.push('/');
+        break;
+      case 'Categories':
+        setSideNavOpen(true);
+        break;
+      default:
+        router.push(`/${value.toLowerCase()}`);
+        break;
+    }
+  };
   const pills = [
     {
       value: 'Home',
       icon: <IconHome size="0.8rem" />,
-      onClick: () => {
-        if (router.pathname !== '/') {
-          router.push('/');
-        }
-        setSideNavOpen(false);
-      },
     },
     {
       value: 'Categories',
       icon: <IconCategory size="0.8rem" />,
-      onClick: () => setSideNavOpen(true),
     },
-    { value: 'featured', icon: <IconStars size="0.8rem" /> },
-    { value: 'popular', icon: <IconCrown size="0.8rem" /> },
-    { value: 'latest', icon: <IconClock size="0.8rem" /> },
+    { value: 'Featured', icon: <IconStars size="0.8rem" /> },
+    { value: 'Popular', icon: <IconCrown size="0.8rem" /> },
+    { value: 'Latest', icon: <IconClock size="0.8rem" /> },
   ];
 
   const userAction = [
@@ -149,7 +166,7 @@ const Navbar = ({ isHomepage }: HeaderSearchProps) => {
                   className={classes.tab}
                   value={pill.value}
                   icon={pill.icon}
-                  onClick={pill.onClick}
+                  onClick={() => handlePillClick(pill.value)}
                 >
                   {pill.value}
                 </Tabs.Tab>

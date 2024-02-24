@@ -13,6 +13,7 @@ import {
   getListingsListQueryKey,
   listingsList,
 } from '../../orval/listings/listings';
+import { ListingsListOrderItem } from '../../orval/model';
 
 export async function getServerSideProps(ctx: NextPageContext) {
   const queryClient = new QueryClient();
@@ -22,13 +23,22 @@ export async function getServerSideProps(ctx: NextPageContext) {
     () => categoryList(),
     {},
   );
-
   await queryClient.prefetchQuery(
-    getListingsListQueryKey({ page: 1 }),
-    () => listingsList({ page: 1 }),
+    getListingsListQueryKey({
+      is_featured: true,
+      order: ListingsListOrderItem[
+        '-created_at'
+      ] as unknown as ListingsListOrderItem[],
+    }),
+    () =>
+      listingsList({
+        is_featured: true,
+        order: ListingsListOrderItem[
+          '-created_at'
+        ] as unknown as ListingsListOrderItem[],
+      }),
     {},
   );
-
   const zustandStore = await getDefaultHomeStore(ctx, queryClient);
 
   return {

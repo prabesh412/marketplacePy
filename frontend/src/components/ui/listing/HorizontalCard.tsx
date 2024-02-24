@@ -175,7 +175,7 @@ const HorizontalCard = ({
         <ActionIcon
           size={30}
           radius="xl"
-          color={'green'}
+          color={'lime'}
           sx={{ boxShadow: '0 2px 4px 2px rgba(0, 0, 0, 0.5)' }}
           variant="filled"
           className={classes.heartIcon}
@@ -305,7 +305,6 @@ const useStyles = createStyles((theme) => ({
     alignItems: 'center',
     '@media (max-width: 576px)': {
       padding: theme.spacing.xs,
-      borderRadius: theme.radius.sm,
     },
   },
   imageContainer: {
