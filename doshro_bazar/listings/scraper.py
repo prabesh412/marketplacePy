@@ -15,13 +15,13 @@ def dump_listing_data(data):
 
     base_url = "https://hamrobazaar.com/"
     listings_object = []
-    user_admin = User.objects.get(username="prabesh")
+    user_admin = User.objects.get(username="9863723133")
 
     datas =data["data"]
     for product in datas: 
         url = base_url + slugify(product["categoryName"]) + "/" + slugify(product["name"]) + "-in-nepal" + "/" + product["id"].replace("-", "") 
         listing_category = Category.objects.get(slug=slugify(product["categoryName"]))
-        listings_object.append(Listings(slug= slugify(product["name"]), link_to_original=url, is_featured= True,banner_image=product["imageUrl"],category = listing_category, description=product["description"], price=product["price"], user=user_admin, title = product["name"], phone_number=product["creatorInfo"]["createdBy"], location=product["location"]["locationDescription"], is_scraped=True, scraped_username=product["creatorInfo"]["createdByName"], scraped_views=product["totalViews"]))
+        listings_object.append(Listings(slug= slugify(product["name"]), link_to_original=url, is_featured= False,banner_image=product["imageUrl"],category = listing_category, description=product["description"], price=product["price"], user=user_admin, title = product["name"], phone_number=product["creatorInfo"]["createdBy"], location=product["location"]["locationDescription"], is_scraped=True, scraped_username=product["creatorInfo"]["createdByName"], scraped_views=product["totalViews"]))
     print(listings_object)
     Listings.objects.bulk_create(listings_object, ignore_conflicts=True)
     return True
