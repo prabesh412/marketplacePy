@@ -29,7 +29,7 @@ app.conf.beat_schedule = {
     },
     "get_all_categories": {
         "task": "doshro_bazar.listings.tasks.get_all_categories",
-        "schedule": 60, 
+        "schedule": 6000, 
     },
 
 }
