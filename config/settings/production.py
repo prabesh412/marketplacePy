@@ -9,7 +9,7 @@ SECRET_KEY = env("DJANGO_SECRET_KEY")
 ALLOWED_HOSTS = env.list("DJANGO_ALLOWED_HOSTS", default=["example.com"])
 
 
-CSRF_TRUSTED_ORIGINS = ['doshrodeal.com', 'www.doshrodeal.com']
+CSRF_TRUSTED_ORIGINS = ['doshrodeal.com', 'www.doshrodeal.com', 'https://www.doshrodeal.com', 'https://doshrodeal.com']
 # DATABASES
 # ------------------------------------------------------------------------------
 DATABASES["default"]["CONN_MAX_AGE"] = env.int("CONN_MAX_AGE", default=60)  # noqa: F405
