@@ -39,6 +39,7 @@ const useStyles = createStyles((theme) => ({
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
+    cursor: 'pointer',
     height: rem(170),
     borderRadius: theme.radius.md,
   },
