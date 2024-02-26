@@ -11,7 +11,7 @@ import {
 
 const ListingStepper = ({ step, form }: any) => {
   return (
-    <Card mb={'lg'} radius={'lg'} shadow="sm" p={'xl'} withBorder>
+    <Card mb={'lg'} radius={'lg'} p={'xl'}>
       <Stepper
         breakpoint={'sm'}
         active={step}

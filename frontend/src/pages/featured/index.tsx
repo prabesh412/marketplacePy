@@ -3,15 +3,7 @@ import SearchLayout from '@/components/layouts/SearchLayout';
 import AddListingFreeBanner from '@/components/ui/common/AddListingFreeBanner';
 import HorizontalCard from '@/components/ui/listing/HorizontalCard';
 import { getDefaultStore } from '@/components/utils/PageDefaults';
-import {
-  Card,
-  Center,
-  Pagination,
-  Text,
-  createStyles,
-  rem,
-  useMantineTheme,
-} from '@mantine/core';
+import { Card, Center, Pagination, Text, useMantineTheme } from '@mantine/core';
 import { QueryClient, dehydrate } from '@tanstack/react-query';
 import { NextPageContext } from 'next';
 import { useRouter } from 'next/router';
@@ -23,59 +15,6 @@ import {
 } from '../../../orval/listings/listings';
 import { ListingsListOrderItem } from '../../../orval/model';
 import { Listings } from '../../../orval/model/listings';
-
-const useStyles = createStyles((theme) => ({
-  parent: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    marginTop: theme.spacing.md,
-  },
-  sort: {
-    backgroundColor: 'white',
-    padding: theme.spacing.lg,
-    marginTop: theme.spacing.sm,
-    borderRadius: theme.radius.md,
-    '@media (max-width: 575px)': {
-      padding: theme.spacing.xs,
-    },
-  },
-  textInput: {
-    width: '100%',
-    border: '1px solid gray',
-    borderRadius: theme.radius.xl,
-    '@media (max-width: 575px)': {
-      marginLeft: 0,
-      marginRight: 0,
-      padding: 0,
-      width: '100%',
-      border: 'none',
-    },
-  },
-  actionIcon: {
-    '@media (max-width: 576px)': {
-      width: '10px',
-      height: '10px',
-    },
-  },
-  scrollableGroup: {
-    overflowX: 'auto',
-    whiteSpace: 'nowrap',
-    '&::-webkit-scrollbar': {
-      display: 'none',
-    },
-    '-ms-overflow-style': 'none',
-    'scrollbar-width': 'none',
-    '@media (max-width: 575px)': {
-      scrollbarWidth: 'none',
-      msOverflowStyle: 'none',
-      overflow: '-moz-scrollbars-none',
-    },
-  },
-
-  selectInput: {
-    minWidth: rem(150),
-  },
-}));
 
 export async function getServerSideProps(ctx: NextPageContext) {
   const page = ctx.query.page || 1;
@@ -133,10 +72,10 @@ export default function Featured() {
     <>
       <SeoElement
         description={`Discover featured listings on Doshrodeal. Explore a wide range of items from electronics to home goods in Nepal's emerging online marketplace.`}
-        title={`Search Results for featured listings | Doshrodeal`}
+        title={`Featured listings | Doshrodeal`}
         url={`https://www.doshrodeal.com/featured&page=${page}`}
         image={''}
-        keywords={`Search, Listings, Doshrodeal, Online Marketplace, Nepal, Buy and Sell, Electronics, Home Goods, Second-hand, Deals`}
+        keywords={`Featured, Listings, Doshrodeal, Online Marketplace, Nepal, Buy and Sell, Electronics, Home Goods, Second-hand, Deals`}
       />
       <div style={{ maxWidth: '1200px', margin: 'auto' }}>
         <AddListingFreeBanner />

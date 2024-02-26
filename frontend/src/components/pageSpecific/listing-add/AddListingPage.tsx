@@ -128,7 +128,7 @@ const AddListingPage = () => {
   };
 
   return (
-    <div>
+    <div style={{ maxWidth: '1200px', margin: 'auto' }}>
       {!submitted && (
         <>
           <ListingStepper step={active} form={form} />

@@ -1,6 +1,5 @@
 import {
   Button,
-  Checkbox,
   Divider,
   PasswordInput,
   TextInput,
@@ -111,11 +110,11 @@ const Register = () => {
               {...form.getInputProps('password')}
             />
             <Divider size={3} />
-            <Checkbox
+            {/* <Checkbox
               mt={'xl'}
               label={`I hereby accept the Terms and Condition of Doshrodeal.`}
               size="sm"
-            />
+            /> */}
             <Button
               radius={'lg'}
               fullWidth

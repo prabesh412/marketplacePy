@@ -15,6 +15,7 @@ const AddListingFreeBanner = () => {
             <Text className={classes.description} pt={'xs'} c={'white'}>
               No matter if your goods are new or old, we've got you covered! Log
               in now to continue your journey with <strong>Doshrodeal</strong>
+              {''} for free.
             </Text>
           </div>
           <Button
@@ -24,7 +25,7 @@ const AddListingFreeBanner = () => {
             bg={'white'}
             c={'black'}
           >
-            Add a listing
+            Add your listing
           </Button>
         </Group>
       </Card>

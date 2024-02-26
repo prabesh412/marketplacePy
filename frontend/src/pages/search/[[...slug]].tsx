@@ -249,8 +249,18 @@ export default function Search() {
   return (
     <>
       <SeoElement
-        description={`Discover listings for "${queryParams.title__icontains}" on Doshrodeal. Explore a wide range of items from electronics to home goods in Nepal's emerging online marketplace.`}
-        title={`Search Results for "${queryParams.title__icontains}" | Doshrodeal`}
+        description={`Discover listings for "${
+          queryParams.title__icontains ||
+          queryParams.category ||
+          queryParams.category__parent
+        }" on Doshrodeal. Explore a wide range of items from electronics to home goods in Nepal's emerging online marketplace.`}
+        title={`Search Results for ${
+          !queryParams.title__icontains ? 'category ID' : ''
+        } "${
+          queryParams.title__icontains ||
+          queryParams.category ||
+          queryParams.category__parent
+        }" | Doshrodeal`}
         url={`https://www.doshrodeal.com/search?title__icontains=${queryParams.title__icontains}&page=${queryParams.page}`}
         image={''}
         keywords={`Search, ${queryParams.title__icontains}, Listings, Doshrodeal, Online Marketplace, Nepal, Buy and Sell, Electronics, Home Goods, Second-hand, Deals`}

@@ -67,7 +67,7 @@ export default function Latest() {
     <>
       <SeoElement
         description={`Discover Latest listings on Doshrodeal. Explore a wide range of items from electronics to home goods in Nepal's emerging online marketplace.`}
-        title={`Search Results for Latest listings | Doshrodeal`}
+        title={`Latest listings | Doshrodeal`}
         url={`https://www.doshrodeal.com/latest&page=${page}`}
         image={''}
         keywords={`Search, Listings, Doshrodeal, Online Marketplace, Nepal, Buy and Sell, Electronics, Home Goods, Second-hand, Deals`}

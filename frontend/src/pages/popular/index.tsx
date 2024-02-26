@@ -66,11 +66,11 @@ export default function Popular() {
   return (
     <>
       <SeoElement
-        description={`Discover Popular listings on Doshrodeal. Explore a wide range of items from electronics to home goods in Nepal's emerging online marketplace.`}
-        title={`Search Results for Popular listings | Doshrodeal`}
+        description={`Popular listings on Doshrodeal. Explore a wide range of items from electronics to home goods in Nepal's emerging online marketplace.`}
+        title={`Popular listings | Doshrodeal`}
         url={`https://www.doshrodeal.com/popular&page=${page}`}
         image={''}
-        keywords={`Search, Listings, Doshrodeal, Online Marketplace, Nepal, Buy and Sell, Electronics, Home Goods, Second-hand, Deals`}
+        keywords={`Search, popular listings in nepal, Listings, Doshrodeal, Online Marketplace, Nepal, Buy and Sell, Electronics, Home Goods, Second-hand, Deals`}
       />
       <div style={{ maxWidth: '1200px', margin: 'auto' }}>
         <AddListingFreeBanner />

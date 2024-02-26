@@ -106,6 +106,7 @@ const CategoryMarquee = () => {
                     height={'70px'}
                     width={'70px'}
                     src={category?.main_category_image}
+                    alt={category?.name}
                   />
                   <Text
                     maw={'100%'}

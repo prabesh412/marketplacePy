@@ -4,7 +4,6 @@ import {
   Divider,
   PasswordInput,
   rem,
-  Text,
   TextInput,
   Title,
 } from '@mantine/core';
@@ -13,7 +12,6 @@ import { PATH_APP } from '@/components/routes';
 import { useStore } from '@/zustand/store';
 import { useForm } from '@mantine/form';
 import { notifications } from '@mantine/notifications';
-import { useRouter } from 'next/router';
 import { useDjRestAuthLoginCreate } from '../../../../../orval/dj-rest-auth/dj-rest-auth';
 
 const useStyles = createStyles((theme) => ({
@@ -31,11 +29,9 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 const Login = () => {
-  const { classes } = useStyles();
   const postLogin = useDjRestAuthLoginCreate();
   const setToken = useStore((state) => state.setAccessToken);
   const setUser = useStore((state) => state.setProfile);
-  const router = useRouter();
   const form = useForm({
     initialValues: {
       username: '',
@@ -109,6 +105,7 @@ const Login = () => {
             placeholder="Phone Number"
             size="lg"
             radius={'lg'}
+            type="number"
             pb={'xl'}
             {...form.getInputProps('username')}
           />
@@ -136,9 +133,9 @@ const Login = () => {
           >
             Log in
           </Button>
-          <Text mt={'xl'} size={'xs'} c={'dimmed'}>
+          {/* <Text mt={'xl'} size={'xs'} c={'dimmed'}>
             Forgot your passsword?
-          </Text>
+          </Text> */}
           <Divider size={1} c={'dimmed'} mt={'xl'} />
         </form>
       </div>

@@ -43,7 +43,7 @@ const Navbar = ({ isHomepage }: HeaderSearchProps) => {
 
   const [userMenuOpened, setUserMenuOpened] = useState(false);
   const [isSideNavOpen, setSideNavOpen] = useState(false);
-
+  const [previousTab, setPreviousTab] = useState<string | null>(null);
   const router = useRouter();
 
   const getPathBasedActiveTab = () => {
@@ -70,17 +70,19 @@ const Navbar = ({ isHomepage }: HeaderSearchProps) => {
     window?.location?.reload();
   };
   const handlePillClick = (value: string) => {
-    switch (value) {
-      case 'Home':
-        router.push('/');
-        break;
-      case 'Categories':
-        setSideNavOpen(true);
-        break;
-      default:
-        router.push(`/${value.toLowerCase()}`);
-        break;
+    if (value === 'Categories') {
+      setPreviousTab(activeTab);
+      setActiveTab('Categories');
+      setSideNavOpen(true);
+    } else {
+      router.push(value === 'Home' ? '/' : `/${value.toLowerCase()}`);
+      setActiveTab(value);
     }
+  };
+  const closeSideNav = () => {
+    setSideNavOpen(false);
+    setActiveTab(previousTab ? previousTab : getPathBasedActiveTab());
+    setPreviousTab(null);
   };
   const pills = [
     {
@@ -257,13 +259,7 @@ const Navbar = ({ isHomepage }: HeaderSearchProps) => {
           </Group>
         </Flex>
       </div>
-      <DefaultSideNav
-        onClose={() => {
-          setSideNavOpen(false);
-          setActiveTab('Home');
-        }}
-        isOpen={isSideNavOpen}
-      />
+      <DefaultSideNav onClose={() => closeSideNav()} isOpen={isSideNavOpen} />
     </>
   );
 };
