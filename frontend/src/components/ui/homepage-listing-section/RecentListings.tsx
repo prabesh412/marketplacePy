@@ -1,15 +1,19 @@
-import React, { useEffect, useRef, useState } from 'react';
 import {
-  Divider,
-  useMantineTheme,
   Badge,
-  Paper,
-  rem,
-  ThemeIcon,
   Group,
+  Paper,
   Text,
-  Card,
+  ThemeIcon,
+  rem,
+  useMantineTheme,
 } from '@mantine/core';
+import {
+  IconArrowRight,
+  IconCircleCheck,
+  IconClockFilled,
+} from '@tabler/icons-react';
+import React, { useEffect, useState } from 'react';
+import { useInView } from 'react-intersection-observer';
 import {
   getListingsListQueryKey,
   useListingsListInfinite,
@@ -18,10 +22,8 @@ import {
   ListingsListOrderItem,
   ListingsListParams,
 } from '../../../../orval/model';
-import { useInView } from 'react-intersection-observer';
 import HorizontalCard from '../listing/HorizontalCard';
 import HorizontalCardSkeleton from '../listing/HorizontalCardSkeleton';
-import { IconArrowRight, IconCircleCheck } from '@tabler/icons-react';
 
 const RecentListings = () => {
   const { ref, inView } = useInView({
@@ -76,21 +78,30 @@ const RecentListings = () => {
   return (
     <div style={{ maxWidth: '1200px', margin: 'auto' }}>
       <div>
-        <Divider
-          label={<Badge radius={'xl'}>Browse Recent Listings</Badge>}
-          labelPosition="center"
-          c={'dimmed'}
-          mt={'sm'}
-          size={3}
-          orientation="horizontal"
-        />
+        <Group position="center">
+          <Badge
+            size="lg"
+            radius={'sm'}
+            style={{
+              borderBottomLeftRadius: '30px',
+              borderBottomRightRadius: '30px',
+            }}
+            variant="light"
+            mt={-3}
+          >
+            <Group spacing={2}>
+              <IconClockFilled style={{ marginTop: 1 }} size={'1.2em'} />{' '}
+              <Text>Browse Recent Listings</Text>
+            </Group>
+          </Badge>
+        </Group>
 
         {data?.pages ? (
           data?.pages?.map((listing, i) => (
             <React.Fragment key={i}>
               {listing?.results?.map((listings, index) => (
                 <div key={index} style={{ marginTop: 10 }}>
-                  <HorizontalCard listing={listings} />
+                  <HorizontalCard currentPage={page} listing={listings} />
                 </div>
               ))}
             </React.Fragment>

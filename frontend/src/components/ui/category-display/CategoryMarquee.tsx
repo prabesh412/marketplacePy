@@ -1,6 +1,4 @@
-import React from 'react';
 import {
-  Avatar,
   Badge,
   Box,
   Divider,
@@ -11,9 +9,9 @@ import {
   useMantineTheme,
 } from '@mantine/core';
 
-import { useCategoryList } from '../../../../orval/category/category';
 import { Carousel } from '@mantine/carousel';
 import { useRouter } from 'next/router';
+import { useCategoryList } from '../../../../orval/category/category';
 const useStyles = createStyles((theme) => ({
   textInput: {
     width: '100%',
@@ -41,6 +39,7 @@ const useStyles = createStyles((theme) => ({
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
+    cursor: 'pointer',
     height: rem(170),
     borderRadius: theme.radius.md,
   },
@@ -58,6 +57,11 @@ const useStyles = createStyles((theme) => ({
     },
     '@media (max-width: 576px)': {
       width: '100%',
+    },
+  },
+  divider: {
+    '@media (max-width: 576px)': {
+      paddingTop: 10,
     },
   },
 }));
@@ -103,6 +107,7 @@ const CategoryMarquee = () => {
                     height={'70px'}
                     width={'70px'}
                     src={category?.main_category_image}
+                    alt={category?.name}
                   />
                   <Text
                     maw={'100%'}
@@ -122,9 +127,9 @@ const CategoryMarquee = () => {
         label={<Badge>Browse Featured Listings</Badge>}
         labelPosition="center"
         c={'dimmed'}
-        mt={1}
         mb={-5}
         size={1}
+        className={classes.divider}
         orientation="horizontal"
       />
     </div>

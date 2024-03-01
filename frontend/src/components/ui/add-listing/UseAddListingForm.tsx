@@ -1,4 +1,4 @@
-import { UseFormReturnType, useForm } from '@mantine/form';
+import { useForm } from '@mantine/form';
 import { hideNotification, showNotification } from '@mantine/notifications';
 import { useEffect } from 'react';
 
@@ -8,18 +8,21 @@ const useAddListingForm = () => {
       firstStep: {
         title: '',
         description: '',
-        price: 0,
-        phone_number: 0,
+        price: '',
+        phone_number: '',
         location: '',
         sub_category: '',
         main_category: '',
-        images: [],
-        listing_features: {
-          object: Array(6).fill({ key: '', value: '' }),
-        },
         is_negotiable: false,
         listing_condition: 'NW',
       },
+
+      secondStep: {
+        listing_features: {
+          object: Array(6).fill({ key: '', value: '' }),
+        },
+      },
+      thirdStep: { images: [] },
     },
     validate: {
       firstStep: {
@@ -38,15 +41,19 @@ const useAddListingForm = () => {
           }
         },
         price: (value) => {
-          if (!value || value < 1) {
-            return 'Price is necessary and should be greater than 5';
+          const stringValue = value.toString();
+          if (!stringValue) {
+            return 'Price is necessary';
+          } else if (stringValue.length > 8) {
+            return 'Price should be smaller than 9 digits';
           }
         },
         phone_number: (value) => {
+          console.log(value);
           if (!value) {
             return 'Secondary Phone Number is necessary';
-          } else if (!/^\d{10}$/.test(value.toString())) {
-            return 'Phone Number should have exactly 10 digits';
+          } else if (!/^\d{10}$/.test(value)) {
+            return 'Invalid Phone number';
           }
         },
 
@@ -71,7 +78,7 @@ const useAddListingForm = () => {
       },
     },
   });
-
+  console.log(form.errors);
   useEffect(() => {
     if (Object.keys(form.errors).length > 0) {
       showNotification({

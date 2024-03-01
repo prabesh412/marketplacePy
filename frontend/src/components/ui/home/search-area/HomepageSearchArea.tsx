@@ -1,27 +1,17 @@
-import React, { useState } from 'react';
 import {
+  ActionIcon,
+  Card,
+  Group,
   TextInput,
   TextInputProps,
-  ActionIcon,
-  useMantineTheme,
-  rem,
-  Group,
   createStyles,
-  Card,
-  Title,
-  Button,
-  Text,
+  rem,
+  useMantineTheme,
 } from '@mantine/core';
-import {
-  IconArrowRight,
-  IconCategory,
-  IconFilter,
-  IconSearch,
-  IconSettings,
-  IconX,
-} from '@tabler/icons-react';
-import DefaultSideNav from '../../navigation/DefaultSideNav';
+import { IconArrowRight, IconSearch } from '@tabler/icons-react';
 import { useRouter } from 'next/router';
+import { useState } from 'react';
+import DefaultSideNav from '../../navigation/DefaultSideNav';
 import SearchCheckBox from './SearchCheckBox';
 
 const useStyles = createStyles((theme) => ({
@@ -112,13 +102,35 @@ const useStyles = createStyles((theme) => ({
     },
   },
 }));
-
+export interface CheckboxStates {
+  is_negotiable: boolean;
+  condition: boolean;
+  is_featured: boolean;
+}
 const HomepageSearchArea = (props: TextInputProps) => {
   const theme = useMantineTheme();
   const { classes } = useStyles();
   const [isSideNavOpen, setSideNavOpen] = useState(false);
   const [searchValue, setSearchValue] = useState('');
+  const [checkboxStates, setCheckboxStates] = useState({
+    is_negotiable: false,
+    condition: false,
+    is_featured: false,
+  });
   const router = useRouter();
+
+  const handleSearch = () => {
+    if (searchValue == null || searchValue.trim() === '') {
+      return;
+    }
+    const queryParams = new URLSearchParams({ title__icontains: searchValue });
+    if (checkboxStates.is_negotiable)
+      queryParams.append('is_negotiable', 'true');
+    if (checkboxStates.condition) queryParams.append('listing_condition', 'BN');
+    if (checkboxStates.is_featured) queryParams.append('is_featured', 'true');
+
+    router.push(`/search?${queryParams.toString()}`);
+  };
 
   return (
     <>
@@ -144,8 +156,13 @@ const HomepageSearchArea = (props: TextInputProps) => {
                 size="lg"
                 radius={'xl'}
                 icon={<IconSearch />}
-                placeholder="Search what you are lookng for"
+                placeholder="Search what you are looking for"
                 rightSectionWidth={40}
+                onKeyDown={(event) => {
+                  if (event.key === 'Enter') {
+                    handleSearch();
+                  }
+                }}
                 rightSection={
                   <ActionIcon
                     size={35}
@@ -154,11 +171,8 @@ const HomepageSearchArea = (props: TextInputProps) => {
                     mr={'sm'}
                     color={theme.primaryColor}
                     variant="filled"
-                    onClick={() => {
-                      if (searchValue) {
-                        router.push(`/search?title__icontains=${searchValue}`);
-                      }
-                    }}
+                    onClick={() => handleSearch()}
+                    tabIndex={0}
                   >
                     <IconArrowRight
                       style={{ width: rem(18), height: rem(18) }}
@@ -169,16 +183,10 @@ const HomepageSearchArea = (props: TextInputProps) => {
                 {...props}
               />
 
-              <SearchCheckBox />
-              {/* <Group mb={'sm'}>
-                <Button
-                  variant="filled"
-                  radius={'xl'}
-                  rightIcon={<IconCategory />}
-                >
-                  Browse Categories
-                </Button>
-              </Group> */}
+              <SearchCheckBox
+                checkboxStates={checkboxStates}
+                setCheckboxStates={setCheckboxStates}
+              />
             </Group>
           </div>
         </div>

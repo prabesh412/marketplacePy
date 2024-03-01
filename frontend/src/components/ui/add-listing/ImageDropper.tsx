@@ -1,19 +1,21 @@
-import { Button, Group, Image, SimpleGrid, Text, rem } from '@mantine/core';
-import { IconUpload, IconPhoto, IconX, IconTrash } from '@tabler/icons-react';
 import {
-  Dropzone,
-  DropzoneProps,
-  FileWithPath,
-  IMAGE_MIME_TYPE,
-} from '@mantine/dropzone';
+  Badge,
+  Divider,
+  Group,
+  Image,
+  SimpleGrid,
+  Text,
+  rem,
+} from '@mantine/core';
+import { Dropzone, IMAGE_MIME_TYPE } from '@mantine/dropzone';
+import { IconPhoto, IconTrash, IconUpload, IconX } from '@tabler/icons-react';
 import { useState } from 'react';
-import { UseFormReturnType } from '@mantine/form';
-import { notifications } from '@mantine/notifications';
-import { error } from 'console';
+
 import ShowNotification from '../common/Notification';
+import useAddListingForm from './UseAddListingForm';
 
 type ImageDropperProps = {
-  form: any;
+  form: ReturnType<typeof useAddListingForm>;
 };
 
 const ImageDropper = ({ form }: ImageDropperProps) => {
@@ -29,10 +31,10 @@ const ImageDropper = ({ form }: ImageDropperProps) => {
     }
 
     setImageCount(imageCount + files.length);
-    const prevImages = form.values.firstStep.images;
+    const prevImages = form.values.thirdStep.images;
     if (prevImages.length === 0) {
       console.log('you heere');
-      return form.setFieldValue(`firstStep.images`, files);
+      return form.setFieldValue(`thirdStep.images`, files);
     }
 
     let allImages: Blob[] = [];
@@ -43,9 +45,9 @@ const ImageDropper = ({ form }: ImageDropperProps) => {
     for (let i = 0; i < files.length; i++) {
       allImages.push(files[i]);
     }
-    return form.setFieldValue(`firstStep.images`, allImages);
+    return form.setFieldValue(`thirdStep.images`, allImages);
   };
-  const previews = form?.values?.firstStep?.images?.map(
+  const previews = form?.values?.thirdStep?.images?.map(
     (file: Blob, index: number) => {
       const imageUrl = URL.createObjectURL(file);
       return (
@@ -67,6 +69,27 @@ const ImageDropper = ({ form }: ImageDropperProps) => {
         maxSize={3 * 1024 ** 2}
         accept={IMAGE_MIME_TYPE}
         maxFiles={5}
+        sx={(theme) => ({
+          minHeight: rem(120),
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          border: '1px dashed gray.3',
+          backgroundColor:
+            theme.colorScheme === 'dark'
+              ? theme.colors.dark[6]
+              : theme.colors.gray[0],
+
+          '&[data-accept]': {
+            color: theme.white,
+            backgroundColor: theme.colors.blue[6],
+          },
+
+          '&[data-reject]': {
+            color: theme.white,
+            backgroundColor: theme.colors.red[6],
+          },
+        })}
       >
         <Group
           position="center"
@@ -95,54 +118,49 @@ const ImageDropper = ({ form }: ImageDropperProps) => {
             />
           </Dropzone.Reject>
           <Dropzone.Idle>
-            <IconPhoto
-              style={{
-                width: rem(52),
-                height: rem(52),
-                color: 'var(--mantine-color-dimmed)',
-              }}
-              stroke={1.5}
-            />
+            <Group position="center">
+              <IconPhoto
+                style={{
+                  width: rem(70),
+                  height: rem(70),
+                  color: 'var(--mantine-color-dimmed)',
+                }}
+                stroke={1.5}
+              />
+            </Group>
+            <Text c={'dimmed'} mt={'xs'} size="md" fw={'lighter'} inline>
+              Drag images here or click to select multiple images
+            </Text>
           </Dropzone.Idle>
-
-          <div>
-            <Text size="md" inline>
-              Drag images here or click to select images
-            </Text>
-            <Text size="sm" c="dimmed" inline mt={7}>
-              You have selected
-              {previews.length > 0 ? (
-                <strong>
-                  <strong> {previews.length} </strong>
-                  {''}
-                  {previews.length < 2 ? ' image' : ' images '}
-                </strong>
-              ) : (
-                <strong> No image selected</strong>
-              )}
-            </Text>
-          </div>
         </Group>
       </Dropzone>
-      {previews.length >= 1 && (
-        <Group
-          style={{ cursor: 'pointer' }}
-          onClick={() => {
-            form.setFieldValue(`firstStep.images`, []);
-            setImageCount(0);
-          }}
-          spacing={2}
-        >
-          <Text pb={rem(5)} underline>
-            {previews.length < 2 ? 'Clear image' : 'Clear images '}
-          </Text>
-          <IconTrash size={'1.2em'} />
-        </Group>
+      {previews?.length >= 1 && (
+        <>
+          <Divider
+            label={<Badge>Preview</Badge>}
+            labelPosition="center"
+            color="gray.3"
+            mt={'xs'}
+          />
+          <Group
+            style={{ cursor: 'pointer' }}
+            onClick={() => {
+              form.setFieldValue(`thirdStep.images`, []);
+              setImageCount(0);
+            }}
+            spacing={2}
+          >
+            <Text c={'dimmed'} pb={rem(5)} underline>
+              {previews?.length < 2 ? 'Clear image' : 'Clear images '}
+            </Text>
+            <IconTrash color="gray" size={'1.2em'} />
+          </Group>
+        </>
       )}
       <SimpleGrid
-        cols={5}
+        cols={8}
         breakpoints={[{ maxWidth: 'sm', cols: 1 }]}
-        mt={previews.length > 0 ? 'xs' : 0}
+        mt={previews?.length > 0 ? 'xs' : 0}
       >
         {previews}
       </SimpleGrid>

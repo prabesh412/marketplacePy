@@ -1,4 +1,3 @@
-import { useStore } from '@/zustand/store';
 import {
   Avatar,
   Button,
@@ -16,18 +15,17 @@ import {
   useMantineTheme,
 } from '@mantine/core';
 import { useForm } from '@mantine/form';
-import { IconUpload } from '@tabler/icons-react';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import {
   getUsersMeRetrieveQueryKey,
   useUsersMeRetrieve,
   useUsersUpdate,
-  usersMeRetrieve,
 } from '../../../../orval/users/users';
 
 import { notifications } from '@mantine/notifications';
 import { useQueryClient } from '@tanstack/react-query';
 import ConfirmationModal from '../common/ConfirmationModal';
+import GetInitials from '../common/GetInitials';
 
 const useStyles = createStyles((theme) => ({
   user: {
@@ -131,17 +129,14 @@ const PersonalInfo = () => {
         <div>
           <UnstyledButton className={classes.user}>
             <Group>
-              <Avatar src={user?.image} radius="xl" size={'lg'} />
-
+              <Avatar size={40} radius="xl" color="cyan">
+                {GetInitials(user?.name ? user?.name : '')}
+              </Avatar>
               <div style={{ flex: 1 }}>
                 <Text size="sm" fw={500}>
                   {user?.name}
                 </Text>
               </div>
-
-              <Button leftIcon={<IconUpload />} radius={'md'}>
-                Upload New Photo
-              </Button>
             </Group>
           </UnstyledButton>
         </div>
@@ -162,6 +157,7 @@ const PersonalInfo = () => {
                 label={<Text c={'dimmed'}>Phone Number</Text>}
                 type="text"
                 size="lg"
+                readOnly
                 placeholder={user?.username}
                 radius={'md'}
                 maxLength={10}
@@ -171,7 +167,7 @@ const PersonalInfo = () => {
             </Group>
             <Group grow>
               <Select
-                disabled
+                readOnly
                 label={<Text c={'dimmed'}>Language</Text>}
                 type="number"
                 size="lg"
@@ -184,43 +180,26 @@ const PersonalInfo = () => {
               <div>
                 <Text c={'dimmed'}>Passsword</Text>
                 <Popover width={'auto'} position="bottom" withArrow shadow="md">
-                  <Popover.Target>
-                    <Button size="lg" radius={'md'} w={'100%'}>
-                      Change Password
-                    </Button>
-                  </Popover.Target>
-                  <Popover.Dropdown>
-                    <Text size={'sm'} fw={'600'}>
-                      Select Price Range
-                    </Text>
-
-                    <TextInput
-                      placeholder="Min"
-                      type="number"
-                      w={'100%'}
-                      {...form.getInputProps('priceRangeMin')}
-                    />
-                    <TextInput
-                      mt={'md'}
-                      w={'100%'}
-                      placeholder="Max"
-                      type="number"
-                      {...form.getInputProps('priceRangeMax')}
-                    />
-                  </Popover.Dropdown>
+                  <Button disabled size="lg" radius={'md'} w={'100%'}>
+                    Reset
+                  </Button>
                 </Popover>
               </div>
             </Group>
             <Checkbox
               mt={'sm'}
+              disabled
               label={<Text c={'dimmed'}>Make Me Anonymous</Text>}
             />
-            <Checkbox label={<Text c={'dimmed'}>NSFW Listings</Text>} />
-            <Checkbox label={<Text c={'dimmed'}>Open To Chat</Text>} />
+            <Checkbox
+              disabled
+              label={<Text c={'dimmed'}>NSFW Listings</Text>}
+            />
+            <Checkbox disabled label={<Text c={'dimmed'}>Open To Chat</Text>} />
 
             <Divider c={'dimmed'} size={1} />
             <Group position="right">
-              <div>
+              {!userPatch.isLoading && (
                 <Button
                   disabled={userPatch.isLoading}
                   radius={'md'}
@@ -228,7 +207,7 @@ const PersonalInfo = () => {
                 >
                   Save Changes
                 </Button>
-              </div>
+              )}
             </Group>
           </FocusTrap>
         </Stack>

@@ -1,22 +1,13 @@
 import {
-  Badge,
   Group,
   Loader,
   Paper,
-  Progress,
   Text,
   ThemeIcon,
   rem,
   useMantineTheme,
 } from '@mantine/core';
-import {
-  IconArrowRight,
-  IconArrowRightBar,
-  IconCircle,
-  IconCircleCheck,
-  IconCircleCheckFilled,
-  IconSwimming,
-} from '@tabler/icons-react';
+import { IconArrowRight, IconCircleCheck } from '@tabler/icons-react';
 import React, { useEffect, useRef, useState } from 'react';
 interface InfiniteScrollProps {
   fetchMoreData: () => void;

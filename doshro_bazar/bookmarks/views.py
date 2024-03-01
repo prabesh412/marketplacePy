@@ -1,14 +1,13 @@
-from rest_framework import viewsets, status
-from doshro_bazar.bookmarks.models import Bookmark
-from drf_spectacular.utils import extend_schema, extend_schema_view
 from django_filters import rest_framework as filters_new
-from doshro_bazar.bookmarks.serializers import BookmarkSerializer, BookmarkInputSerializer, BookmarkProfileSerializer
-from rest_framework.response import Response
-from rest_framework.mixins import ListModelMixin, CreateModelMixin, DestroyModelMixin
-from rest_framework.viewsets import GenericViewSet
+from drf_spectacular.utils import extend_schema, extend_schema_view
+from rest_framework import status, viewsets
 from rest_framework.decorators import action
+from rest_framework.mixins import CreateModelMixin, DestroyModelMixin, ListModelMixin
+from rest_framework.response import Response
+from rest_framework.viewsets import GenericViewSet
 
-
+from doshro_bazar.bookmarks.models import Bookmark
+from doshro_bazar.bookmarks.serializers import BookmarkInputSerializer, BookmarkProfileSerializer, BookmarkSerializer
 
 
 class BookmarkViewSet(GenericViewSet, CreateModelMixin, DestroyModelMixin):
@@ -39,6 +38,9 @@ class BookmarkViewSet(GenericViewSet, CreateModelMixin, DestroyModelMixin):
         if not request.user: 
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         if serializer.is_valid():
+            if Bookmark.objects.filter(user=request.user, listing=serializer.validated_data['listing']).exists():
+                Bookmark.objects.filter(user=request.user, listing=serializer.validated_data['listing']).delete()
+                return Response({"message": "Bookmark deleted"}, status=status.HTTP_200_OK)
             serializer.save(user=request.user)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

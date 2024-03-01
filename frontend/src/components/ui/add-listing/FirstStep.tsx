@@ -1,21 +1,31 @@
-import React, { useEffect, useRef, useState } from 'react';
 import {
-  ActionIcon,
-  Button,
-  Flex,
+  Card,
+  Divider,
   FocusTrap,
-  Grid,
   Group,
   NumberInput,
   Select,
   SelectItem,
   Stack,
-  Textarea,
+  Text,
   TextInput,
+  Textarea,
+  createStyles,
+  useMantineTheme,
 } from '@mantine/core';
-import ImageDropper from './ImageDropper';
+import {
+  IconAbc,
+  IconCategory,
+  IconCategoryFilled,
+  IconCurrencyRupeeNepalese,
+  IconFileDescription,
+  IconHomeSearch,
+  IconMapPinFilled,
+  IconPhone,
+  IconTool,
+} from '@tabler/icons-react';
+import { useEffect, useState } from 'react';
 import { useCategoryList } from '../../../../orval/category/category';
-import { IconMinus, IconPlus } from '@tabler/icons-react';
 import useAddListingForm from './UseAddListingForm';
 
 type FirstStepProps = {
@@ -23,9 +33,10 @@ type FirstStepProps = {
 };
 
 const FirstStep = ({ form }: FirstStepProps) => {
-  const [active, setActive] = useState(false);
-  const [numOfFeatures, setNumOfFeatures] = useState<number[]>([0]);
+  const theme = useMantineTheme();
+  const { classes } = useStyles();
 
+  const [active, setActive] = useState(false);
   const [selectedMainCategory, setSelectedMainCategory] = useState<string>(
     form.values.firstStep.main_category || '',
   );
@@ -102,50 +113,89 @@ const FirstStep = ({ form }: FirstStepProps) => {
   }, [form.values.firstStep.main_category]);
 
   return (
-    <div>
-      <Stack>
+    <div
+      style={{
+        backgroundColor: 'white',
+        borderRadius: theme.radius.md,
+      }}
+    >
+      <Stack className={classes.stack} p={'xl'}>
         <FocusTrap active={active}>
+          <Card withBorder shadow="sm" bg={'gray.1'}>
+            <Group spacing={5}>
+              <IconHomeSearch color="gray" />
+              <Text c={'dimmed'}>
+                Buyers tend to show a higher interest in listings that offer
+                comprehensive and detailed information.
+              </Text>
+            </Group>
+          </Card>
+          <Divider color="gray.1" />
           <TextInput
+            withAsterisk={false}
             required
-            label={'Title of listing'}
-            placeholder="Eg: House for sale in Bhaktapur, Radhe Radhe"
+            placeholder="Ad title (Eg: House for sale in Koteshwor)"
             {...form.getInputProps('firstStep.title')}
+            icon={<IconAbc />}
             data-autofocus={form.errors?.title !== undefined}
+            radius={'md'}
+            size="md"
+            maxLength={70}
           />
 
           <Group grow>
             <NumberInput
               required
-              label={'Price in रू'}
-              placeholder="Eg:10,000"
+              placeholder="Price in रू"
+              icon={<IconCurrencyRupeeNepalese />}
               type="number"
-              maxLength={10}
-              min={1}
+              precision={2}
+              min={0}
               {...form.getInputProps('firstStep.price')}
               data-autofocus={form.errors?.price !== undefined}
+              radius={'md'}
+              size="md"
+              hideControls
             />
             <NumberInput
               required
-              label={'Phone number'}
               placeholder="Secondary Phone number"
+              icon={<IconPhone />}
               type="number"
               maxLength={10}
               minLength={10}
               {...form.getInputProps('firstStep.phone_number')}
+              radius={'md'}
+              size="md"
+              hideControls
             />
           </Group>
-          <TextInput
-            required
-            label={'Location'}
-            placeholder="Eg: New baneshwor chowk, opposite of parliament house"
-            {...form.getInputProps('firstStep.location')}
-            data-autofocus={form?.errors?.title !== undefined}
-          />
+          <Group grow>
+            <TextInput
+              required
+              placeholder="Location (Eg: Koteshwor, opposite of Shiva mandir)"
+              {...form.getInputProps('firstStep.location')}
+              icon={<IconMapPinFilled />}
+              radius={'md'}
+              size="md"
+              data-autofocus={form?.errors?.title !== undefined}
+            />
+            <Select
+              required
+              placeholder="Condition"
+              {...form.getInputProps('firstStep.listing_condition')}
+              data={['New', 'Used', 'Like New', 'Brand New']}
+              icon={<IconTool />}
+              radius={'md'}
+              size="md"
+              data-autofocus={form?.errors?.title !== undefined}
+            />
+          </Group>
           <Group grow>
             <Select
-              label="Main category"
               required
               placeholder="Pick main category"
+              icon={<IconCategory />}
               searchable
               data={(categoryOptions || []).map((category) => ({
                 value: category.value.toString(),
@@ -156,78 +206,34 @@ const FirstStep = ({ form }: FirstStepProps) => {
                 handleMainCategoryChange(mainCategory as string)
               }
               error={form.errors['firstStep.main_category']}
+              radius={'md'}
+              size="md"
             />
             <Select
               key={selectedMainCategory}
-              label="Sub category"
               required
+              icon={<IconCategoryFilled />}
               placeholder="Pick Sub category"
               {...form.getInputProps('firstStep.sub_category')}
               data={selectedSubcategories}
               disabled={selectedSubcategories.length < 1}
               error={form.errors['firstStep.sub_category']}
               value={form.values.firstStep.sub_category}
+              radius={'md'}
+              size="md"
             />
           </Group>
           <Textarea
+            icon={
+              <IconFileDescription style={{ marginBottom: theme.spacing.lg }} />
+            }
             placeholder={'Description'}
-            label={'Description'}
-            withAsterisk
             required
             {...form.getInputProps('firstStep.description')}
             data-autofocus={form.errors?.description !== undefined}
+            radius={'md'}
+            size="md"
           />
-          <Grid>
-            {numOfFeatures.map((_, index) => (
-              <>
-                <Grid.Col span={6}>
-                  <TextInput
-                    key={index}
-                    label={'Feature Name'}
-                    placeholder="Eg: John Doe"
-                    {...form.getInputProps(
-                      `firstStep.listing_features.object.${index}.key`,
-                    )}
-                  />
-                </Grid.Col>
-                <Grid.Col span={6}>
-                  <TextInput
-                    key={index}
-                    label={'Feature Value'}
-                    placeholder="Eg: John Doe"
-                    {...form.getInputProps(
-                      `firstStep.listing_features.object.${index}.value`,
-                    )}
-                  />
-                </Grid.Col>
-              </>
-            ))}
-          </Grid>
-          <Flex justify="flex-end" align="flex-end">
-            
-            <ActionIcon
-              variant="default"
-              onClick={() =>
-                setNumOfFeatures((current) => [
-                  ...current,
-                  current[current.length - 1] + 1,
-                ])
-              }
-            >
-              <IconPlus />
-            </ActionIcon>
-            {numOfFeatures.length !== 1 && (
-              <ActionIcon
-                variant="default"
-                onClick={() =>
-                  setNumOfFeatures((current) => current.slice(0, -1))
-                }
-              >
-                <IconMinus />
-              </ActionIcon>
-            )}
-          </Flex>
-          <ImageDropper form={form} />
         </FocusTrap>
       </Stack>
     </div>
@@ -235,3 +241,11 @@ const FirstStep = ({ form }: FirstStepProps) => {
 };
 
 export default FirstStep;
+
+const useStyles = createStyles((theme) => ({
+  stack: {
+    [`@media (max-width: 576px)`]: {
+      padding: theme.spacing.xs,
+    },
+  },
+}));

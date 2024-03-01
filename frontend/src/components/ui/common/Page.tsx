@@ -1,5 +1,5 @@
-import { ReactNode } from 'react';
 import Head from 'next/head';
+import { ReactNode } from 'react';
 
 interface PageProps {
   children: ReactNode;
@@ -9,7 +9,7 @@ const Page = ({ children }: PageProps) => {
   return (
     <>
       <Head>
-        <title> Doroso Bazaar</title>
+        <title>Doshro Deal</title>
         {/*  TODO : add meta tags  */}
       </Head>
       {children}

@@ -1,21 +1,18 @@
 import {
   Button,
-  Checkbox,
   createStyles,
   Divider,
   PasswordInput,
   rem,
-  Text,
   TextInput,
   Title,
 } from '@mantine/core';
 
-import { useDjRestAuthLoginCreate } from '../../../../../orval/dj-rest-auth/dj-rest-auth';
-import { useRouter } from 'next/router';
-import { useForm } from '@mantine/form';
-import { useStore } from '@/zustand/store';
 import { PATH_APP } from '@/components/routes';
+import { useStore } from '@/zustand/store';
+import { useForm } from '@mantine/form';
 import { notifications } from '@mantine/notifications';
+import { useDjRestAuthLoginCreate } from '../../../../../orval/dj-rest-auth/dj-rest-auth';
 
 const useStyles = createStyles((theme) => ({
   form: {
@@ -32,11 +29,9 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 const Login = () => {
-  const { classes } = useStyles();
   const postLogin = useDjRestAuthLoginCreate();
   const setToken = useStore((state) => state.setAccessToken);
   const setUser = useStore((state) => state.setProfile);
-  const router = useRouter();
   const form = useForm({
     initialValues: {
       username: '',
@@ -66,7 +61,7 @@ const Login = () => {
         onSuccess: (data) => {
           setToken(data.key);
           setUser(data.key);
-          router.push(PATH_APP.root);
+          window.location.replace(PATH_APP.root);
           notifications.update({
             id: 'login',
             title: `Login Success`,
@@ -77,6 +72,7 @@ const Login = () => {
 
             withCloseButton: true,
           });
+          form.reset();
         },
         onError: (error: any) => {
           notifications.update({
@@ -87,7 +83,8 @@ const Login = () => {
               error['response']['data']['email'] ||
               error['response']['data']['username'] ||
               error['response']['data']['non_field_errors'] ||
-              error['response']['data']['password1']
+              error['response']['data']['password1'] ||
+              'Unexpected error occured'
             }`,
             loading: false,
             autoClose: true,
@@ -108,6 +105,7 @@ const Login = () => {
             placeholder="Phone Number"
             size="lg"
             radius={'lg'}
+            type="number"
             pb={'xl'}
             {...form.getInputProps('username')}
           />
@@ -135,9 +133,9 @@ const Login = () => {
           >
             Log in
           </Button>
-          <Text mt={'xl'} size={'xs'} c={'dimmed'}>
+          {/* <Text mt={'xl'} size={'xs'} c={'dimmed'}>
             Forgot your passsword?
-          </Text>
+          </Text> */}
           <Divider size={1} c={'dimmed'} mt={'xl'} />
         </form>
       </div>

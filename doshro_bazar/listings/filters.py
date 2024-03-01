@@ -1,5 +1,7 @@
 from django_filters import rest_framework as filters_new
+
 from doshro_bazar.listings.models import Listings
+
 
 class ListingsFilter(filters_new.FilterSet):
     order = filters_new.OrderingFilter(
@@ -19,6 +21,7 @@ class ListingsFilter(filters_new.FilterSet):
             'status': ['exact'],
             'sale_status': ['exact'],
             'category': ['exact'],
+            'user': ['exact'],
             'user__username': ['exact'],
             'created_at': ['exact', 'lt', 'gt'],
             'updated_at': ['exact', 'lt', 'gt'],

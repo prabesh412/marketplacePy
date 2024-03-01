@@ -1,3 +1,4 @@
+import FeaturedCard from '@/components/ui/featured/FeaturedCard';
 import LargeScreenProductDetail from '@/components/ui/listing/LargeScreenProductDetail';
 import SmallScreenProductDetail from '@/components/ui/listing/SmallScreenProductDetail';
 import {
@@ -10,23 +11,24 @@ import {
   createStyles,
   rem,
 } from '@mantine/core';
-import { Listings } from '../../../../orval/model';
-import FeaturedCard from '@/components/ui/featured/FeaturedCard';
 import { IconArrowRight } from '@tabler/icons-react';
+import { useRouter } from 'next/router';
 import { useListingsList } from '../../../../orval/listings/listings';
+import { Listings } from '../../../../orval/model';
 
 type ProductDetailProps = {
   listingDetail?: Listings;
 };
 const ListingDetailWrapper = ({ listingDetail }: ProductDetailProps) => {
   const { classes } = useStyles();
+  const router = useRouter();
+
   const { data: userListings } = useListingsList({
     user__username: listingDetail?.user?.username,
   });
   const { data: similarListings } = useListingsList({
     category: listingDetail?.category?.id as number,
   });
-  console.log(similarListings);
 
   return (
     <>
@@ -68,7 +70,15 @@ const ListingDetailWrapper = ({ listingDetail }: ProductDetailProps) => {
         </Grid>
         {userListings?.next && (
           <Group mt={'sm'} pb={'sm'} position="center">
-            <Button rightIcon={<IconArrowRight />}>View more</Button>
+            <Button
+              radius={'xl'}
+              onClick={() =>
+                router.push(`/public-profile/${listingDetail?.user?.username}`)
+              }
+              rightIcon={<IconArrowRight />}
+            >
+              View more
+            </Button>
           </Group>
         )}
         {similarListings?.results?.length &&
@@ -97,7 +107,14 @@ const ListingDetailWrapper = ({ listingDetail }: ProductDetailProps) => {
         </Grid>
         {similarListings?.next && (
           <Group mt={'sm'} pb={'sm'} position="center">
-            <Button rightIcon={<IconArrowRight />}>View more</Button>
+            <Button
+              onClick={() =>
+                router.push(`/search?category=${listingDetail?.category?.id}`)
+              }
+              rightIcon={<IconArrowRight />}
+            >
+              View more
+            </Button>
           </Group>
         )}
       </div>

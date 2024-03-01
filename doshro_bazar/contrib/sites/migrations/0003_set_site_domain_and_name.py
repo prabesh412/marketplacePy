@@ -40,8 +40,8 @@ def update_site_forward(apps, schema_editor):
     _update_or_create_site_with_sequence(
         Site,
         schema_editor.connection,
-        "example.com",
-        "doshro_bazar",
+        "djangocutter.store",
+        "doshrodeal",
     )
 
 
@@ -51,8 +51,8 @@ def update_site_backward(apps, schema_editor):
     _update_or_create_site_with_sequence(
         Site,
         schema_editor.connection,
-        "example.com",
-        "example.com",
+        "gmail.com",
+        "gmail.com",
     )
 
 

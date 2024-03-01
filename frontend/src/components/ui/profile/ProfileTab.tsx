@@ -1,27 +1,21 @@
-import React, { useRef } from 'react';
-import { Group, Tabs, Text, useMantineTheme } from '@mantine/core';
+import { Tabs, useMantineTheme } from '@mantine/core';
 import {
   IconBookmark,
   IconMessageCircle,
-  IconPencil,
-  IconSettings,
   IconUpload,
 } from '@tabler/icons-react';
+import { useRouter } from 'next/router';
 import { useListingsMeRetrieve } from '../../../../orval/listings/listings';
 import { Listings } from '../../../../orval/model';
-import { useRouter } from 'next/router';
-import PersonalInfo from './PersonalInfo';
 
-import MylistingCard from './MylistingCard';
 import BookMarks from './Bookmark';
+import MylistingCard from './MylistingCard';
+import PersonalInfo from './PersonalInfo';
 
 const tabs = [
   { label: 'Personal Info', icon: <IconMessageCircle size="1.2rem" /> },
   { label: 'Bookmark', icon: <IconBookmark size="1.2rem" /> },
-  { label: 'Inbox', icon: <IconMessageCircle size="1.2rem" /> },
-  { label: 'Manage Listings', icon: <IconPencil size="1.2rem" /> },
   { label: 'Public Listings', icon: <IconUpload size="1.2rem" /> },
-  { label: 'settings', icon: <IconSettings size="1.2rem" /> },
 ];
 const ProfileTab = () => {
   const { data: myListings } = useListingsMeRetrieve();
@@ -41,37 +35,24 @@ const ProfileTab = () => {
           </Tabs.Tab>
         ))}
       </Tabs.List>
-
       <Tabs.Panel value="Personal Info" pt="xs">
-        <PersonalInfo />
+        <div>
+          <PersonalInfo />
+        </div>
       </Tabs.Panel>
       <Tabs.Panel value="Bookmark" pt="xs">
-        <BookMarks />
+        <div>
+          <BookMarks />
+        </div>
       </Tabs.Panel>
-
       <Tabs.Panel value="Public Listings" pt="xs">
         <Tabs.Panel value="Public Listings">
-          {Array.isArray(myListings) ? (
+          {Array.isArray(myListings) &&
             myListings.map((listing: Listings, index: number) => (
               <div style={{ marginBottom: theme.spacing.sm }}>
                 <MylistingCard listing={listing} />
               </div>
-            ))
-          ) : (
-            <Group spacing={5}>
-              <Text c={'dimmed'}>You haven't uploaded anything yet,</Text>
-              <Text
-                sx={{ cursor: 'pointer' }}
-                onClick={() =>
-                  router.push('http://localhost:3000/listing/listing-add')
-                }
-                c={theme.primaryColor}
-                underline
-              >
-                upload a listing now
-              </Text>
-            </Group>
-          )}
+            ))}
         </Tabs.Panel>
       </Tabs.Panel>
     </Tabs>

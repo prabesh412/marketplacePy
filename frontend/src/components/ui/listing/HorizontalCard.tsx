@@ -1,57 +1,78 @@
+import { GetKeyFromValue } from '@/components/utils/GetKeyFromMap';
+import { ListingOptionMap } from '@/components/utils/ListingOptionMap';
+import { useStore } from '@/zustand/store';
 import {
-  Text,
-  Card,
-  Group,
-  createStyles,
-  Avatar,
-  Divider,
-  Badge,
   ActionIcon,
+  Avatar,
+  Badge,
+  Card,
+  Divider,
+  Group,
+  Text,
+  createStyles,
 } from '@mantine/core';
+import { notifications } from '@mantine/notifications';
 import {
   IconClock,
   IconDotsVertical,
   IconHeart,
+  IconHeartFilled,
   IconX,
 } from '@tabler/icons-react';
-import { Listings } from '../../../../orval/model';
-import { notifications } from '@mantine/notifications';
+import { useQueryClient } from '@tanstack/react-query';
+import { useRouter } from 'next/router';
+import { useState } from 'react';
 import {
   getBookmarksProfileRetrieveQueryKey,
   useBookmarksCreate,
   useBookmarksDestroy,
 } from '../../../../orval/bookmarks/bookmarks';
-import { useQueryClient } from '@tanstack/react-query';
-import { useRouter } from 'next/router';
+import { getListingsListQueryKey } from '../../../../orval/listings/listings';
+import { Listings } from '../../../../orval/model';
+import GetInitials from '../common/GetInitials';
 
 type HorizontalCardProps = {
-  listing: Listings;
+  listing?: Listings;
+  overViewDetails?: any;
   overViewImage?: Blob[];
   isBookmark?: boolean;
   bookmarkId?: number;
+  isOverview?: boolean;
+  currentPage?: number;
 };
 const HorizontalCard = ({
   listing,
   overViewImage,
+  overViewDetails,
   isBookmark,
   bookmarkId,
+  isOverview,
+  currentPage,
 }: HorizontalCardProps) => {
   const { classes } = useStyles();
-  const overviewUrl = overViewImage
-    ? URL.createObjectURL(overViewImage?.[0])
-    : null;
+  const overviewUrl =
+    isOverview && overViewImage
+      ? URL?.createObjectURL(overViewImage?.[0])
+      : null;
+  const [isBookmarked, setIsBookmarked] = useState<boolean>(
+    listing?.is_bookmarked || false,
+  );
   const bookmarkAddMutation = useBookmarksCreate();
   const bookmarkDestroyMutation = useBookmarksDestroy();
   const queryClient = useQueryClient();
+  const user = useStore((state) => state.profile);
+
   const addAction = () => {
     if (!isBookmark) {
       const data = {
         listing: listing?.slug as string,
       };
       notifications.show({
-        id: 'userBookmark',
-        title: `Adding to your bookmark`,
-        message: `Please wait while we add to your bookmark`,
+        id: `userBookmark ${listing?.slug} ${isBookmarked}`,
+        title: `${!isBookmarked ? 'Adding' : 'Removing'} your bookmark`,
+        message: `Please wait while we ${
+          !isBookmarked ? 'add' : 'remove'
+        }  your bookmark`,
         loading: true,
         autoClose: false,
         withCloseButton: false,
@@ -59,23 +80,32 @@ const HorizontalCard = ({
         bookmarkAddMutation.mutate(
           { data: data },
           {
-            onSuccess: () => {
+            onSuccess: async () => {
+              setIsBookmarked((prev) => !prev);
               notifications.update({
-                id: 'userBookmark',
-                title: `Bookmark successfully added`,
+                id: `userBookmark ${listing?.slug} ${isBookmarked}`,
+                title: `Bookmark successfully ${
+                  !isBookmarked ? 'added' : 'removed'
+                }`,
                 color: 'green',
-                message: 'Successfully saved the bookmark!',
+                message: `Successfully  ${
+                  !isBookmarked ? 'added' : 'removed'
+                } the bookmark!`,
                 loading: false,
                 autoClose: true,
                 withCloseButton: true,
               });
+              await queryClient.invalidateQueries(getListingsListQueryKey());
+              await queryClient.invalidateQueries(
+                getBookmarksProfileRetrieveQueryKey(),
+              );
             },
             onError: () => {
               notifications.update({
-                id: 'userBookmark',
+                id: `userBookmark ${listing?.slug} ${isBookmarked}`,
                 title: `Bookmark couldnot be added`,
                 color: 'red',
-                message: 'Bookmark already exist',
+                message: 'Please make sure you are logged in',
                 loading: false,
                 autoClose: true,
                 withCloseButton: true,
@@ -95,7 +125,7 @@ const HorizontalCard = ({
         bookmarkDestroyMutation.mutate(
           { id: bookmarkId as number },
           {
-            onSuccess: () => {
+            onSuccess: async () => {
               notifications.update({
                 id: 'userBookmarkdestroy',
                 title: `Bookmark successfully deleted`,
@@ -105,9 +135,10 @@ const HorizontalCard = ({
                 autoClose: true,
                 withCloseButton: true,
               });
-              queryClient.invalidateQueries(
+              await queryClient.invalidateQueries(
                 getBookmarksProfileRetrieveQueryKey(),
               );
+              await queryClient.refetchQueries(getListingsListQueryKey());
             },
             onError: () => {
               notifications.update({
@@ -125,6 +156,7 @@ const HorizontalCard = ({
     }
   };
   const router = useRouter();
+  console.log(listing?.listing_condition);
   return (
     <Card
       shadow="sm"
@@ -141,17 +173,22 @@ const HorizontalCard = ({
         }}
       >
         <ActionIcon
-          disabled={overViewImage ? true : false}
           size={30}
           radius="xl"
-          color={'green'}
+          color={'lime'}
           sx={{ boxShadow: '0 2px 4px 2px rgba(0, 0, 0, 0.5)' }}
           variant="filled"
           className={classes.heartIcon}
-          onClick={() => addAction()}
+          onClick={() => {
+            if (!isOverview) addAction();
+          }}
         >
           {!isBookmark ? (
-            <IconHeart size={24} stroke={1.5} />
+            isBookmarked ? (
+              <IconHeartFilled size={24} stroke={1.5} />
+            ) : (
+              <IconHeart size={24} stroke={1.5} />
+            )
           ) : (
             <IconX size={24} stroke={1.5} />
           )}
@@ -160,14 +197,15 @@ const HorizontalCard = ({
       <div
         className={classes.textContainer}
         onClick={() =>
-          listing?.is_scraped
-            ? window.open(listing.link_to_original as string)
-            : router.push(`/listing/listing-detail/${listing?.slug}`)
+          !isOverview &&
+          (!listing?.is_scraped
+            ? router.push(`/listing/listing-detail/${listing?.slug}`)
+            : window?.open(listing.link_to_original as string))
         }
       >
         <Group position="apart" noWrap>
           <Text className={classes.title} fw={500} size="md">
-            {listing?.title}
+            {isOverview ? overViewDetails?.title : listing?.title}
           </Text>
 
           <IconDotsVertical />
@@ -181,7 +219,7 @@ const HorizontalCard = ({
             fw={400}
             size="md"
           >
-            रू. {listing?.price}
+            रू. {isOverview ? overViewDetails?.price : listing?.price}
           </Text>
           <Text
             className={classes.smContainer}
@@ -190,7 +228,12 @@ const HorizontalCard = ({
             c="dimmed"
             size="xs"
           >
-            | <Badge variant="filled"> Like New</Badge>
+            |{' '}
+            <Badge variant="filled">
+              {isOverview
+                ? overViewDetails?.listing_condition
+                : GetKeyFromValue(ListingOptionMap, listing?.listing_condition)}
+            </Badge>
           </Text>
           <Text
             className={classes.smContainer}
@@ -199,15 +242,18 @@ const HorizontalCard = ({
             c="dimmed"
             size="sm"
           >
-            | <Badge>{listing?.category?.name}</Badge>
+            |
+            <Badge>
+              {isOverview ? "Your listing's category" : listing?.category?.name}
+            </Badge>
           </Text>
         </Group>
         <Text className={classes.description} mt="xs" c="dimmed" size="sm">
-          {listing?.description}
+          {isOverview ? overViewDetails?.description : listing?.description}
         </Text>
         <Group spacing={2} noWrap>
           <Text className={classes.smText} fw={400} truncate mt="xs" size="sm">
-            {listing?.location}
+            {isOverview ? overViewDetails?.location : listing?.location}
           </Text>
         </Group>
         <Divider className={classes.divider} mt={'xs'} />
@@ -220,19 +266,33 @@ const HorizontalCard = ({
         >
           <Group noWrap spacing={4}>
             <Avatar size={25} radius="xl" color="cyan">
-              {listing?.is_scraped
-                ? listing?.scraped_username?.substring(0, 2).toUpperCase()
-                : listing?.user?.name?.substring(0, 2).toUpperCase()}
+              {!isOverview
+                ? listing?.is_scraped
+                  ? listing?.scraped_username
+                    ? GetInitials(listing?.scraped_username)
+                    : ''
+                  : listing?.user?.name
+                  ? GetInitials(listing?.user?.name)
+                  : ''
+                : user?.name
+                ? GetInitials(user?.name)
+                : ''}
             </Avatar>
             <Text size="xs" w={'99%'} truncate={'end'}>
-              {listing?.is_scraped
-                ? listing?.scraped_username
-                : listing?.user?.name}
+              {!isOverview
+                ? listing?.is_scraped
+                  ? listing?.scraped_username
+                  : listing?.user?.name
+                : user?.name}
             </Text>
           </Group>
           <Group className={classes.smContainer} spacing={2}>
             <IconClock style={{ color: 'green' }} size={17} />
-            <Text size={'xs'}>{listing?.created_at?.slice(0, 10)}</Text>
+            <Text size={'xs'}>
+              {!isOverview
+                ? listing?.created_at?.slice(0, 10)
+                : 'Listing creation time'}
+            </Text>
           </Group>
         </Group>
       </div>
@@ -245,7 +305,6 @@ const useStyles = createStyles((theme) => ({
     alignItems: 'center',
     '@media (max-width: 576px)': {
       padding: theme.spacing.xs,
-      borderRadius: theme.radius.sm,
     },
   },
   imageContainer: {
@@ -271,7 +330,7 @@ const useStyles = createStyles((theme) => ({
     position: 'absolute',
     top: theme.spacing.xs,
     left: theme.spacing.xs,
-    zIndex: 100,
+    zIndex: 10,
     cursor: 'pointer',
   },
   textContainer: {

@@ -1,38 +1,33 @@
+import { GetKeyFromValue } from '@/components/utils/GetKeyFromMap';
+import { ListingOptionMap } from '@/components/utils/ListingOptionMap';
 import {
-  Text,
-  Card,
-  Group,
-  createStyles,
-  Avatar,
-  Divider,
-  Badge,
   ActionIcon,
+  Avatar,
+  Badge,
+  Card,
+  Divider,
+  Group,
   Menu,
+  Text,
+  createStyles,
   rem,
-  Modal,
-  Button,
-  Alert,
 } from '@mantine/core';
+import { notifications } from '@mantine/notifications';
 import {
-  IconAlertCircle,
-  IconAlertHexagon,
-  IconCheck,
   IconClock,
   IconDotsVertical,
   IconEdit,
   IconTrash,
 } from '@tabler/icons-react';
-import { Listings } from '../../../../orval/model';
+import { useQueryClient } from '@tanstack/react-query';
+import { useState } from 'react';
 import {
   getListingsMeRetrieveQueryKey,
   useListingsDestroy,
-  useListingsUpdate,
 } from '../../../../orval/listings/listings';
-import { useRouter } from 'next/router';
-import { notifications } from '@mantine/notifications';
-import { useQueryClient } from '@tanstack/react-query';
-import { useState } from 'react';
+import { Listings } from '../../../../orval/model';
 import ConfirmationModal from '../common/ConfirmationModal';
+import GetInitials from '../common/GetInitials';
 
 type HorizontalCardProps = {
   listing: Listings;
@@ -55,7 +50,7 @@ const MylistingCard = ({ listing }: HorizontalCardProps) => {
       deleteMutation.mutate(
         { slug: slug },
         {
-          onSuccess: () => {
+          onSuccess: async () => {
             notifications.update({
               id: 'userListing',
               title: `Listing successfully deleted`,
@@ -65,7 +60,9 @@ const MylistingCard = ({ listing }: HorizontalCardProps) => {
               autoClose: true,
               withCloseButton: true,
             });
-            queryClient.invalidateQueries(getListingsMeRetrieveQueryKey());
+            await queryClient.invalidateQueries(
+              getListingsMeRetrieveQueryKey(),
+            );
           },
           onError: () => {
             notifications.update({
@@ -81,7 +78,6 @@ const MylistingCard = ({ listing }: HorizontalCardProps) => {
         },
       );
   };
-  const router = useRouter();
   const openDeleteModal = () => setDeleteModalOpen(true);
   const closeDeleteModal = () => setDeleteModalOpen(false);
   const confirmDelete = () => {
@@ -133,28 +129,6 @@ const MylistingCard = ({ listing }: HorizontalCardProps) => {
               >
                 Delete Listing
               </Menu.Item>
-              <Menu.Item
-                onClick={() => router.push('/listing/')}
-                rightSection={
-                  <IconEdit
-                    style={{ width: rem(16), height: rem(16) }}
-                    stroke={1.5}
-                  />
-                }
-              >
-                Edit Listing Details
-              </Menu.Item>
-              <Menu.Item
-                rightSection={
-                  <IconCheck
-                    style={{ width: rem(16), height: rem(16) }}
-                    stroke={1.5}
-                    color="blue"
-                  />
-                }
-              >
-                Mark Listing as sold
-              </Menu.Item>
             </Menu.Dropdown>
           </Menu>
         </ActionIcon>
@@ -178,7 +152,10 @@ const MylistingCard = ({ listing }: HorizontalCardProps) => {
             c="dimmed"
             size="xs"
           >
-            | <Badge> Like New</Badge>
+            |
+            <Badge>
+              {GetKeyFromValue(ListingOptionMap, listing?.listing_condition)}
+            </Badge>
           </Text>
           <Text
             className={classes.smContainer}
@@ -207,7 +184,10 @@ const MylistingCard = ({ listing }: HorizontalCardProps) => {
           noWrap
         >
           <Group noWrap spacing={2}>
-            <Avatar size={20} src={''} />
+            <Avatar size={25} radius="xl" color="cyan">
+              {GetInitials(listing?.user?.name ? listing?.user?.name : '')}
+            </Avatar>
+
             <Text size="xs" w={'100%'} truncate>
               {listing?.user?.name}
             </Text>
@@ -258,7 +238,7 @@ const useStyles = createStyles((theme) => ({
     position: 'absolute',
     top: theme.spacing.xs,
     left: theme.spacing.xs,
-    zIndex: 100,
+    zIndex: 10,
     cursor: 'pointer',
   },
   textContainer: {

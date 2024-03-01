@@ -1,10 +1,9 @@
-import { useState } from 'react';
 import {
-  Group,
   Box,
   Collapse,
-  ThemeIcon,
+  Group,
   Text,
+  ThemeIcon,
   UnstyledButton,
   createStyles,
   rem,
@@ -15,6 +14,7 @@ import {
   IconChevronRight,
 } from '@tabler/icons-react';
 import { useRouter } from 'next/router';
+import { useState } from 'react';
 
 const useStyles = createStyles((theme) => ({
   control: {

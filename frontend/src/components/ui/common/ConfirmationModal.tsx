@@ -1,10 +1,8 @@
 import { Alert, Button, Divider, Group, Modal, Text } from '@mantine/core';
 import { IconAlertHexagon } from '@tabler/icons-react';
-import { text } from 'stream/consumers';
 
 interface ConfirmationModalProps {
   color: string;
-  animation?: string;
   text: string;
   title: string;
   isModalOpen: boolean;
@@ -13,7 +11,6 @@ interface ConfirmationModalProps {
 }
 const ConfirmationModal = ({
   color,
-  animation,
   isModalOpen,
   title,
   closeModal,
@@ -26,7 +23,6 @@ const ConfirmationModal = ({
       opened={isModalOpen}
       radius={'md'}
       onClose={closeModal}
-      transitionProps={{ transition: 'rotate-left' }}
       overlayProps={{
         blur: 3,
       }}

@@ -1,16 +1,19 @@
 from django.contrib.auth import get_user_model
 from rest_framework import serializers
-from doshro_bazar.users.models import User as UserType
 
+from doshro_bazar.users.models import User as UserType
 
 User = get_user_model()
 
 
 class UserSerializer(serializers.ModelSerializer[UserType]):
     image = serializers.ImageField(required=False)
+    number_of_listings = serializers.IntegerField(read_only=True)
+    number_of_bookmark = serializers.IntegerField(read_only=True)
+    number_of_comments = serializers.IntegerField(read_only=True)
     class Meta:
         model = User
-        fields = ["username", "name", "image"]
+        fields = ["username", "name", "image", "number_of_listings", "number_of_bookmark", "number_of_comments"]
 
         extra_kwargs = {
             "url": {"view_name": "api:user-detail", "lookup_field": "username"},

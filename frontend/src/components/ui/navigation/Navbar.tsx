@@ -1,75 +1,102 @@
+import { useStore } from '@/zustand/store';
 import {
   Avatar,
-  Burger,
   Button,
-  Container,
-  createStyles,
+  Flex,
   Group,
-  rem,
-  UnstyledButton,
   Menu,
   Tabs,
-  Flex,
+  UnstyledButton,
+  createStyles,
+  rem,
   useMantineTheme,
-  Modal,
-  TextInput,
-  ActionIcon,
-  Divider,
-  Text,
-  Chip,
-  Transition,
 } from '@mantine/core';
-import cx from 'clsx';
-import { useDisclosure, useWindowScroll } from '@mantine/hooks';
 import {
   IconCategory,
+  IconChevronDown,
+  IconCirclePlus,
   IconClock,
   IconCrown,
   IconHome,
   IconLogin,
-  IconPlus,
-  IconStars,
-  IconUser,
   IconLogout,
   IconMessage,
   IconSettings,
-  IconChevronDown,
   IconStar,
-  IconSearch,
-  IconArrowRight,
-  IconBellPlusFilled,
-  IconCirclePlus,
-  IconCubePlus,
+  IconStars,
+  IconUser,
 } from '@tabler/icons-react';
+import cx from 'clsx';
+import Image from 'next/image';
 import { useRouter } from 'next/router';
 import React, { useState } from 'react';
-import { useStore } from '@/zustand/store';
-import DefaultSideNav from './DefaultSideNav';
-import Logo from '../../../../public/favicon/logo.png';
-import Image from 'next/image';
+import Logo from '../.../../../../../public/favicon/logo1.png';
 import GetInitials from '../common/GetInitials';
-import HomepageSearchArea from '../home/search-area/HomepageSearchArea';
+import DefaultSideNav from './DefaultSideNav';
 
 interface HeaderSearchProps {
   isHomepage: boolean;
 }
 
 const Navbar = ({ isHomepage }: HeaderSearchProps) => {
-  const [opened, { toggle }] = useDisclosure(false);
-  const [scroll, scrollTo] = useWindowScroll();
-
   const { classes } = useStyles();
+
   const [userMenuOpened, setUserMenuOpened] = useState(false);
   const [isSideNavOpen, setSideNavOpen] = useState(false);
+  const [previousTab, setPreviousTab] = useState<string | null>(null);
   const router = useRouter();
+
+  const getPathBasedActiveTab = () => {
+    const pathMap: { [key: string]: string } = {
+      '/': 'Home',
+      '/featured': 'Featured',
+      '/popular': 'Popular',
+      '/latest': 'Latest',
+    };
+    const activeTab =
+      router.pathname in pathMap ? pathMap[router.pathname] : '/';
+    return activeTab;
+  };
   const user = useStore((state) => state.profile);
   const logout = useStore((state) => state.logout);
-  const defaultTab = router.pathname === '/' ? 'Home' : '';
-  const [activeTab, setActiveTab] = useState<string | null>(defaultTab);
-  const [modalTrigger, setModalTrigger] = useState(false);
-  const [searchValue, setSearchValue] = useState('');
+
+  const [activeTab, setActiveTab] = useState<string | null>(
+    getPathBasedActiveTab(),
+  );
 
   const theme = useMantineTheme();
+  const handleLogout = () => {
+    logout();
+    window?.location?.reload();
+  };
+  const handlePillClick = (value: string) => {
+    if (value === 'Categories') {
+      setPreviousTab(activeTab);
+      setActiveTab('Categories');
+      setSideNavOpen(true);
+    } else {
+      router.push(value === 'Home' ? '/' : `/${value.toLowerCase()}`);
+      setActiveTab(value);
+    }
+  };
+  const closeSideNav = () => {
+    setSideNavOpen(false);
+    setActiveTab(previousTab ? previousTab : getPathBasedActiveTab());
+    setPreviousTab(null);
+  };
+  const pills = [
+    {
+      value: 'Home',
+      icon: <IconHome size="0.8rem" />,
+    },
+    {
+      value: 'Categories',
+      icon: <IconCategory size="0.8rem" />,
+    },
+    { value: 'Featured', icon: <IconStars size="0.8rem" /> },
+    { value: 'Popular', icon: <IconCrown size="0.8rem" /> },
+    { value: 'Latest', icon: <IconClock size="0.8rem" /> },
+  ];
 
   const userAction = [
     {
@@ -110,7 +137,7 @@ const Navbar = ({ isHomepage }: HeaderSearchProps) => {
 
   return (
     <>
-      <Container className={classes.header} fluid>
+      <div className={classes.header}>
         <Flex
           className={classes.mainFlex}
           justify={'space-evenly'}
@@ -119,13 +146,14 @@ const Navbar = ({ isHomepage }: HeaderSearchProps) => {
         >
           <Image
             src={Logo}
-            alt="as"
-            height={120}
-            width={170}
+            alt="logo"
+            height={40}
             onClick={() => router.push('/')}
-            style={{ paddingBottom: theme.spacing.xs }}
+            style={{
+              paddingLeft: theme.spacing.xs,
+              cursor: 'pointer',
+            }}
           />
-
           <Tabs
             variant="pills"
             radius="xl"
@@ -134,63 +162,22 @@ const Navbar = ({ isHomepage }: HeaderSearchProps) => {
             onTabChange={setActiveTab}
           >
             <Tabs.List className={classes.tabsList}>
-              <Tabs.Tab
-                className={classes.tab}
-                value="Home"
-                icon={<IconHome size="0.8rem" />}
-                onClick={() => {
-                  if (router.pathname !== '/') {
-                    router.push('/');
-                  }
-                  setSideNavOpen(false);
-                }}
-              >
-                Home
-              </Tabs.Tab>
-              <Tabs.Tab
-                onClick={() => setSideNavOpen(true)}
-                value="messages"
-                className={classes.tab}
-                icon={<IconCategory size="0.8rem" />}
-              >
-                Category
-              </Tabs.Tab>
-
-              <Tabs.Tab
-                className={classes.tab}
-                value="settings"
-                icon={<IconStars size="0.8rem" />}
-              >
-                Featured
-              </Tabs.Tab>
-              <Tabs.Tab
-                className={classes.tab}
-                value="settings"
-                icon={<IconCrown size="0.8rem" />}
-              >
-                Popular
-              </Tabs.Tab>
-              <Tabs.Tab
-                className={classes.tab}
-                value="settings"
-                icon={<IconClock size="0.8rem" />}
-              >
-                Latest
-              </Tabs.Tab>
+              {pills.map((pill) => (
+                <Tabs.Tab
+                  key={pill.value}
+                  className={classes.tab}
+                  value={pill.value}
+                  icon={pill.icon}
+                  onClick={() => handlePillClick(pill.value)}
+                >
+                  {pill.value}
+                </Tabs.Tab>
+              ))}
             </Tabs.List>
           </Tabs>
-          <IconSearch
-            onClick={() => setModalTrigger((prev) => !prev)}
-            className={classes.burger}
-            size="2em"
-            stroke={'2'}
-          />
-
           <Group classNames={classes.burger} spacing={7}>
             <Button
               leftIcon={<IconCirclePlus />}
-              variant="gradient"
-              gradient={{ from: 'lime', to: 'cyan', deg: 30 }}
               radius={'xl'}
               className={classes.tabsList}
               onClick={() => router.push('/listing/listing-add')}
@@ -218,7 +205,11 @@ const Navbar = ({ isHomepage }: HeaderSearchProps) => {
                         {user.name ? GetInitials(user?.name) : ''}
                       </Avatar>
                       <IconChevronDown
-                        style={{ width: rem(15), height: rem(15) }}
+                        style={{
+                          width: rem(20),
+                          height: rem(20),
+                          color: 'gray',
+                        }}
                         stroke={2}
                       />
                     </Group>
@@ -241,7 +232,7 @@ const Navbar = ({ isHomepage }: HeaderSearchProps) => {
                     </Menu.Item>
                   ))}
                   <Menu.Item
-                    onClick={logout}
+                    onClick={() => handleLogout()}
                     icon={
                       <IconLogout
                         style={{ width: rem(16), height: rem(16) }}
@@ -259,7 +250,7 @@ const Navbar = ({ isHomepage }: HeaderSearchProps) => {
                   leftIcon={<IconLogin />}
                   variant="light"
                   radius={'xl'}
-                  onClick={() => router.push('users/auth')}
+                  onClick={() => router.push('/users/auth')}
                 >
                   Login
                 </Button>
@@ -267,58 +258,8 @@ const Navbar = ({ isHomepage }: HeaderSearchProps) => {
             )}
           </Group>
         </Flex>
-      </Container>
-      <DefaultSideNav
-        onClose={() => {
-          setSideNavOpen(false);
-          setActiveTab('Home');
-        }}
-        isOpen={isSideNavOpen}
-      />
-      {modalTrigger && (
-        <Modal
-          opened={modalTrigger}
-          onClose={() => setModalTrigger((prev) => !prev)}
-          centered
-          radius={'lg'}
-          transitionProps={{ transition: 'fade', duration: 300 }}
-          overlayProps={{
-            color: theme.colors.gray[7],
-            opacity: 0.55,
-            blur: 3,
-          }}
-        >
-          <TextInput
-            radius={'xl'}
-            size="lg"
-            placeholder="Search here"
-            value={searchValue}
-            variant="unstyled"
-            sx={{ borderBottom: `1px solid ${theme.colors.gray[4]}` }}
-            onChange={(event) => setSearchValue(event.target.value)}
-            icon={<IconSearch />}
-          />
-
-          <Group mt={'sm'} position="right">
-            <Text
-              onClick={() => setModalTrigger((prev) => !prev)}
-              style={{ cursor: 'pointer' }}
-            >
-              Cancel
-            </Text>
-            <Button
-              radius={'lg'}
-              onClick={() => {
-                if (searchValue) {
-                  router.push(`/search?title__icontains=${searchValue}`);
-                }
-              }}
-            >
-              Confirm
-            </Button>
-          </Group>
-        </Modal>
-      )}
+      </div>
+      <DefaultSideNav onClose={() => closeSideNav()} isOpen={isSideNavOpen} />
     </>
   );
 };
@@ -335,7 +276,7 @@ const useStyles = createStyles((theme) => ({
     zIndex: 50,
   },
   mainFlex: {
-    '@media (max-width: 890px)': {
+    '@media (max-width: 900px)': {
       justifyContent: 'space-between',
       paddingRight: theme.spacing.xs,
     },
@@ -343,7 +284,7 @@ const useStyles = createStyles((theme) => ({
   user: {
     color:
       theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.colors.white,
-    padding: `${theme.spacing.xs} ${theme.spacing.sm}`,
+    // padding: `${theme.spacing.xs} ${theme.spacing.sm}`,
     borderRadius: theme.radius.sm,
     transition: 'background-color 100ms ease',
     '&:hover': {
@@ -351,10 +292,6 @@ const useStyles = createStyles((theme) => ({
         theme.colorScheme === 'dark'
           ? theme.colors.dark[8]
           : theme.colors.white,
-    },
-
-    '@media (max-width: 575px)': {
-      display: 'none',
     },
   },
 
@@ -368,7 +305,7 @@ const useStyles = createStyles((theme) => ({
     },
   },
   tabsList: {
-    [theme.fn.smallerThan('sm')]: {
+    '@media (max-width: 900px)': {
       display: 'none',
     },
   },

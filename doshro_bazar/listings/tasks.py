@@ -1,8 +1,10 @@
 from celery import shared_task
-from doshro_bazar.listings.models import ListingViews, Listings
 from django.core.cache import cache
+
 from doshro_bazar.category.models import Category
+from doshro_bazar.listings.models import Listings, ListingViews
 from doshro_bazar.listings.scraper import scrape_listing_paginated
+
 
 @shared_task
 def update_views():
@@ -24,7 +26,7 @@ def print_current_scraping_category(category_id):
     print(category_id, "current_category")
 
 
-# @shared_task
+@shared_task
 def get_all_categories():
     categories = Category.objects.all()
     category_id_list = []

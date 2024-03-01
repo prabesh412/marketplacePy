@@ -1,13 +1,12 @@
-import React, { useCallback, useState } from 'react';
 import {
-  Text,
+  ActionIcon,
   Avatar,
-  Group,
-  Paper,
   Box,
   Flex,
+  Group,
+  Paper,
+  Text,
   TextInput,
-  ActionIcon,
   rem,
 } from '@mantine/core';
 import {
@@ -16,6 +15,7 @@ import {
   IconMessage,
   IconMessageShare,
 } from '@tabler/icons-react';
+import React, { useCallback, useState } from 'react';
 
 type CommentsReply = {
   id: number;
@@ -37,29 +37,35 @@ type RecursiveRepliesProps = {
     replyValue: string,
   ) => void;
   topParentCommentId: number;
+  activeReplies?: {
+    [key: number]: boolean;
+  };
 };
 
-const RecursiveReplies = ({
-  replies,
-  handleReplySubmit,
-  topParentCommentId,
-}: RecursiveRepliesProps) => {
-  const [replyValue, setReplyValue] = useState<string>('');
-  const [activeReplies, setActiveReplies] = useState<{
-    [key: number]: boolean;
-  }>({});
+const RenderReplies = React.memo(
+  ({
+    replies,
+    handleReplySubmit,
+    topParentCommentId,
+  }: RecursiveRepliesProps) => {
+    const [replyValue, setReplyValue] = useState<string>('');
+    const [activeReplies, setActiveReplies] = useState<{
+      [key: number]: boolean;
+    }>({});
 
-  const handleReplyClick = useCallback((commentId: number) => {
-    setActiveReplies((prev) => ({ [commentId]: !prev[commentId] }));
-  }, []);
-
-  const renderReplies = (replies: CommentsReplies) => {
+    const handleReplyClick = useCallback((commentId: number) => {
+      setActiveReplies((prev) => ({ [commentId]: !prev[commentId] }));
+    }, []);
     return (
       <Group mt={'sm'} pl={25} sx={{ position: 'relative' }}>
         <Flex direction={'column'}>
           {replies &&
             replies?.map((reply) => (
-              <div key={reply.id} style={{ position: 'relative' }}>
+              <div
+                key={reply.id}
+                style={{ position: 'relative', width: '100%' }}
+              >
+                {' '}
                 <Paper m={4}>
                   <Group>
                     <Box
@@ -82,7 +88,7 @@ const RecursiveReplies = ({
                       </Text>
                     </div>
                   </Group>
-                  <Text pl={54} size="sm" w={'100%'}>
+                  <Text pl={54} size="sm">
                     {reply?.texts}
                   </Text>
                   <Group mt={'xs'} mb={'xs'} pl={54}>
@@ -101,6 +107,7 @@ const RecursiveReplies = ({
                   {activeReplies[reply.id] && (
                     <TextInput
                       w={'100%'}
+                      miw={'30vw'}
                       pl={50}
                       onChange={(event) =>
                         setReplyValue(event.currentTarget.value)
@@ -109,7 +116,6 @@ const RecursiveReplies = ({
                       size="md"
                       mt={5}
                       radius={'xl'}
-                      sx={{ width: '100%' }}
                       icon={<IconMessageShare />}
                       placeholder={'Leave a Reply'}
                       rightSectionWidth={40}
@@ -143,16 +149,39 @@ const RecursiveReplies = ({
                   )}
                 </Paper>
                 {reply.replies && reply.replies.length > 0 && (
-                  <div>{renderReplies(reply.replies)}</div>
+                  <div>
+                    <RenderReplies
+                      replies={reply.replies}
+                      handleReplySubmit={handleReplySubmit}
+                      topParentCommentId={topParentCommentId}
+                      activeReplies={activeReplies}
+                    />
+                  </div>
                 )}
               </div>
             ))}
         </Flex>
       </Group>
     );
-  };
+  },
+);
 
-  return <Group>{replies && renderReplies(replies)}</Group>;
+const RecursiveReplies = ({
+  replies,
+  handleReplySubmit,
+  topParentCommentId,
+}: RecursiveRepliesProps) => {
+  return (
+    <Group w={'100%'}>
+      {replies && (
+        <RenderReplies
+          replies={replies}
+          handleReplySubmit={handleReplySubmit}
+          topParentCommentId={topParentCommentId}
+        />
+      )}
+    </Group>
+  );
 };
 
 export default React.memo(RecursiveReplies);

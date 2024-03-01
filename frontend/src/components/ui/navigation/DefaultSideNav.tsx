@@ -1,5 +1,5 @@
+import { LinksGroup } from '@/components/ui/common/NavLinks';
 import {
-  Card,
   createStyles,
   Drawer,
   Group,
@@ -8,9 +8,8 @@ import {
   Text,
 } from '@mantine/core';
 import { IconCategory } from '@tabler/icons-react';
-import { useCategoryList } from '../../../../orval/category/category';
 import React from 'react';
-import { LinksGroup } from '@/components/ui/common/NavLinks';
+import { useCategoryList } from '../../../../orval/category/category';
 
 const useStyles = createStyles((theme) => ({
   navbar: {
@@ -95,7 +94,7 @@ const DefaultSideNav = ({
         label={parentCategory.name}
         links={subcategories?.map((subcategory) => ({
           label: subcategory.name,
-          link: `search/?title__icontains=${subcategory.id}`,
+          link: `search/?category=${subcategory.id}`,
         }))}
         key={parentCategory.id}
         icon={icons}
@@ -108,12 +107,14 @@ const DefaultSideNav = ({
       overlayProps={{ blur: 4 }}
       scrollAreaComponent={ScrollArea.Autosize}
       title={
-        <Group ml={'lg'} spacing={10}>
-          <IconCategory color="gray" />
-          <Text fw={500} c={'dimmed'} size={'md'} align="center">
-            Browse all categories
-          </Text>
-        </Group>
+        <>
+          <Group ml={'lg'} spacing={10}>
+            <IconCategory />
+            <Text fw={500} size={'md'} align="center">
+              Browse all categories
+            </Text>
+          </Group>
+        </>
       }
       sx={{ overflow: 'auto' }}
       opened={isOpen}

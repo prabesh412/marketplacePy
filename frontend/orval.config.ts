@@ -1,7 +1,7 @@
 module.exports = {
   doshroBazar: {
     input: {
-      target: 'http://localhost:8000/api/schema/',
+      target: './doshro_bazar.yaml',
     },
     output: {
       mode: 'tags-split',

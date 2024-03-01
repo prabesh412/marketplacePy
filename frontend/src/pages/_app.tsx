@@ -1,18 +1,18 @@
-import { AppProps } from 'next/app';
-import { MantineProvider, MantineThemeOverride } from '@mantine/core';
-import { Notifications } from '@mantine/notifications';
-import {
-  QueryClient,
-  QueryClientProvider,
-  Hydrate,
-} from '@tanstack/react-query';
-import StoreProvider from '@/zustand/StoreProvider';
 import Background from '@/components/global/Background';
-import { NextPage } from 'next';
-import { ReactNode, useState } from 'react';
 import { RouterTransition } from '@/components/global/RouterTransition';
 import AffixButton from '@/components/ui/common/AffixButton';
 import BottomAppBar from '@/components/ui/navigation/MobileBottomAppBar';
+import StoreProvider from '@/zustand/StoreProvider';
+import { MantineProvider, MantineThemeOverride } from '@mantine/core';
+import { Notifications } from '@mantine/notifications';
+import {
+  Hydrate,
+  QueryClient,
+  QueryClientProvider,
+} from '@tanstack/react-query';
+import { NextPage } from 'next';
+import { AppProps } from 'next/app';
+import { ReactNode, useState } from 'react';
 
 const customTheme: MantineThemeOverride = {
   colorScheme: 'light',
@@ -41,7 +41,7 @@ export default function App({ Component, pageProps }: Props) {
             theme={customTheme}
           >
             <RouterTransition />
-            <Notifications />
+            <Notifications limit={4} />
             <AffixButton />
             <BottomAppBar />
 
