@@ -1,4 +1,3 @@
-import { ROOTS_AUTH } from '@/components/routes';
 import { Button, Card, Group, PinInput, Text, rem } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { useMediaQuery } from '@mantine/hooks';
@@ -38,7 +37,7 @@ const OtpCard = ({ phone_number }: OtpProps) => {
       { data },
       {
         onSuccess: (data) => {
-          router.push(ROOTS_AUTH);
+          router.push('/users/auth');
           notifications.update({
             id: 'otp',
             title: `Registration Success`,
