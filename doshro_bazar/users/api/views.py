@@ -13,8 +13,9 @@ from rest_framework.viewsets import GenericViewSet
 from rest_framework_extensions.cache.decorators import cache_response
 
 from doshro_bazar.users.models import OTP
+from doshro_bazar.users.tasks import send_otp
 from doshro_bazar.utils.cache_utils import ProfileKeyConstructor
-from doshro_bazar.utils.TwilioClient import MessageHandler
+from doshro_bazar.utils.SparrowClient import MessageHandler
 
 from .serializers import OTPValidationSerializer, UserRegisterSerializer, UserSerializer
 
@@ -85,6 +86,8 @@ def generate_otp(user):
     OTP.objects.create(user=user, code=otp_code)
     return otp_code
 
+
+
 class RegisterViewSet(CreateModelMixin, GenericViewSet):
     serializer_class = UserRegisterSerializer
     queryset = User.objects.all()
@@ -93,8 +96,10 @@ class RegisterViewSet(CreateModelMixin, GenericViewSet):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         serializer.save()
-        generated_otp = generate_otp(serializer.instance)
-        MessageHandler(serializer.instance.username, generated_otp).send_otp_via_message()
+        phone_number = request.data["username"]
+        otp = generate_otp(User.objects.get(username=phone_number))
+        send_otp.delay(phone_number, otp)
+              
         return Response({"message": "OTP sent for verification!"}, status=status.HTTP_201_CREATED,)
        
     

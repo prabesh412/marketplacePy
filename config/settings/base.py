@@ -85,6 +85,7 @@ THIRD_PARTY_APPS = [
     "drf_spectacular",
     'cloudinary_storage',
     'cloudinary',
+    'jazzmin',
     "django_filters",
     'dj_rest_auth.registration',
 ]
