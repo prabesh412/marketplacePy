@@ -1,5 +1,6 @@
 from django.contrib import admin
-from doshro_bazar.listings.models import Listings, ListingImage, ListingViews
+
+from doshro_bazar.listings.models import ListingImage, Listings, ListingViews
 
 # Register your models here.
 
@@ -7,7 +8,7 @@ from doshro_bazar.listings.models import Listings, ListingImage, ListingViews
 @admin.register(Listings)
 class ListingsAdmin(admin.ModelAdmin):
     list_display = ["title", "price", "status", "sale_status", "category", "user"]
-    list_filter = ["status", "sale_status", "category", "user"]
+    list_filter = ["status", "sale_status", "category", "user", "is_featured"]
     search_fields = ["title", "price", "status", "sale_status", "category", "user"]
     list_per_page = 10
 
